@@ -48,7 +48,7 @@ export const create = async (projectName?: string) => {
         }
 
         // Clone the templates repository directly into the target directory
-        const templatesRepo = 'https://github.com/sneddonisaac/umi.git';
+        const templatesRepo = 'https://github.com/sneddonisaac/umi/tree/main/templates';
 
         spinner.start('Cloning templates from GitHub...');
         await git.clone(templatesRepo, targetDir);

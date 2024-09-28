@@ -27,9 +27,8 @@ async function main() {
 
     // Command for creating a new project
     program
-        .command('create')
+        .command('create [projectName]')
         .description('Creates a new project')
-        .argument('<projectName>', 'The name of the project to create')
         .action(async (projectName) => {
             await create(projectName);
         });
