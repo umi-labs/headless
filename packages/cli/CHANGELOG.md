@@ -1,5 +1,28 @@
 # @umi-digital/cli
 
+## 1.5.0
+
+### Minor Changes
+
+- stable release of the create functionality
+- stable release of the create function on the cli
+
+### Patch Changes
+
+- changes to remove, readme, config and create
+- spinners patch
+- update to colours
+- fixing package.json for each publishing
+- adding remove function and fixing components directory path
+- update to colours and flags
+- formatting ui directory
+- updates to commands, readme and package.json
+- testing colours
+- changes to remove, readme, config and create
+- testing colours
+- modifying the componentDir for removals
+- modifying add commands to allow for component name to be left out and to output the correct directory
+
 ## 1.4.0
 
 ### Minor Changes
