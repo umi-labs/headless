@@ -115,9 +115,10 @@ export const create = async (projectName?: string) => {
         // Offering helpful tips to the user
         const tips = [
             `${bold('1.')} Navigate into your new project folder: ${bold(`cd ${projectName}`)}`,
-            `${bold('2.')} Start your development server: ${bold(`${packageManager.manager} dev`)}`,
-            `${bold('3.')} Check the ${bold("README.md")} file for more setup instructions.`,
-            `${bold('4.')} Explore the available templates to customise your project further.`,
+            `${bold('2.')} Run ${bold("umi init")} to initialise your project.`,
+            `${bold('3.')} Start your development server: ${bold(`${packageManager.manager} dev`)}`,
+            `${bold('4.')} Check the ${bold("README.md")} file for more setup instructions.`,
+            `${bold('5.')} Explore the available templates to customise your project further.`,
         ];
 
         console.log(`\n🎉 Project created successfully! ${bold((green('Let\'s get you started:\n')))}`);

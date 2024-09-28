@@ -52,7 +52,7 @@ umi add
 umi add Button
 ```
 
-### remove (not implemented)
+### remove
 
 This command is used to remove a component from a project.
 
@@ -60,3 +60,8 @@ This command is used to remove a component from a project.
 umi remove
 ```
 
+#### Example
+
+```bash
+umi remove Button
+```

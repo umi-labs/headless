@@ -11,7 +11,7 @@ const { readJSON, pathExists, ensureDir, outputFile } = fs;
 
 // Function to add a component
 export const add = async (componentName?: string) => {
-    const spinner = ora('Adding component...').start();
+    const spinner = ora();
 
     // If no component name is provided, prompt for one
     if (!componentName) {
@@ -23,6 +23,8 @@ export const add = async (componentName?: string) => {
             message: 'What is the name of the component?',
             validate: (value) => (value.length > 0 ? true : 'Component name is required'), // Validation for empty input
         });
+
+        spinner.start('Validating component name...');
 
         // Check if the prompt response contains the expected componentName
         if (response.componentName) {
@@ -40,6 +42,8 @@ export const add = async (componentName?: string) => {
         spinner.fail((error as z.ZodError).errors[0].message);
         return;
     }
+
+    spinner.succeed('Component name validated.');
 
     // Load existing configuration
     let existingConfig: Config | {} = {};
@@ -59,6 +63,8 @@ export const add = async (componentName?: string) => {
     }
 
     const componentDir = path.join(process.cwd(), 'app', `_${config.aliases.components}`, `${config.aliases.ui}`);
+
+    spinner.start(`Adding component: ${componentName}...`);
 
     // Ensure the directory exists
     await ensureDir(componentDir);

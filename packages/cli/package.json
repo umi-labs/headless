@@ -1,6 +1,6 @@
 {
   "name": "@umi-digital/cli",
-  "version": "1.2.0",
+  "version": "1.3.3",
   "type": "module",
   "main": "./dist/index.js",
   "bin": {
@@ -21,7 +21,7 @@
     "build": "tsup",
     "start": "node dist/index.js",
     "dev:local": "pnpm run build && pnpm link",
-    "pub:beta": "pnpm build && changeset && changeset version && pnpm publish --access public --no-git-checks --tag beta",
+    "pub:beta": "pnpm build && changeset && pnpm publish --access public --no-git-checks --tag beta",
     "pub:next": "pnpm build && changeset && changeset version && pnpm publish --access public --no-git-checks --tag next",
     "pub:release": "pnpm build && changeset && changeset version && git add -A && git commit -m 'chore(release): publish new version' && git push && pnpm publish --access public"
   },
