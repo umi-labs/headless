@@ -6,7 +6,7 @@ import { execa } from 'execa';
 
 const { copy } = fs;
 
-export const newProject = async (projectName?: string) => {
+export const create = async (projectName?: string) => {
     const spinner = ora('Setting up a new project...').start();
 
     try {

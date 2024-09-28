@@ -2,6 +2,8 @@ import { Command } from 'commander';
 import { init } from './commands/init';
 import { add } from './commands/add';
 import { help } from './commands/help';
+import { create } from './commands/create';
+
 import { getPackageInfo } from './utils/getPackageInfo';
 
 const program = new Command();
@@ -25,11 +27,11 @@ async function main() {
 
     // Command for creating a new project
     program
-        .command('new')
+        .command('create')
         .description('Creates a new project')
         .argument('<projectName>', 'The name of the project to create')
         .action(async (projectName) => {
-            await new (projectName);
+            await create(projectName);
         });
 
     // Command for adding components or features
