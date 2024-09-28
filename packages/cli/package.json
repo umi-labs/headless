@@ -1,6 +1,6 @@
 {
   "name": "@umi-digital/cli",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "type": "module",
   "main": "./dist/index.js",
   "bin": {
@@ -36,6 +36,7 @@
     "ora": "^8.1.0",
     "path": "^0.12.7",
     "prompts": "^2.4.2",
+    "simple-git": "^3.27.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
