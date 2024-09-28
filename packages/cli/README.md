@@ -24,12 +24,18 @@ This command is used to initialize a new project.
 umi init
 ```
 
-### new (not implemented)
+### create
 
 This command is used to create a new project.
 
 ```bash
-umi new
+umi create
+```
+
+#### Example
+
+```bash
+umi create basic
 ```
 
 ### add
@@ -38,6 +44,12 @@ This command is used to add a new component to a project.
 
 ```bash
 umi add
+```
+
+#### Example
+
+```bash
+umi add Button
 ```
 
 ### remove (not implemented)

@@ -3,6 +3,7 @@ import { init } from './commands/init';
 import { add } from './commands/add';
 import { help } from './commands/help';
 import { create } from './commands/create';
+import { remove } from './commands/remove';
 
 import { getPackageInfo } from './utils/getPackageInfo';
 
@@ -39,6 +40,14 @@ async function main() {
         .description('Adds components or features to your project')
         .action(async (componentName) => {
             await add(componentName); // Pass the component name to add
+        });
+
+    // Command for removing components or features
+    program
+        .command('remove [componentName]')
+        .description('Removes components or features from your project')
+        .action(async (componentName) => {
+            await remove(componentName); // Pass the component name to add
         });
 
     // Command for displaying help information
