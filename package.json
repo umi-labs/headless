@@ -10,7 +10,9 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "cli:test:local": "cd packages/cli && pnpm run dev:local",
     "release": "changeset version",
-    "cli:pub:release": "cd packages/cli && pnpm run publish-packages"
+    "cli:release": "cd packages/cli && pnpm pub:release",
+    "cli:beta": "cd packages/cli && pnpm pub:beta",
+    "cli:next": "cd packages/cli && pnpm pub:next"
   },
   "devDependencies": {
     "prettier": "^3.2.5",

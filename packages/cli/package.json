@@ -21,18 +21,22 @@
     "build": "tsup",
     "start": "node dist/index.js",
     "dev:local": "pnpm run build && pnpm link",
-    "publish-packages": "pnpm build && pnpm publish --access public"
+    "pub:beta": "pnpm build && pnpm publish --access public --tag beta",
+    "pub:next": "pnpm build && pnpm publish --access public --tag next",
+    "pub:release": "pnpm build && pnpm publish --access public"
   },
   "keywords": [],
   "author": "Isaac",
   "license": "ISC",
   "description": "A CLI tool for project management",
   "dependencies": {
+    "@changesets/cli": "^2.27.8",
     "chalk": "^5.3.0",
     "commander": "^12.1.0",
     "cosmiconfig": "^9.0.0",
     "execa": "^9.4.0",
     "fs-extra": "^11.2.0",
+    "kleur": "^4.1.5",
     "ora": "^8.1.0",
     "path": "^0.12.7",
     "prompts": "^2.4.2",
