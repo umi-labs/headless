@@ -98,6 +98,7 @@ export const create = async (projectName?: string) => {
             message: 'Which package manager would you like to use?',
             choices: [
                 { title: 'npm', value: 'npm' },
+                { title: 'pnpm', value: 'pnpm' },
                 { title: 'yarn', value: 'yarn' },
             ],
             initial: 0,
@@ -107,10 +108,20 @@ export const create = async (projectName?: string) => {
         await execa(packageManager.manager, ['install'], { cwd: targetDir, stdio: 'inherit' });
         spinner.succeed('Dependencies installed.');
 
-        spinner.succeed(`Project "${projectName}" created successfully!`);
-
         // Clean up by removing the temporary directory
         await fs.remove(tempDir);
+
+        // Offering helpful tips to the user
+        const tips = [
+            '1. Navigate into your new project folder: `cd ' + projectName + '`',
+            '2. Start your development server: `npm run dev` or `yarn dev` or `' + packageManager.manager + ' run dev`',
+            '3. Check the README.md file for more setup instructions.',
+            '4. Explore the available templates to customise your project further.',
+        ];
+
+        console.log('\n🎉 Project created successfully! Here are some tips to get you started:\n');
+        tips.forEach(tip => console.log(tip));
+
     } catch (error) {
         spinner.fail('An error occurred while creating the project.');
         console.error(error);
