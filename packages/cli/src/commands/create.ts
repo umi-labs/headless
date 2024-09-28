@@ -44,6 +44,8 @@ export const create = async (projectName?: string) => {
             return;
         }
 
+        spinner.stop();
+
         // Prompt user to select a template
         const { selectedTemplate } = await prompts({
             type: 'select',
@@ -62,9 +64,11 @@ export const create = async (projectName?: string) => {
 
         const templatePath = path.join(templatesDir, selectedTemplate);
 
-        // Clone the template into the target directory
+        spinner.start('Copying template...');
+
         await copy(templatePath, targetDir);
 
+        spinner.succeed('Template copied.');
         // Run installation commands
         spinner.start('Installing dependencies...');
         await execa('npm', ['install'], { cwd: targetDir, stdio: 'inherit' });
