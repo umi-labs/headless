@@ -1,5 +1,5 @@
 {
-  "name": "headless-template",
+  "name": "basic",
   "private": true,
   "scripts": {
     "build": "next build",

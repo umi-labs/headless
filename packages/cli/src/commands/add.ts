@@ -58,7 +58,7 @@ export const add = async (componentName?: string) => {
         return;
     }
 
-    const componentDir = path.join(process.cwd(), 'app', config.aliases.components);
+    const componentDir = path.join(process.cwd(), 'app', `_${config.aliases.components}`);
 
     // Ensure the directory exists
     await ensureDir(componentDir);

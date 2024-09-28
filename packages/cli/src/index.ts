@@ -35,9 +35,8 @@ async function main() {
 
     // Command for adding components or features
     program
-        .command('add')
+        .command('add [componentName]')
         .description('Adds components or features to your project')
-        .argument('<componentName>', 'The name of the component to add')
         .action(async (componentName) => {
             await add(componentName); // Pass the component name to add
         });
