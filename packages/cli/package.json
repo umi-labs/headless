@@ -1,6 +1,6 @@
 {
   "name": "@umi-digital/cli",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "bin": {
     "umi": "./dist/index.js"
@@ -16,7 +16,7 @@
   "scripts": {
     "build": "tsup",
     "start": "node dist/index.js",
-    "test-local": "pnpm run build && pnpm link",
+    "dev:local": "pnpm run build && pnpm link",
     "publish-packages": "pnpm build && pnpm publish --access public"
   },
   "keywords": [],

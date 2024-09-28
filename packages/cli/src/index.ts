@@ -23,6 +23,15 @@ async function main() {
             init(options);
         });
 
+    // Command for creating a new project
+    program
+        .command('new')
+        .description('Creates a new project')
+        .argument('<projectName>', 'The name of the project to create')
+        .action(async (projectName) => {
+            await new (projectName);
+        });
+
     // Command for adding components or features
     program
         .command('add')
