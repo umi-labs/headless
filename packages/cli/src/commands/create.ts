@@ -8,8 +8,7 @@ import simpleGit from 'simple-git';
 const git = simpleGit();
 
 export const create = async (projectName?: string) => {
-    const spinner = ora('Setting up a new project...').start();
-
+    const spinner = ora();
     try {
         // Prompt for the project name if not provided
         if (!projectName) {
@@ -22,10 +21,14 @@ export const create = async (projectName?: string) => {
             projectName = response.projectName;
         }
 
+        spinner.start('Setting up a new project...');
+
         if (!projectName) {
             spinner.fail('Project name is required.');
             return;
         }
+
+
 
         const targetDir = path.join(process.cwd(), projectName);
 
