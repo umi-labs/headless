@@ -1,9 +1,11 @@
 import { PromptObject } from 'prompts';
 import { Config } from './schema'; // Adjust the import path as needed
 import chalk from 'chalk';
-
+import path from 'path';
 // Highlight function for prompts
 const highlight = (text: string) => chalk.cyan(text);
+
+const getCurrentDirectoryName = () => path.basename(process.cwd());
 
 // Define the prompts
 export const configPrompts = (existingConfig: Config, DEFAULT_CONFIG: Config): PromptObject<string>[] => [
@@ -11,7 +13,7 @@ export const configPrompts = (existingConfig: Config, DEFAULT_CONFIG: Config): P
         type: 'text',
         name: 'name',
         message: `What is the name of your project? ${highlight("(Required)")}`,
-        initial: existingConfig.name || DEFAULT_CONFIG.name,
+        initial: existingConfig.name || getCurrentDirectoryName() || DEFAULT_CONFIG.name,
     },
     {
         type: 'text',
