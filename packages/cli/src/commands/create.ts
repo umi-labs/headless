@@ -47,23 +47,21 @@ export const create = async (projectName?: string) => {
             await fs.remove(targetDir);
         }
 
-        spinner.start('Cloning templates from GitHub...');
-
-        // Clone the templates repository
+        // Clone the templates repository directly into the target directory
         const templatesRepo = 'https://github.com/sneddonisaac/umi.git';
-        const templatesDir = path.resolve(__dirname, '../../../templates');
 
-        await git.clone(templatesRepo, templatesDir);
+        spinner.start('Cloning templates from GitHub...');
+        await git.clone(templatesRepo, targetDir);
+
+        spinner.succeed('Templates cloned.');
 
         // List available templates in the cloned directory
-        const templates = await fs.readdir(path.join(templatesDir, 'templates'));
+        const templates = await fs.readdir(path.join(targetDir, 'templates'));
 
         if (templates.length === 0) {
-            spinner.fail('No templates available in the templates directory.');
+            spinner.fail('No templates available in the cloned directory.');
             return;
         }
-
-        spinner.stop();
 
         // Prompt user to select a template
         const { selectedTemplate } = await prompts({
@@ -81,12 +79,12 @@ export const create = async (projectName?: string) => {
             return;
         }
 
-        const templatePath = path.join(templatesDir, 'templates', selectedTemplate);
+        const templatePath = path.join(targetDir, 'templates', selectedTemplate);
 
         spinner.start(`Copying template: ${selectedTemplate}...`);
 
-        // Copy the template to the target directory
-        await fs.copy(templatePath, targetDir);
+        // Move the template contents to the target directory
+        await fs.copy(templatePath, targetDir, { overwrite: true });
 
         spinner.succeed('Template copied.');
 
