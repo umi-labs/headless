@@ -4,7 +4,7 @@ import ora from 'ora';
 import prompts from 'prompts';
 import { execa } from 'execa';
 import simpleGit from 'simple-git';
-import { cyan, red, yellow, bold } from 'kleur';
+import { bold, green } from 'kleur/colors';
 
 const git = simpleGit();
 
@@ -114,14 +114,13 @@ export const create = async (projectName?: string) => {
 
         // Offering helpful tips to the user
         const tips = [
-            '1. Navigate into your new project folder: `cd ' + projectName + '`',
-            '2. Start your development server: `' + packageManager.manager + ' dev`',
-            '3. Check the README.md file for more setup instructions.',
-            '4. Explore the available templates to customise your project further.',
-            yellow(`foo ${red().bold('red')} bar ${cyan('cyan')} baz`)
+            `${bold('1.')} Navigate into your new project folder: ${bold(`cd ${projectName}`)}`,
+            `${bold('2.')} Start your development server: ${bold(`${packageManager.manager} dev`)}`,
+            `${bold('3.')} Check the ${bold("README.md")} file for more setup instructions.`,
+            `${bold('4.')} Explore the available templates to customise your project further.`,
         ];
 
-        console.log('\n🎉 Project created successfully! Here are some tips to get you started:\n');
+        console.log(`\n🎉 Project created successfully! ${bold((green('Let\'s get you started:\n')))}`);
         tips.forEach(tip => console.log(tip));
 
     } catch (error) {

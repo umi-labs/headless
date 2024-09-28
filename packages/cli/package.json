@@ -1,6 +1,6 @@
 {
   "name": "@umi-digital/cli",
-  "version": "1.0.12",
+  "version": "1.0.15",
   "type": "module",
   "main": "./dist/index.js",
   "bin": {
@@ -21,9 +21,9 @@
     "build": "tsup",
     "start": "node dist/index.js",
     "dev:local": "pnpm run build && pnpm link",
-    "pub:beta": "pnpm build && pnpm publish --access public --tag beta",
-    "pub:next": "pnpm build && pnpm publish --access public --tag next",
-    "pub:release": "pnpm build && pnpm publish --access public"
+    "pub:beta": "pnpm build && changeset && changeset version&& pnpm publish --access public --no-git-checks --tag beta",
+    "pub:next": "pnpm build && changeset && pnpm publish --access public --no-git-checks --tag next",
+    "pub:release": "pnpm build && changeset && pnpm publish --access public"
   },
   "keywords": [],
   "author": "Isaac",
