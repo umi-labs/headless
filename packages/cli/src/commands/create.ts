@@ -28,8 +28,6 @@ export const create = async (projectName?: string) => {
             return;
         }
 
-
-
         const targetDir = path.join(process.cwd(), projectName);
 
         // Check if the target directory already exists
@@ -50,16 +48,18 @@ export const create = async (projectName?: string) => {
             await fs.remove(targetDir);
         }
 
-        // Clone the templates repository directly into the target directory
-        const templatesRepo = 'https://github.com/sneddonisaac/umi/tree/main/templates';
+        // Clone the templates repository into a temporary directory
+        const templatesRepo = 'https://github.com/sneddonisaac/umi.git'; // Correct repo URL
+        const tempDir = path.join(process.cwd(), 'temp-templates');
 
         spinner.start('Cloning templates from GitHub...');
-        await git.clone(templatesRepo, targetDir);
+        await git.clone(templatesRepo, tempDir);
 
         spinner.succeed('Templates cloned.');
 
         // List available templates in the cloned directory
-        const templates = await fs.readdir(path.join(targetDir, 'templates'));
+        const templatesDir = path.join(tempDir, 'templates');
+        const templates = await fs.readdir(templatesDir);
 
         if (templates.length === 0) {
             spinner.fail('No templates available in the cloned directory.');
@@ -82,7 +82,7 @@ export const create = async (projectName?: string) => {
             return;
         }
 
-        const templatePath = path.join(targetDir, 'templates', selectedTemplate);
+        const templatePath = path.join(templatesDir, selectedTemplate);
 
         spinner.start(`Copying template: ${selectedTemplate}...`);
 
@@ -108,6 +108,9 @@ export const create = async (projectName?: string) => {
         spinner.succeed('Dependencies installed.');
 
         spinner.succeed(`Project "${projectName}" created successfully!`);
+
+        // Clean up by removing the temporary directory
+        await fs.remove(tempDir);
     } catch (error) {
         spinner.fail('An error occurred while creating the project.');
         console.error(error);
