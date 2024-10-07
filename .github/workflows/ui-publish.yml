@@ -1,9 +1,6 @@
 name: Publish UI package to npm
 
 on:
-  release:
-    types:
-      - published # Run when a release is published
   push:
     tags:
       - "ui-v*.*.*"
@@ -35,9 +32,9 @@ jobs:
         working-directory: ./packages/ui
 
       # Step 5: Extract the release version
-      - name: Extract release version
-        id: release_version
-        run: echo "VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+      - name: Extract tag version
+        id: tag_version
+        run: echo "VERSION=${GITHUB_REF/refs\/tags\/ui-v/}" >> $GITHUB_ENV
 
       # Step 6: Update package.json version with the release tag
       - name: Update package.json version
