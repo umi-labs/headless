@@ -5,7 +5,7 @@ This is the CLI for UMI. It is used to manage projects with components, template
 ## Installation
 
 ```bash
-pnpm add @umi-digital/cli
+pnpm add -g @umi-digital/cli
 ```
 
 ## Usage
