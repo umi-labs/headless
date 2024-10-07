@@ -5,7 +5,7 @@ on:
     branches:
       - "main"
     tags:
-      - "v*.*.*"
+      - "v*.*.*" # Trigger on version tags matching this pattern
 
 jobs:
   publish:
@@ -33,18 +33,16 @@ jobs:
         run: npm run build
         working-directory: ./packages/cli
 
-      # Step 5: Get the release tag
+      # Step 5: Get the release tag version
       - name: Extract tag version
         id: tag_version
-        run: echo "::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}"
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       # Step 6: Update package.json version with the release tag
       - name: Update package.json version
         run: |
           cd packages/cli
-          npm version ${GITHUB_REF/refs\/tags\//} --no-git-tag-version
-        env:
-          VERSION: ${{ steps.tag_version.outputs.VERSION }}
+          npm version $VERSION --no-git-tag-version
 
       # Step 7: Commit the version change to package.json
       - name: Commit version change
@@ -52,7 +50,7 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
           git add packages/cli/package.json
-          git commit -m "chore(release): update version to ${{ steps.tag_version.outputs.VERSION }}"
+          git commit -m "chore(release): update version to $VERSION"
           git push origin HEAD
 
       # Step 8: Publish the package to npm
