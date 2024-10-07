@@ -1,0 +1,61 @@
+name: Publish UI package to npm
+
+on:
+  release:
+    types:
+      - published # Run when a release is published
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./packages/ui
+
+      # Step 4: Build the project
+      - name: Build the project
+        run: npm run build
+        working-directory: ./packages/ui
+
+      # Step 5: Extract the release version
+      - name: Extract release version
+        id: release_version
+        run: echo "VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+
+      # Step 6: Update package.json version with the release tag
+      - name: Update package.json version
+        run: |
+          cd packages/ui
+          npm version $VERSION --no-git-tag-version
+
+      # Step 7: Commit version change to package.json
+      - name: Commit version change
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add packages/ui/package.json
+          git commit -m "chore(release): update version to $VERSION"
+          git push origin HEAD:main
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
+
+      # Step 8: Publish the package to npm
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        working-directory: ./packages/ui
