@@ -4,6 +4,9 @@ on:
   release:
     types:
       - published # Run when a release is published
+  push:
+    tags:
+      - "ui-v*.*.*"
 
 jobs:
   publish:
