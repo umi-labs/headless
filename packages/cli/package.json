@@ -25,7 +25,12 @@
     "pub:next": "pnpm build && changeset && changeset version && pnpm publish --access public --no-git-checks --tag next",
     "pub:release": "pnpm build && changeset && changeset version && git add -A && git commit -m 'chore(release): publish new version' && git push && pnpm publish --access public"
   },
-  "keywords": [],
+  "keywords": [
+    "cli",
+    "create",
+    "umi",
+    "digital"
+  ],
   "author": "Isaac",
   "license": "ISC",
   "description": "A CLI tool for project management",
