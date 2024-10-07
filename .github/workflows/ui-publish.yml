@@ -4,6 +4,7 @@ on:
   release:
     types:
       - published # Run when a release is published
+    if: ${{ startsWith(github.event.release.tag_name, 'ui') }}
 
 jobs:
   publish:
