@@ -50,6 +50,8 @@ jobs:
           git add packages/cli/package.json
           git commit -m "chore(release): update version to $VERSION"
           git push origin HEAD
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
 
       # Step 8: Publish the package to npm
       - name: Publish to npm
