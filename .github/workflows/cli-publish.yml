@@ -1,4 +1,4 @@
-name: Publish to npm
+name: Publish CLI package to npm
 
 on:
   push:
@@ -23,11 +23,14 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        working-directory: ./packages/cli
 
       - name: Build the project
         run: npm run build
+        working-directory: ./packages/cli
 
       - name: Publish to npm
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        working-directory: ./packages/cli
