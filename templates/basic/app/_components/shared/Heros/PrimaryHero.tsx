@@ -1,4 +1,4 @@
-import { VelocityScroll } from '@/components/magicui/scroll-based-velocity'
+import { VelocityScroll } from '@/app/_components/magicui/scroll-based-velocity'
 
 export interface PrimaryHeroProps {
   title: string

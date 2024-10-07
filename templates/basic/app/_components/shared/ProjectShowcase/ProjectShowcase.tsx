@@ -1,7 +1,7 @@
 import type { EncodeDataAttributeCallback } from '@sanity/react-loader'
 import Link from 'next/link'
 
-import { ProjectListItem } from '@/components/shared/ProjectShowcase/ProjectListItem'
+import { ProjectListItem } from '@/app/_components/shared/ProjectShowcase/ProjectListItem'
 import { resolveHref } from '@/sanity/lib/utils'
 
 export default function ProjectShowcase({

@@ -1,7 +1,7 @@
 import type { PortableTextBlock } from 'next-sanity'
 import type { Image } from 'sanity'
-import { HomeHeroProps } from '@/components/shared/Heros/HomeHero'
-import { PrimaryHeroProps } from '@/components/shared/Heros/PrimaryHero'
+import { HomeHeroProps } from '@/app/_components/shared/Heros/HomeHero'
+import { PrimaryHeroProps } from '@/app/_components/shared/Heros/PrimaryHero'
 
 export interface MenuItem {
   _type: string

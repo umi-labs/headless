@@ -1,7 +1,7 @@
 import type { PortableTextBlock } from 'next-sanity'
 
-import { CustomPortableText } from '@/components/shared/CustomPortableText'
-import ImageBox from '@/components/shared/ImageBox'
+import { CustomPortableText } from '@/app/_components/shared/CustomPortableText'
+import ImageBox from '@/app/_components/shared/ImageBox'
 import type { ShowcaseWork } from '@/types'
 
 interface ProjectProps {
@@ -14,9 +14,8 @@ export function ProjectListItem(props: ProjectProps) {
 
   return (
     <div
-      className={`flex flex-col gap-x-5 p-2 transition hover:bg-gray-50/50 xl:flex-row ${
-        odd && 'border-b border-t xl:flex-row-reverse'
-      }`}
+      className={`flex flex-col gap-x-5 p-2 transition hover:bg-gray-50/50 xl:flex-row ${odd && 'border-b border-t xl:flex-row-reverse'
+        }`}
     >
       <div className="w-full xl:w-9/12">
         <ImageBox

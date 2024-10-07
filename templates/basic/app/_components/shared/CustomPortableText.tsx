@@ -6,10 +6,10 @@ import {
 import type { Image } from 'sanity'
 import Link from 'next/link'
 
-import ImageWText from '@/components/shared/Blocks/ImageWText'
-import ImageBox from '@/components/shared/ImageBox'
-import ContactForm from '@/components/shared/Blocks/ContactForm/ContactForm'
-import { FormBuilderBlock } from '@/components/global/FormBuilder/FormBuilder'
+import ImageWText from '@/app/_components/shared/Blocks/ImageWText'
+import ImageBox from '@/app/_components/shared/ImageBox'
+import ContactForm from '@/app/_components/shared/Blocks/ContactForm/ContactForm'
+import { FormBuilderBlock } from '@/app/_components/global/FormBuilder/FormBuilder'
 
 export function CustomPortableText({
   paragraphClasses,

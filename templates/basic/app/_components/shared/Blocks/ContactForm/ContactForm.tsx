@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 
 import { STATUS, STATUS_TYPE } from './types'
 
-import { INPUT, TEXTAREA, FIELDSET } from '@/components/ui/Forms'
+import { INPUT, TEXTAREA, FIELDSET } from '@/app/_components/ui/Forms'
 
 export default function ContactForm() {
   const [formData, setFormData] = React.useState({

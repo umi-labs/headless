@@ -18,6 +18,13 @@ export default defineType({
             type: 'array',
             of: [{ type: 'formFields' }],
         }),
+        defineField({
+            name: 'inbox',
+            title: 'Inbox',
+            type: 'reference',
+            to: [{ type: 'inbox' }],
+            validation: (Rule) => Rule.required(),
+        }),
     ],
     preview: {
         select: {

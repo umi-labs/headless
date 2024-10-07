@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { STATUS, STATUS_TYPE, STATUS_ENUM } from "@/lib/types"
 
-import { INPUT, TEXTAREA, FIELDSET } from '@/components/ui/Forms'
+import { INPUT, TEXTAREA, FIELDSET } from '@/app/_components/ui/Forms'
 
 export const FormBuilderBlock = ({ formFields, uid }) => {
     const [formData, setFormData] = React.useState({

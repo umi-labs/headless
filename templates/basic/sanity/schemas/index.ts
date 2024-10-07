@@ -9,6 +9,7 @@ import page from '@/sanity/schemas/documents/page'
 import post from '@/sanity/schemas/documents/post'
 import contactForm from '@/sanity/schemas/documents/contact-form'
 import form from '@/sanity/schemas/documents/form'
+import inbox from '@/sanity/schemas/documents/inbox'
 import navigation from '@/sanity/schemas/documents/navigation'
 
 // Objects
@@ -35,6 +36,7 @@ export const schema = [
     post,
     contactForm,
     form,
+    inbox,
     navigation,
 
     // Objects

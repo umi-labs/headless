@@ -1,7 +1,7 @@
 import { type PortableTextBlock } from 'next-sanity'
 import type { Image as ImageType } from 'sanity'
 
-import ImageBox from '@/components/shared/ImageBox'
+import ImageBox from '@/app/_components/shared/ImageBox'
 
 interface ImageWTextProps {
   images?: ImageType[]

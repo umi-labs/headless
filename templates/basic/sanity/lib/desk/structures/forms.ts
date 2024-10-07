@@ -1,9 +1,9 @@
-import { Mailbox, Textbox } from "@phosphor-icons/react";
+import { Mailbox, Textbox, Table } from "@phosphor-icons/react";
 
 export const Forms = (S) =>
     S.listItem()
         .title('Forms')
-        .icon(Mailbox)
+        .icon(Table)
         .child(
             S.list()
                 .title('Forms')

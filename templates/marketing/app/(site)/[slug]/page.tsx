@@ -3,10 +3,10 @@ import dynamic from 'next/dynamic'
 import { draftMode } from 'next/headers'
 import { notFound } from 'next/navigation'
 
-import Page from '@/components/pages/page/Page'
+import Page from '@/app/_components/pages/page/Page'
 import { generateStaticSlugs } from '@/sanity/loader/generateStaticSlugs'
 import { loadPage } from '@/sanity/loader/loadQuery'
-const PagePreview = dynamic(() => import('@/components/pages/page/PagePreview'))
+const PagePreview = dynamic(() => import('@/app/_components/pages/page/PagePreview'))
 
 type Props = {
   params: { slug: string }

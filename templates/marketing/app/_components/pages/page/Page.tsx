@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { CustomPortableText } from '@/components/shared/CustomPortableText'
-import HeroSwitcher from '@/components/shared/Heros/HeroSwitcher'
+import { CustomPortableText } from '@/app/_components/shared/CustomPortableText'
+import HeroSwitcher from '@/app/_components/shared/Heros/HeroSwitcher'
 import type { PagePayload } from '@/types'
 
 export interface PageProps {

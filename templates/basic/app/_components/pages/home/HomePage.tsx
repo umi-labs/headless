@@ -1,7 +1,7 @@
 import type { EncodeDataAttributeCallback } from '@sanity/react-loader'
 
-import { CustomPortableText } from '@/components/shared/CustomPortableText'
-import HeroSwitcher from '@/components/shared/Heros/HeroSwitcher'
+import { CustomPortableText } from '@/app/_components/shared/CustomPortableText'
+import HeroSwitcher from '@/app/_components/shared/Heros/HeroSwitcher'
 import type { HomePagePayload } from '@/types'
 
 export interface HomePageProps {

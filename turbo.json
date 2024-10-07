@@ -24,6 +24,18 @@
     "dev": {
       "cache": false,
       "persistent": true
+    },
+    "test": {
+      "cache": true,
+      "persistent": true
+    },
+    "test:ui": {
+      "cache": true,
+      "persistent": true
+    },
+    "test:watch": {
+      "cache": true,
+      "persistent": true
     }
   }
 }
