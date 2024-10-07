@@ -1,6 +1,6 @@
 {
   "name": "@umi-digital/cli",
-  "version": "1.6.0",
+  "version": "0.0.1",
   "type": "module",
   "main": "./dist/index.js",
   "bin": {

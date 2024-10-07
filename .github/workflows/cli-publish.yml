@@ -2,6 +2,8 @@ name: Publish to npm
 
 on:
   push:
+    paths:
+      - "packages/cli/**"
     tags:
       - "v*.*.*"
 
@@ -16,7 +18,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "18.x"
+          node-version: "20.x"
           registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
