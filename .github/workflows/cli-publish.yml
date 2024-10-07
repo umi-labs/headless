@@ -5,7 +5,7 @@ on:
     branches:
       - "main"
     tags:
-      - "v*.*.*" # Trigger on version tags matching this pattern
+      - "v*.*.*" # Only trigger on version tags following semantic versioning (vX.X.X)
 
 jobs:
   publish:
@@ -25,7 +25,7 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm i
+        run: npm install
         working-directory: ./packages/cli
 
       # Step 4: Build the project
@@ -33,19 +33,27 @@ jobs:
         run: npm run build
         working-directory: ./packages/cli
 
-      # Step 5: Get the release tag version
+      # Step 5: Ensure it's a tag push
+      - name: Check if it’s a tag push
+        if: startsWith(github.ref, 'refs/tags/')
+        run: echo "Tag detected - ${GITHUB_REF#refs/tags/}"
+
+      # Step 6: Extract the tag version
       - name: Extract tag version
+        if: startsWith(github.ref, 'refs/tags/')
         id: tag_version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
-      # Step 6: Update package.json version with the release tag
+      # Step 7: Update package.json version
       - name: Update package.json version
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           cd packages/cli
           npm version $VERSION --no-git-tag-version
 
-      # Step 7: Commit the version change to package.json
+      # Step 8: Commit version change
       - name: Commit version change
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
@@ -53,8 +61,9 @@ jobs:
           git commit -m "chore(release): update version to $VERSION"
           git push origin HEAD
 
-      # Step 8: Publish the package to npm
+      # Step 9: Publish to npm
       - name: Publish to npm
+        if: startsWith(github.ref, 'refs/tags/')
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
