@@ -34,6 +34,35 @@ UMI is the monorepo for the UMI Headless Stack, this encompasses the following:
 
 Contributions are welcome! Please open an issue or submit a pull request.
 
+### Commit messages
+
+Commit messages should be in the present tense and should be descriptive.
+
+> Suggested convention for commit messages is the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#examples) specification.
+
+---
+
+### Branching
+
+All commits to the `main` branch are automatically deployed to production. So do not use `main` for development. Create a new branch from dev and make your changes there.
+
+Create a new branch from dev and make your changes there.
+
+```bash
+git checkout dev
+git checkout -b my-new-feature
+```
+
+### Pull Requests
+
+Create a new pull request from your branch to the dev branch.
+
+```bash
+git push origin my-new-feature
+```
+
+---
+
 ## License
 
 This project is licensed under the MIT License.
