@@ -1,5 +1,5 @@
 "use client";
-import Button from "@umi-digital/ui/dist/components/Button";
+import { Button, Heading } from "@umi-digital/ui";
 
 export default function HomePage() {
   return (
@@ -10,13 +10,13 @@ export default function HomePage() {
       </section>
       <section className="container grid grid-cols-2 gap-16">
         <div>
-          <h2 className="text-3xl">Getting Started</h2>
+          <Heading variant={"h2"}>Getting Started</Heading>
           <p>To get starting using UMI UI, follow these steps:</p>
         </div>
 
         <div>
           <Button
-            label="Button"
+            label="Click Me"
             variant="primary"
             onClick={() => alert("Button clicked")}
           />

@@ -110,8 +110,8 @@ importers:
   apps/umi-ui:
     dependencies:
       '@umi-digital/ui':
-        specifier: ^1.0.25
-        version: 1.0.25(react@18.3.1)
+        specifier: ^1.0.26
+        version: 1.0.26(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next:
         specifier: 14.2.14
         version: 14.2.14(@playwright/test@1.47.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.4)
@@ -217,6 +217,9 @@ importers:
 
   packages/ui:
     dependencies:
+      react-dom:
+        specifier: ^18.0.0
+        version: 18.3.1(react@18.3.1)
       zod:
         specifier: ^3.23.8
         version: 3.23.8
@@ -3731,10 +3734,11 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
-  '@umi-digital/ui@1.0.25':
-    resolution: {integrity: sha512-q8QOHjNtNECbpcvtnJM44JBGaOAK31nQjzdCzNuVahurwnUnQI3L8OzuMZBC+urhGtKXfyL4clPyvgan3WMcDw==}
+  '@umi-digital/ui@1.0.26':
+    resolution: {integrity: sha512-lqsgDaklH8Byr4pqfdCMZULem/+33m+tJGEd6i4NgRYlUqWbZ64qb1TmB4Ci4udPcmh1emg5B5UojNKFl0z5dA==}
     peerDependencies:
-      react: ^18.2.0
+      react: ^18.0.0
+      react-dom: ^18.0.0
 
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
@@ -12669,9 +12673,10 @@ snapshots:
       react: 18.3.1
       zod: 3.23.8
 
-  '@umi-digital/ui@1.0.25(react@18.3.1)':
+  '@umi-digital/ui@1.0.26(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
       zod: 3.23.8
 
   '@ungap/structured-clone@1.2.0': {}
