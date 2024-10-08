@@ -109,6 +109,9 @@ importers:
 
   apps/umi-ui:
     dependencies:
+      '@umi-digital/ui':
+        specifier: ^1.0.21
+        version: 1.0.21(react@18.3.1)
       next:
         specifier: 14.2.14
         version: 14.2.14(@playwright/test@1.47.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.4)
@@ -446,7 +449,7 @@ importers:
         version: 18.3.3
       '@vitejs/plugin-react':
         specifier: ^4.3.1
-        version: 4.3.1(vite@4.5.5(@types/node@22.7.4)(sass@1.79.4))
+        version: 4.3.1(vite@5.4.8(@types/node@22.7.4)(sass@1.79.4))
       autoprefixer:
         specifier: 10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -615,7 +618,7 @@ importers:
         version: 18.3.3
       '@vitejs/plugin-react':
         specifier: ^4.3.1
-        version: 4.3.1(vite@5.4.8(@types/node@22.7.4)(sass@1.79.4))
+        version: 4.3.1(vite@4.5.5(@types/node@22.7.4)(sass@1.79.4))
       autoprefixer:
         specifier: 10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -3715,6 +3718,11 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
+  '@umi-digital/ui@1.0.21':
+    resolution: {integrity: sha512-U6GhrwSHUjSzIGweD+tckR/3cWHDvVPaMSGXBhw3QGmDngnuJW6395zqQZJ7Pox6Fu3rcwX/tCkWWS0hcSNiww==}
+    peerDependencies:
+      react: ^18.2.0
+
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
@@ -5036,11 +5044,13 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   eslint@8.57.1:
     resolution: {integrity: sha512-ypowyDxpVSYpkXr9WPv2PAZCtNip1Mv5KTW0SCurXv/9iOpcrH9PaqUElksqEB6pChqHGDRCFTyrZlGhnLNGiA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   eslint@9.11.1:
@@ -11253,7 +11263,7 @@ snapshots:
 
   '@sanity/core-loader@1.6.19(@sanity/client@6.22.0)':
     dependencies:
-      '@sanity/client': 6.22.0(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@3.2.7)
 
   '@sanity/dashboard@4.0.0(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(sanity@3.47.1(@types/node@22.7.4)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.4)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
@@ -11427,7 +11437,7 @@ snapshots:
 
   '@sanity/presentation@1.16.0(@sanity/client@6.22.0)(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
     dependencies:
-      '@sanity/client': 6.22.0(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@3.2.7)
       '@sanity/icons': 3.3.0(react@18.3.1)
       '@sanity/preview-url-secret': 1.6.17(@sanity/client@6.22.0)
       '@sanity/ui': 2.4.0(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -11450,12 +11460,12 @@ snapshots:
 
   '@sanity/preview-kit-compat@1.5.1(@sanity/client@6.22.0)(react@18.3.1)':
     dependencies:
-      '@sanity/client': 6.22.0(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@3.2.7)
       react: 18.3.1
 
   '@sanity/preview-kit@5.1.0(@sanity/client@6.22.0)(react@18.3.1)':
     dependencies:
-      '@sanity/client': 6.22.0(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@3.2.7)
       '@sanity/preview-kit-compat': 1.5.1(@sanity/client@6.22.0)(react@18.3.1)
       mendoza: 3.0.7
     optionalDependencies:
@@ -11463,12 +11473,12 @@ snapshots:
 
   '@sanity/preview-url-secret@1.6.17(@sanity/client@6.22.0)':
     dependencies:
-      '@sanity/client': 6.22.0(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@3.2.7)
       '@sanity/uuid': 3.0.2
 
   '@sanity/react-loader@1.10.3(@sanity/client@6.22.0)(react@18.3.1)':
     dependencies:
-      '@sanity/client': 6.22.0(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@3.2.7)
       '@sanity/core-loader': 1.6.19(@sanity/client@6.22.0)
       react: 18.3.1
 
@@ -11523,7 +11533,7 @@ snapshots:
 
   '@sanity/types@3.47.1(debug@4.3.7)':
     dependencies:
-      '@sanity/client': 6.22.0(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@3.2.7)
       '@types/react': 18.3.10
     transitivePeerDependencies:
       - debug
@@ -11645,7 +11655,7 @@ snapshots:
       scroll-into-view-if-needed: 3.1.0
       valibot: 0.30.0
     optionalDependencies:
-      '@sanity/client': 6.22.0(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@3.2.7)
       next: 14.2.4(@babel/core@7.25.2)(@playwright/test@1.47.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.4)
 
   '@sec-ant/readable-stream@0.4.1': {}
@@ -12584,6 +12594,11 @@ snapshots:
       zod: 3.23.8
 
   '@umi-digital/ui@1.0.17(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      zod: 3.23.8
+
+  '@umi-digital/ui@1.0.21(react@18.3.1)':
     dependencies:
       react: 18.3.1
       zod: 3.23.8
@@ -14041,7 +14056,7 @@ snapshots:
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.0(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-plugin-import: 2.29.0(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.57.0)
       eslint-plugin-react: 7.37.0(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.0)
@@ -14069,7 +14084,7 @@ snapshots:
       enhanced-resolve: 5.15.0
       eslint: 8.57.0
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.29.0(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0)
+      eslint-plugin-import: 2.29.0(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.2
       is-core-module: 2.13.1
@@ -14119,7 +14134,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.0(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(eslint@8.57.0))(eslint@8.57.0))(eslint@8.57.0):
+  eslint-plugin-import@2.29.0(@typescript-eslint/parser@7.1.0(eslint@8.57.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@8.57.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.3
@@ -14746,6 +14761,10 @@ snapshots:
     optionalDependencies:
       debug: 3.2.7
 
+  follow-redirects@1.15.9(debug@4.3.7):
+    optionalDependencies:
+      debug: 4.3.7
+
   for-each@0.3.3:
     dependencies:
       is-callable: 1.2.7
@@ -14872,7 +14891,7 @@ snapshots:
       '@types/follow-redirects': 1.14.4
       '@types/progress-stream': 2.0.5
       decompress-response: 7.0.0
-      follow-redirects: 1.15.9(debug@3.2.7)
+      follow-redirects: 1.15.9(debug@4.3.7)
       is-retry-allowed: 2.2.0
       progress-stream: 2.0.0
       tunnel-agent: 0.6.0
@@ -15974,7 +15993,7 @@ snapshots:
   next-sanity@9.3.10(@sanity/client@6.22.0)(@sanity/icons@3.3.0(react@18.3.1))(@sanity/types@3.47.1)(@sanity/ui@2.4.0(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(next@14.2.4(@playwright/test@1.47.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sanity@3.47.1(@types/node@22.7.4)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.4)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)))(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
       '@portabletext/react': 3.1.0(react@18.3.1)
-      '@sanity/client': 6.22.0(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@3.2.7)
       '@sanity/icons': 3.3.0(react@18.3.1)
       '@sanity/preview-kit': 5.1.0(@sanity/client@6.22.0)(react@18.3.1)
       '@sanity/types': 3.47.1(debug@4.3.7)
@@ -17191,7 +17210,7 @@ snapshots:
       '@sanity/bifur-client': 0.4.1
       '@sanity/block-tools': 3.47.1
       '@sanity/cli': 3.47.1(react@18.3.1)
-      '@sanity/client': 6.22.0(debug@4.3.7)
+      '@sanity/client': 6.22.0(debug@3.2.7)
       '@sanity/color': 3.0.6
       '@sanity/diff': 3.47.1
       '@sanity/diff-match-patch': 3.1.1

@@ -1,3 +1,5 @@
+import { Button } from "@umi-digital/ui";
+
 export default function Home() {
   return (
     <main className="flexbox vertical w-full no-padding min-h-screen font-[family-name:var(--font-geist-sans)]">
@@ -11,7 +13,13 @@ export default function Home() {
           <p>To get starting using UMI UI, follow these steps:</p>
         </div>
 
-        <div></div>
+        <div>
+          <Button
+            label="Button"
+            variant="primary"
+            onClick={() => alert("Button clicked")}
+          />
+        </div>
       </section>
     </main>
   );
