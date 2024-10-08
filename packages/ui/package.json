@@ -4,8 +4,8 @@
   "type": "module",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
-  "style": "dist/assets/index.css",
   "types": "dist/index.d.ts",
+  "style": "dist/assets/index.css",
   "files": [
     "dist"
   ],
@@ -85,7 +85,8 @@
     "vitest-browser-react": "^0.0.1"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "dependencies": {
     "zod": "^3.23.8"

@@ -21,6 +21,5 @@
     "types": ["@testing-library/jest-dom", "@testing-library/react"]
   },
   "include": ["src"], // Specifies the directory to include when searching for TypeScript files.
-  "exclude": ["src/**/__docs__", "src/**/__test__"],
-  "baseUrl": "@/"
+  "exclude": ["src/**/__docs__", "src/**/__test__"]
 }

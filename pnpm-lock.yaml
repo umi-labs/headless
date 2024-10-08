@@ -110,8 +110,8 @@ importers:
   apps/umi-ui:
     dependencies:
       '@umi-digital/ui':
-        specifier: ^1.0.24
-        version: 1.0.24(react@18.3.1)
+        specifier: ^1.0.25
+        version: 1.0.25(react@18.3.1)
       next:
         specifier: 14.2.14
         version: 14.2.14(@playwright/test@1.47.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.4)
@@ -3731,8 +3731,8 @@ packages:
     peerDependencies:
       react: ^18.2.0
 
-  '@umi-digital/ui@1.0.24':
-    resolution: {integrity: sha512-+RMibOgkFmQWxVrbfuQe0p92vUqRmiTYzaXplp/fjSj0uguSgMrCDpZyBkPvqzEZoqKymVxqakE0wLMbfWnEEA==}
+  '@umi-digital/ui@1.0.25':
+    resolution: {integrity: sha512-q8QOHjNtNECbpcvtnJM44JBGaOAK31nQjzdCzNuVahurwnUnQI3L8OzuMZBC+urhGtKXfyL4clPyvgan3WMcDw==}
     peerDependencies:
       react: ^18.2.0
 
@@ -12669,7 +12669,7 @@ snapshots:
       react: 18.3.1
       zod: 3.23.8
 
-  '@umi-digital/ui@1.0.24(react@18.3.1)':
+  '@umi-digital/ui@1.0.25(react@18.3.1)':
     dependencies:
       react: 18.3.1
       zod: 3.23.8

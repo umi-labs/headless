@@ -27,7 +27,6 @@ export default function Button({
     <button
       onClick={onClick}
       className={cn(baseStyles, stylePicker(variant)?.classes)}
-      data-variant={variant}
       {...props}
     >
       {label}
