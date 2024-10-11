@@ -1,6 +1,4 @@
 export default {
-  index: {
-    title: "Home",
-  },
+  index: "Get Started",
   commands: "Commands",
 };

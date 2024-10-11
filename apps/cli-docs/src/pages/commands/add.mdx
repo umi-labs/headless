@@ -1,0 +1,44 @@
+# Add
+
+The add command is used to add a new component to a project.
+
+```bash copy
+umi add
+```
+
+## Options
+
+| Option | Description | Default |
+| --- | --- | --- |
+| `componentName` | The name of the component to add. | None |
+| `--name` `-n` | Custom name for the component. | None |
+| `--help` `-h` | Display help information. | None |
+| `--list` `-l` | List available components. | None |
+
+## Examples
+
+### Add a Button component
+
+```bash copy
+umi add Button
+```
+
+### List available components
+
+```bash copy
+umi add --list
+```
+
+### Giving the component a name
+
+```bash copy
+umi add Button --name="CustomButton"
+```
+
+## How it works
+
+The add command uses the `add` function from the `@umi-digital/cli` package to add a new component to the project. The `add` function takes in the name of the component to add as an argument and adds the component to the project's `components` directory.
+
+The `add` function also updates the `package.json` file to include the new component in the project's dependencies. This ensures that the component is installed when the project is installed.
+
+The `add` function also updates the `app/layout.tsx` file to include the new component in the project's layout. This ensures that the component is rendered on the page when the project is run.

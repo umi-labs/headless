@@ -1,13 +1,17 @@
 {
   "name": "cli-docs",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "umi",
+    "umi-digital",
+    "umi-cli"
+  ],
+  "author": "Isaac",
   "license": "ISC",
   "description": "",
   "dependencies": {

@@ -1,0 +1,35 @@
+# Initialisation
+
+The init command is used to initialise a new project.
+
+```bash copy
+umi init
+```
+
+## Options
+
+| Option | Description | Default |
+| --- | --- | --- |
+| `--yes` | Skip prompts and use default values. | None |
+
+## Examples
+
+### Initialising a new project
+
+```bash copy
+umi init
+```
+
+### Skipping prompts
+
+```bash copy
+umi init --yes
+```
+
+## How it works
+
+The init command uses the `init` function from the `@umi-digital/cli` package to initialise a new project. The `init` function takes in the name of the project as an argument and creates a new directory with the project's name.
+
+The `init` function also updates the `package.json` file to include the project's name and description. This ensures that the project is properly identified when the project is installed.
+
+The `init` function also updates the `app/layout.tsx` file to include the project's name in the page title. This ensures that the project is properly identified on the page when the project is run.
