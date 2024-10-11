@@ -1,0 +1,20 @@
+{
+  "name": "cli-docs",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "next": "^14.2.15",
+    "nextra": "^3.0.8",
+    "nextra-theme-docs": "^3.0.8",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

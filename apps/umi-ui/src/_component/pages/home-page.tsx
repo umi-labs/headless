@@ -1,5 +1,5 @@
 "use client";
-import { Button, Heading } from "@umi-digital/ui";
+import { Heading } from "@umi-digital/ui";
 
 export default function HomePage() {
   return (
@@ -15,11 +15,7 @@ export default function HomePage() {
         </div>
 
         <div>
-          <Button
-            label="Click Me"
-            variant="primary"
-            onClick={() => alert("Button clicked")}
-          />
+          <a href="/game-of-life">ENTER THE GAME</a>
         </div>
       </section>
     </main>

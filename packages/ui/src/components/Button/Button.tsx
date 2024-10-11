@@ -7,8 +7,8 @@ const baseStyles =
 
 const styles: Array<{ id: number; key: string; classes: string }> = [
   { id: 1, key: "primary", classes: "bg-black text-white" },
-  { id: 2, key: "secondary", classes: "bg-black text-white" },
-  { id: 3, key: "tertiary", classes: "bg-black text-white" },
+  { id: 2, key: "secondary", classes: "bg-white text-black" },
+  { id: 3, key: "tertiary", classes: "bg-blue text-white" },
 ];
 
 const stylePicker = (key: string) => {

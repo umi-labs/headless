@@ -1,0 +1,25 @@
+.grid {
+  margin: 20px;
+}
+.grid div {
+  cursor: pointer;
+}
+
+canvas {
+  border: 1px solid black;
+}
+
+#game-of-life {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 4rem 2rem;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
