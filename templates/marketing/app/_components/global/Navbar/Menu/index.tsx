@@ -27,8 +27,6 @@ export default function Menu({ data, show, setShow }: MenuProps) {
 
   const menu = data?.mainNav?.items || ([] as NavItem[])
 
-  console.log('data: ', data)
-
   React.useEffect(() => {
     const keyDownHandler = (event: any) => {
       if (event.key === 'Escape' && show) {

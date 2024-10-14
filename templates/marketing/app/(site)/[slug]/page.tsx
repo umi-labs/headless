@@ -20,8 +20,6 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { data: page } = await loadPage(params.slug)
 
-  console.log(page)
-
   return {
     title: page?.metaData?.title ? page?.metaData?.title : '',
     description: page?.metaData?.description

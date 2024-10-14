@@ -28,8 +28,6 @@ export const FormBuilderBlock = ({ formFields, uid }) => {
   const onSubmit = async (data: any) => {
     setStatus(STATUS[1])
 
-    console.log(data)
-
     const response = await fetch('/api/contact/form-builder', {
       method: 'POST',
       headers: {
