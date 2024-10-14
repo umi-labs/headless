@@ -42,15 +42,21 @@ export const add = async (componentName?: string) => {
   }
 
   // Prompt user to select a template
-  const { selectedTemplate } = await prompts({
+  const { selectedComponent } = await prompts({
     type: "select",
-    name: "selectedTemplate",
-    message: "Select a template:",
+    name: "selectedComponent",
+    message: "Select a component to add:",
     choices: components.map((component) => ({
       title: component,
       value: component,
     })),
   });
+
+  const componentConfig = await readJSON(
+    path.join(selectedComponent, "config.json")
+  );
+
+  console.log(componentConfig);
 
   // If no component name is provided, prompt for one
   if (!componentName) {
