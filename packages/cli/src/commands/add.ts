@@ -18,19 +18,25 @@ export const add = async (componentName?: string) => {
   const spinner = ora();
 
   // Clone the templates repository into a temporary directory
-  const templatesRepo = "https://github.com/umi-labs/umi"; // Correct repo URL
-  const tempDir = path.join(process.cwd(), "temp-templates");
+  const componentsRepo = "https://github.com/umi-labs/umi"; // Correct repo URL
+  const compDir = path.join(process.cwd(), "temp-components");
 
-  spinner.start("Cloning templates from GitHub...");
-  await git.clone(templatesRepo, tempDir);
+  spinner.start("Getting components...");
+  await git.clone(componentsRepo, compDir);
 
-  spinner.succeed("Templates cloned.");
+  spinner.succeed("Components found.");
 
   // List available templates in the cloned directory
-  const templatesDir = path.join(tempDir, "templates");
-  const templates = await fs.readdir(templatesDir);
+  const componentsDir = path.join(
+    compDir,
+    "packages",
+    "ui",
+    "src",
+    "components"
+  );
+  const components = await fs.readdir(componentsDir);
 
-  if (templates.length === 0) {
+  if (components.length === 0) {
     spinner.fail("No templates available in the cloned directory.");
     return;
   }
@@ -40,9 +46,9 @@ export const add = async (componentName?: string) => {
     type: "select",
     name: "selectedTemplate",
     message: "Select a template:",
-    choices: templates.map((template) => ({
-      title: template,
-      value: template,
+    choices: components.map((component) => ({
+      title: component,
+      value: component,
     })),
   });
 
