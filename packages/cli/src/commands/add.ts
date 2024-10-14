@@ -52,11 +52,13 @@ export const add = async (componentName?: string) => {
     })),
   });
 
-  const componentConfig = await readJSON(
-    path.join(selectedComponent, "config.json")
-  );
+  console.log(selectedComponent);
 
-  console.log(componentConfig);
+  // const componentConfig = await readJSON(
+  //   path.join(selectedComponent, "config.json")
+  // );
+
+  // console.log(componentConfig);
 
   // If no component name is provided, prompt for one
   if (!componentName) {
