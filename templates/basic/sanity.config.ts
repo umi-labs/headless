@@ -36,6 +36,7 @@ export default defineConfig([
     subtitle: 'production',
     icon: RocketIcon,
     schema: {
+      // @ts-ignore
       types: schema,
     },
     plugins: [
@@ -51,7 +52,11 @@ export default defineConfig([
         },
       }),
       // Configures the global "new document" button, and document actions, to suit the Settings document singleton
-      singletonPlugin(singletons.map(singleton => typeof singleton === 'string' ? singleton : singleton.name)),
+      singletonPlugin(
+        singletons.map((singleton) =>
+          typeof singleton === 'string' ? singleton : singleton.name,
+        ),
+      ),
       // Add an image asset source for Unsplash
       unsplashImageAsset(),
       // Vision lets you query your content with GROQ in the studio
@@ -61,10 +66,7 @@ export default defineConfig([
       media(),
       vercelDeployTool(),
       dashboardTool({
-        widgets: [
-          projectUsersWidget(),
-          projectInfoWidget()
-        ],
+        widgets: [projectUsersWidget(), projectInfoWidget()],
       }),
     ],
     studio: {
@@ -77,7 +79,7 @@ export default defineConfig([
     name: 'studio-development',
     basePath: `${studioUrl}/development`,
     projectId: projectId || '',
-    dataset: "development" || '',
+    dataset: 'development' || '',
     title: `${title} - Development`,
     subtitle: 'development',
     icon: CodeIcon,
@@ -97,7 +99,11 @@ export default defineConfig([
         },
       }),
       // Configures the global "new document" button, and document actions, to suit the Settings document singleton
-      singletonPlugin(singletons.map(singleton => typeof singleton === 'string' ? singleton : singleton.name)),
+      singletonPlugin(
+        singletons.map((singleton) =>
+          typeof singleton === 'string' ? singleton : singleton.name,
+        ),
+      ),
       // Add an image asset source for Unsplash
       unsplashImageAsset(),
       // Vision lets you query your content with GROQ in the studio
@@ -112,5 +118,5 @@ export default defineConfig([
         navbar: DevelopmentNavbar,
       },
     },
-  }
+  },
 ])

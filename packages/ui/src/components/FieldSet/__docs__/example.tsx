@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { FIELDSET_TYPE } from '../types';
+import { FIELDSET_TYPE } from "../types";
 
 const Example: FC<FIELDSET_TYPE> = ({
   disabled = false,

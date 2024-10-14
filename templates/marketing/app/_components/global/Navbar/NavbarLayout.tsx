@@ -35,7 +35,7 @@ export default function NavbarLayout(props: NavbarProps) {
             'navbar__home flex whitespace-nowrap justify-center items-center font-semibold overflow-x-hidden text-black interactable',
           )}
         >
-          <span className={""}>{data.name}</span>
+          <span className={''}>{data.name}</span>
         </Link>
       </div>
       {data?.mainNav?.items && data.mainNav.items.length > 0 && (

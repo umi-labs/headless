@@ -1,12 +1,12 @@
-import { expect, test } from 'vitest'
-import { render, screen } from '@testing-library/react';
-import FieldSet from '../FieldSet';
+import { expect, test } from "vitest";
+import { render, screen } from "@testing-library/react";
+import FieldSet from "../FieldSet";
 
-test('renders component successfully', () => {
+test("renders component successfully", () => {
   render(
     <FieldSet>
       <input type="text" />
-    </FieldSet>
+    </FieldSet>,
   );
   const element = screen.getByTestId(/test/i);
   expect(element).toBeInTheDocument();

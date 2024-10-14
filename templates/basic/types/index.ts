@@ -10,25 +10,25 @@ export interface MenuItem {
 }
 
 export interface MainNav {
-  id: string;
-  _type: string;
-  title: string;
-  displayList: boolean;
-  items: NavItem[];
+  id: string
+  _type: string
+  title: string
+  displayList: boolean
+  items: NavItem[]
 }
 
 export interface NavItem {
-  _type: string;
-  _key: string;
-  name: string;
+  _type: string
+  _key: string
+  name: string
   navItemUrl: {
-    _type: string;
-    displayExternal: boolean;
-    externalUrl: string;
+    _type: string
+    displayExternal: boolean
+    externalUrl: string
     internalLink?: {
-      _type: string;
-      title: string;
-      slug?: string;
+      _type: string
+      title: string
+      slug?: string
     }
   }
 }
@@ -88,4 +88,3 @@ export interface SettingsPayload {
 export interface SEOSettingsPayload {
   metaData?: MetaData
 }
-

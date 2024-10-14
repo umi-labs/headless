@@ -6,7 +6,9 @@ import { notFound } from 'next/navigation'
 import Page from '@/app/_components/pages/page/Page'
 import { generateStaticSlugs } from '@/sanity/loader/generateStaticSlugs'
 import { loadPage } from '@/sanity/loader/loadQuery'
-const PagePreview = dynamic(() => import('@/app/_components/pages/page/PagePreview'))
+const PagePreview = dynamic(
+  () => import('@/app/_components/pages/page/PagePreview'),
+)
 
 type Props = {
   params: { slug: string }
@@ -42,9 +44,5 @@ export default async function PageSlugRoute({ params }: Props) {
     notFound()
   }
 
-  return (
-    <Page
-      data={initial.data}
-    />
-  )
+  return <Page data={initial.data} />
 }

@@ -62,7 +62,7 @@ export function CustomPortableText({
         const { content, images } = value || {}
         return <ImageWText content={content} images={images} />
       },
-      contactFormBlock: ({ }) => {
+      contactFormBlock: ({}) => {
         return <ContactForm />
       },
       formBuilder: ({ value }) => {

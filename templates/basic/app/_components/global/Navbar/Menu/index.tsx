@@ -27,7 +27,7 @@ export default function Menu({ data, show, setShow }: MenuProps) {
 
   const menu = data?.mainNav?.items || ([] as NavItem[])
 
-  console.log("data: ", data)
+  console.log('data: ', data)
 
   React.useEffect(() => {
     const keyDownHandler = (event: any) => {
@@ -54,7 +54,12 @@ export default function Menu({ data, show, setShow }: MenuProps) {
             <ul className="list-none ml-0">
               {menu &&
                 menu.map((menuItem, key) => {
-                  const href = menuItem.navItemUrl.displayExternal ? menuItem.navItemUrl.externalUrl : resolveHref(menuItem?.navItemUrl?.internalLink?._type, menuItem?.navItemUrl?.internalLink?.slug)
+                  const href = menuItem.navItemUrl.displayExternal
+                    ? menuItem.navItemUrl.externalUrl
+                    : resolveHref(
+                        menuItem?.navItemUrl?.internalLink?._type,
+                        menuItem?.navItemUrl?.internalLink?.slug,
+                      )
                   if (!href) {
                     return null
                   }

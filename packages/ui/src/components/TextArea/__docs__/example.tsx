@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { TEXTAREA_TYPE } from '../types';
+import { TEXTAREA_TYPE } from "../types";
 
 const Example: FC<TEXTAREA_TYPE> = ({
   disabled = false,

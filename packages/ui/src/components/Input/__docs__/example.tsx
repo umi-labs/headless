@@ -2,11 +2,7 @@ import React, { FC } from "react";
 import Input from "../Input";
 import { INPUT_TYPE } from "../types";
 
-const Example: FC<INPUT_TYPE> = ({
-  id,
-  name,
-  ...props
-}) => {
+const Example: FC<INPUT_TYPE> = ({ id, name, ...props }) => {
   return (
     <div
       style={{
@@ -16,11 +12,7 @@ const Example: FC<INPUT_TYPE> = ({
         height: "100%",
       }}
     >
-      <Input
-        id={id}
-        name={name}
-        {...props}
-      />
+      <Input id={id} name={name} {...props} />
     </div>
   );
 };

@@ -6,7 +6,9 @@ import { notFound } from 'next/navigation'
 import Page from '@/app/_components/pages/page/Page'
 import { generateStaticSlugs } from '@/sanity/loader/generateStaticSlugs'
 import { loadPage } from '@/sanity/loader/loadQuery'
-const PagePreview = dynamic(() => import('@/app/_components/pages/page/PagePreview'))
+const PagePreview = dynamic(
+  () => import('@/app/_components/pages/page/PagePreview'),
+)
 
 type Props = {
   params: { slug: string }
@@ -21,7 +23,7 @@ export async function generateMetadata(
   console.log(page)
 
   return {
-    title: page?.metaData?.title ? page?.metaData?.title : "",
+    title: page?.metaData?.title ? page?.metaData?.title : '',
     description: page?.metaData?.description
       ? page?.metaData?.description
       : (await parent).description,
@@ -44,9 +46,5 @@ export default async function PageSlugRoute({ params }: Props) {
     notFound()
   }
 
-  return (
-    <Page
-      data={initial.data}
-    />
-  )
+  return <Page data={initial.data} />
 }

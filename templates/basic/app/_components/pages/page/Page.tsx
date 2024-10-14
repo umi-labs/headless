@@ -11,7 +11,7 @@ export interface PageProps {
 function Page({ data }: PageProps) {
   const { overview, blocks, title, hero } = data ?? {}
 
-  console.log(blocks);
+  console.log(blocks)
 
   return (
     <div>

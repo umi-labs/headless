@@ -1,10 +1,10 @@
-import './input.scss';
-import { INPUT_TYPE } from './types';
+import "./input.scss";
+import { INPUT_TYPE } from "./types";
 
 export default function Input({
   id,
   name,
-  type = 'text',
+  type = "text",
   value,
   onChange,
   classNames,
@@ -23,7 +23,7 @@ export default function Input({
       data-testid="input"
       {...props}
     />
-  )
+  );
 }
 
-Input.displayName = "Input"
+Input.displayName = "Input";

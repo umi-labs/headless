@@ -30,7 +30,7 @@ Commit messages should be in the present tense and should be descriptive.
 
 #### Branching
 
-All commits to the `main` branch are automatically deployed to production. So do not use `main` for development. Create a new branch from dev and make your changes there. 
+All commits to the `main` branch are automatically deployed to production. So do not use `main` for development. Create a new branch from dev and make your changes there.
 
 Create a new branch from dev and make your changes there.
 
@@ -47,7 +47,7 @@ Create a new pull request from your branch to the dev branch.
 git push origin my-new-feature
 ```
 
---- 
+---
 
 ### Use of this template
 
@@ -67,4 +67,3 @@ The site is built with the following technologies:
 ### Folder and file structure
 
 The folder and file structure of this template is as follows:
-
