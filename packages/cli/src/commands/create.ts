@@ -49,6 +49,8 @@ export const create = async (projectName?: string) => {
       await fs.remove(targetDir);
     }
 
+    spinner.succeed("Directory setup complete.");
+
     // Clone the templates repository into a temporary directory
     const templatesRepo = "https://github.com/umi-labs/umi"; // Correct repo URL
     const tempDir = path.join(process.cwd(), "temp-templates");
