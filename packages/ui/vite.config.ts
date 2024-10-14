@@ -2,10 +2,11 @@
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 import { peerDependencies } from "./package.json";
+import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   css: {
-    postcss: "./postcss.config.js", // Ensure PostCSS is loaded
+    postcss: "./postcss.config.js",
   },
   build: {
     lib: {
@@ -20,7 +21,7 @@ export default defineConfig({
     sourcemap: true,
     emptyOutDir: true,
   },
-  plugins: [dts()],
+  plugins: [dts(), react()],
   test: {
     globals: true,
     environment: "jsdom",

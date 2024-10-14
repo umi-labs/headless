@@ -2,6 +2,23 @@
   "name": "@umi-digital/cli",
   "version": "0.0.4",
   "type": "module",
+  "author": "Isaac",
+  "license": "ISC",
+  "description": "A CLI tool for project management",
+  "keywords": [
+    "cli",
+    "create",
+    "umi",
+    "digital"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "start": "node dist/index.js",
+    "dev:local": "pnpm run build && npm link",
+    "pub:beta": "pnpm build && changeset && pnpm publish --access public --no-git-checks --tag beta",
+    "pub:next": "pnpm build && changeset && changeset version && pnpm publish --access public --no-git-checks --tag next",
+    "pub:release": "pnpm build && changeset && changeset version && git add -A && git commit -m 'chore(release): publish new version' && git push && pnpm publish --access public"
+  },
   "main": "./dist/index.js",
   "bin": {
     "umi": "./dist/index.js"
@@ -17,23 +34,6 @@
     "url": "https://github.com/umi-labs/umi.git",
     "directory": "packages/cli"
   },
-  "scripts": {
-    "build": "tsup",
-    "start": "node dist/index.js",
-    "dev:local": "pnpm run build && pnpm link",
-    "pub:beta": "pnpm build && changeset && pnpm publish --access public --no-git-checks --tag beta",
-    "pub:next": "pnpm build && changeset && changeset version && pnpm publish --access public --no-git-checks --tag next",
-    "pub:release": "pnpm build && changeset && changeset version && git add -A && git commit -m 'chore(release): publish new version' && git push && pnpm publish --access public"
-  },
-  "keywords": [
-    "cli",
-    "create",
-    "umi",
-    "digital"
-  ],
-  "author": "Isaac",
-  "license": "ISC",
-  "description": "A CLI tool for project management",
   "dependencies": {
     "@changesets/cli": "^2.27.8",
     "chalk": "^5.3.0",

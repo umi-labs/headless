@@ -124,7 +124,9 @@ export const create = async (projectName?: string) => {
       )}`,
       `${bold("2.")} Run ${bold("umi init")} to initialise your project.`,
       `${bold("3.")} Start your development server: ${bold(
-        `${packageManager.manager} dev`
+        `${packageManager.manager} ${
+          packageManager.manager === "npm" ? "run" : ""
+        } dev`
       )}`,
       `${bold("4.")} Check the ${bold(
         "README.md"

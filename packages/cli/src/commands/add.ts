@@ -1,6 +1,7 @@
 import fs from "fs-extra";
 import path from "path";
 import ora from "ora";
+import simpleGit from "simple-git";
 import prompts from "prompts"; // Import prompts for user input
 import { z } from "zod"; // Import Zod for validation
 import { Config, componentNameSchema } from "../utils/schema"; // Adjust the import path as needed
@@ -9,9 +10,41 @@ import { componentTemplate } from "../utils/templates"; // Import the component 
 // Import fs-extra functions like this or dist will fail
 const { readJSON, pathExists, ensureDir, outputFile } = fs;
 
+// Initialise simple-git
+const git = simpleGit();
+
 // Function to add a component
 export const add = async (componentName?: string) => {
   const spinner = ora();
+
+  // Clone the templates repository into a temporary directory
+  const templatesRepo = "https://github.com/umi-labs/umi"; // Correct repo URL
+  const tempDir = path.join(process.cwd(), "temp-templates");
+
+  spinner.start("Cloning templates from GitHub...");
+  await git.clone(templatesRepo, tempDir);
+
+  spinner.succeed("Templates cloned.");
+
+  // List available templates in the cloned directory
+  const templatesDir = path.join(tempDir, "templates");
+  const templates = await fs.readdir(templatesDir);
+
+  if (templates.length === 0) {
+    spinner.fail("No templates available in the cloned directory.");
+    return;
+  }
+
+  // Prompt user to select a template
+  const { selectedTemplate } = await prompts({
+    type: "select",
+    name: "selectedTemplate",
+    message: "Select a template:",
+    choices: templates.map((template) => ({
+      title: template,
+      value: template,
+    })),
+  });
 
   // If no component name is provided, prompt for one
   if (!componentName) {
