@@ -491,7 +491,7 @@ importers:
         version: 18.3.3
       '@vitejs/plugin-react':
         specifier: ^4.3.1
-        version: 4.3.1(vite@4.5.5(@types/node@22.7.4)(sass@1.79.4))
+        version: 4.3.1(vite@5.4.8(@types/node@22.7.4)(sass@1.79.4))
       autoprefixer:
         specifier: 10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -577,8 +577,8 @@ importers:
         specifier: 3.47.1
         version: 3.47.1(@babel/runtime@7.23.2)(@codemirror/lint@6.8.2)(@codemirror/theme-one-dark@6.1.2)(@lezer/common@1.2.1)(codemirror@6.0.1(@lezer/common@1.2.1))(react-dom@18.3.1(react@18.3.1))(react-is@18.3.1)(react@18.3.1)(styled-components@6.1.11(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       '@umi-digital/ui':
-        specifier: ^1.0.17
-        version: 1.0.17(react@18.3.1)
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@vercel/analytics':
         specifier: ^1.3.1
         version: 1.3.1(next@14.2.4(@playwright/test@1.47.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(sass@1.79.4))(react@18.3.1)
@@ -663,7 +663,7 @@ importers:
         version: 18.3.3
       '@vitejs/plugin-react':
         specifier: ^4.3.1
-        version: 4.3.1(vite@5.4.8(@types/node@22.7.4)(sass@1.79.4))
+        version: 4.3.1(vite@4.5.5(@types/node@22.7.4)(sass@1.79.4))
       autoprefixer:
         specifier: 10.4.19
         version: 10.4.19(postcss@8.4.38)
@@ -4036,11 +4036,6 @@ packages:
 
   '@umi-digital/ui@1.0.13':
     resolution: {integrity: sha512-Mo4G66D396did3vbGnEIJ8xatC0DnwjGXVylhMZ7szxbrgi1Z4ief3Nk7TAIhad8PQrIeRIwIlP/TRMyGkxgtQ==}
-    peerDependencies:
-      react: ^18.2.0
-
-  '@umi-digital/ui@1.0.17':
-    resolution: {integrity: sha512-/B0izFZufLBwo4lD42/3y72jBAazzFXg0hPZFOgTjNiX64whzRr2fXna9F0WEPpdxpPhhjMzhcn4RsjlhmKLkA==}
     peerDependencies:
       react: ^18.2.0
 
@@ -14202,11 +14197,6 @@ snapshots:
       - '@codemirror/search'
 
   '@umi-digital/ui@1.0.13(react@18.3.1)':
-    dependencies:
-      react: 18.3.1
-      zod: 3.23.8
-
-  '@umi-digital/ui@1.0.17(react@18.3.1)':
     dependencies:
       react: 18.3.1
       zod: 3.23.8
