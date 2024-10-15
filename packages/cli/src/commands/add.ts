@@ -130,5 +130,8 @@ export const add = async (componentName?: string) => {
   // Write the component file
   await outputFile(componentFilePath, componentContent);
 
+  // Clean up by removing the temporary directory
+  await fs.remove(compDir);
+
   spinner.succeed(`Component "${componentName}" added successfully!`);
 };

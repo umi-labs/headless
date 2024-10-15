@@ -1,7 +1,12 @@
 import "../../global.css";
+import { cn } from "../../lib/utils";
 import { Hero1Type } from "./schema";
 
-export default function Hero1({ data }: Hero1Type) {
+export default function Hero1({
+  data,
+  textAlignHoz = "center",
+  textAlignVer,
+}: Hero1Type) {
   return (
     <section className="h-screen w-full relative flex items-center justify-center">
       <div className="absolute top-0 left-0 z-0 h-screen w-full">
@@ -17,7 +22,13 @@ export default function Hero1({ data }: Hero1Type) {
           />
         </picture>
       </div>
-      <div className="z-10 text-white text-center gap-4 max-w-[768px] mx-auto">
+      <div
+        className={cn(
+          "z-10 text-white gap-4 max-w-[768px] mx-auto",
+          `text-${textAlignHoz}`,
+          textAlignVer,
+        )}
+      >
         <span className="text-base font-semibold">{data.tagline}</span>
         <div className="flex flex-col items-center justify-center gap-6">
           <h1 className="text-6xl font-bold">{data.heading}</h1>
