@@ -5,10 +5,9 @@ import simpleGit from "simple-git";
 import prompts from "prompts"; // Import prompts for user input
 import { z } from "zod"; // Import Zod for validation
 import { Config, componentNameSchema } from "../utils/schema"; // Adjust the import path as needed
-import { componentTemplate } from "../utils/templates"; // Import the component template
 
 // Import fs-extra functions like this or dist will fail
-const { readJSON, pathExists, ensureDir, outputFile } = fs;
+const { readJSON, pathExists, ensureDir, outputFile, readFile } = fs;
 
 // Initialise simple-git
 const git = simpleGit();
@@ -54,8 +53,10 @@ export const add = async (componentName?: string) => {
 
   console.log(`Selected component: ${selectedComponent}`);
 
-  // Read the config.json from the selected component directory
+  // Path to the selected component directory
   const selectedComponentDir = path.join(componentsDir, selectedComponent);
+
+  // Read the config.json from the selected component directory
   const componentConfigPath = path.join(selectedComponentDir, "config.json");
 
   if (!(await pathExists(componentConfigPath))) {
@@ -117,7 +118,7 @@ export const add = async (componentName?: string) => {
     return;
   }
 
-  // Determine the correct directory to place the component
+  // Path to the new component directory based on config and category
   const componentDir = path.join(
     process.cwd(),
     "app",
@@ -130,14 +131,26 @@ export const add = async (componentName?: string) => {
   // Ensure the directory exists
   await ensureDir(componentDir);
 
-  // Create the component file using the template
-  const componentFilePath = path.join(componentDir, `${componentName}.tsx`);
+  // Path to the component file in the selected template (e.g., Hero_1.tsx)
+  const selectedComponentFilePath = path.join(
+    selectedComponentDir,
+    `${selectedComponent}.tsx`
+  );
 
-  // Use the imported template to create the component content
-  const componentContent = componentTemplate(componentName); // Ensure componentName is a string
+  // Ensure the component file exists
+  if (!(await pathExists(selectedComponentFilePath))) {
+    spinner.fail(`Component file "${selectedComponent}.tsx" not found.`);
+    return;
+  }
 
-  // Write the component file
-  await outputFile(componentFilePath, componentContent);
+  // Read the content of the selected component file
+  const componentContent = await readFile(selectedComponentFilePath, "utf8");
+
+  // Create the new component file in the target directory
+  const newComponentFilePath = path.join(componentDir, `${componentName}.tsx`);
+
+  // Write the content to the new file
+  await outputFile(newComponentFilePath, componentContent);
 
   // Clean up by removing the temporary directory
   await fs.remove(compDir);
