@@ -1,0 +1,42 @@
+---
+title: Add
+description: This section provides an overview of how to get started with the `umi add` command.
+keywords: ["introduction", "guide", "add", "components"]
+---
+
+## Intro
+
+The `add` command is used to add a new component to a project.
+
+```bash copy
+umi add
+```
+
+## Options
+
+| Option | Description | Default |
+| ------- | --- | --- |
+| `componentName` | The name of the component to add. | None |
+| `--name` `-n` | Custom name for the component. | None |
+| `--help` `-h` | Display help information. | None |
+| `--list` `-l` | List available components. | None |
+
+## Examples
+
+### Add a Button component
+
+```bash copy
+umi add Button
+```
+
+### List available components
+
+```bash copy
+umi add --list
+```
+
+### Giving the component a name
+
+```bash copy
+umi add Button --name="CustomButton"
+```
