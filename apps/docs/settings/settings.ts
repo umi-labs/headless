@@ -6,7 +6,7 @@ export const gtmconnected = true;
 
 export const sitename = "Documentation";
 export const description =
-  "Welcome to UMI CLI, a powerful and flexible cli package designed to simplify the process of creating high-quality, comprehensive projects using the UHS. Built in **TypeScript** for stability with type-safety, this cli provides the foundation to build your project as well as the ability to add and remove components as easy as umi add.";
+  "Welcome to UMI CLI, a powerful and flexible cli package designed to simplify the process of creating high-quality, comprehensive projects using the UHS. Built in TypeScript for stability with type-safety, this cli provides the foundation to build your project as well as the ability to add and remove components as easy as umi add.";
 export const keywords = ["Next.js", "documentation", "open source", "SEO"];
 export const urlimage = "/images/banner-umi-dark.png";
 export const imagealt = "UMI Digital Documentation";

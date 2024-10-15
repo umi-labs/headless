@@ -7,11 +7,11 @@ import rehypePrism from "rehype-prism-plus";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeSlug from "rehype-slug";
 import rehypeCodeTitles from "rehype-code-titles";
-import rehypeKatex from 'rehype-katex'
+import rehypeKatex from "rehype-katex";
 import { visit } from "unist-util-visit";
 
 import { PageRoutes } from "@/lib/pageroutes";
-import { components } from '@/lib/components'; 
+import { components } from "@/lib/components";
 import { Settings } from "@/lib/meta";
 import { GitHubLink } from "@/settings/navigation";
 
@@ -45,7 +45,7 @@ type BaseMdxFrontmatter = {
 
 const computeDocumentPath = (slug: string) => {
   return Settings.gitload
-    ? `${GitHubLink.href}/raw/main/contents/docs/${slug}/index.mdx`
+    ? `${GitHubLink.href}/apps/docs/raw/main/contents/docs/${slug}/index.mdx`
     : path.join(process.cwd(), "/contents/docs/", `${slug}/index.mdx`);
 };
 
@@ -68,10 +68,12 @@ export async function getDocument(slug: string) {
     if (Settings.gitload) {
       const response = await fetch(contentPath);
       if (!response.ok) {
-        throw new Error(`Failed to fetch content from GitHub: ${response.statusText}`);
+        throw new Error(
+          `Failed to fetch content from GitHub: ${response.statusText}`,
+        );
       }
       rawMdx = await response.text();
-      lastUpdated = response.headers.get('Last-Modified') ?? null;
+      lastUpdated = response.headers.get("Last-Modified") ?? null;
     } else {
       rawMdx = await fs.readFile(contentPath, "utf-8");
       const stats = await fs.stat(contentPath);
@@ -95,16 +97,24 @@ export async function getDocument(slug: string) {
 
 const headingsRegex = /^(#{2,4})\s(.+)$/gm;
 
-export async function getTable(slug: string): Promise<Array<{ level: number; text: string; href: string }>> {
-  const extractedHeadings: Array<{ level: number; text: string; href: string }> = [];
+export async function getTable(
+  slug: string,
+): Promise<Array<{ level: number; text: string; href: string }>> {
+  const extractedHeadings: Array<{
+    level: number;
+    text: string;
+    href: string;
+  }> = [];
   let rawMdx = "";
 
   if (Settings.gitload) {
-    const contentPath = `${GitHubLink.href}/raw/main/contents/docs/${slug}/index.mdx`;
+    const contentPath = `${GitHubLink.href}/apps/docs/raw/main/contents/docs/${slug}/index.mdx`;
     try {
       const response = await fetch(contentPath);
       if (!response.ok) {
-        throw new Error(`Failed to fetch content from GitHub: ${response.statusText}`);
+        throw new Error(
+          `Failed to fetch content from GitHub: ${response.statusText}`,
+        );
       }
       rawMdx = await response.text();
     } catch (error) {
@@ -112,9 +122,13 @@ export async function getTable(slug: string): Promise<Array<{ level: number; tex
       return [];
     }
   } else {
-    const contentPath = path.join(process.cwd(), "/contents/docs/", `${slug}/index.mdx`);
+    const contentPath = path.join(
+      process.cwd(),
+      "/contents/docs/",
+      `${slug}/index.mdx`,
+    );
     try {
-      const stream = createReadStream(contentPath, { encoding: 'utf-8' });
+      const stream = createReadStream(contentPath, { encoding: "utf-8" });
       for await (const chunk of stream) {
         rawMdx += chunk;
       }
@@ -139,10 +153,15 @@ export async function getTable(slug: string): Promise<Array<{ level: number; tex
 }
 
 function innerslug(text: string) {
-  return text.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "");
 }
 
-const pathIndexMap = new Map(PageRoutes.map((route, index) => [route.href, index]));
+const pathIndexMap = new Map(
+  PageRoutes.map((route, index) => [route.href, index]),
+);
 
 export function getPreviousNext(path: string) {
   const index = pathIndexMap.get(`/${path}`);

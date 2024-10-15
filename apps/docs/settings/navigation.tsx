@@ -3,7 +3,7 @@ import { PageRoutes } from "@/lib/pageroutes";
 export const Navigations = [
   {
     title: "Home",
-    href: "https://www.umi-digital.co.uk/",
+    href: "https://www.umidigital.co.uk/",
     external: true,
   },
   {
