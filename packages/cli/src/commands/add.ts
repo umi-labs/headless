@@ -52,13 +52,21 @@ export const add = async (componentName?: string) => {
     })),
   });
 
-  console.log(selectedComponent);
+  console.log(`Selected component: ${selectedComponent}`);
 
-  // const componentConfig = await readJSON(
-  //   path.join(selectedComponent, "config.json")
-  // );
+  // Read the config.json from the selected component directory
+  const selectedComponentDir = path.join(componentsDir, selectedComponent);
+  const componentConfigPath = path.join(selectedComponentDir, "config.json");
 
-  // console.log(componentConfig);
+  if (!(await pathExists(componentConfigPath))) {
+    spinner.fail(`No config.json found in ${selectedComponent}`);
+    return;
+  }
+
+  const componentConfig = await readJSON(componentConfigPath);
+  const category = componentConfig.category || "blocks"; // Default to "blocks" if category is not defined
+
+  console.log(`Component category: ${category}`);
 
   // If no component name is provided, prompt for one
   if (!componentName) {
@@ -109,14 +117,15 @@ export const add = async (componentName?: string) => {
     return;
   }
 
+  // Determine the correct directory to place the component
   const componentDir = path.join(
     process.cwd(),
     "app",
     `_${config.aliases.components}`,
-    `${config.aliases.ui}`
+    `${category}` // Use the category from the component's config.json
   );
 
-  spinner.start(`Adding component: ${componentName}...`);
+  spinner.start(`Adding component: ${componentName} to ${category}...`);
 
   // Ensure the directory exists
   await ensureDir(componentDir);
@@ -133,5 +142,7 @@ export const add = async (componentName?: string) => {
   // Clean up by removing the temporary directory
   await fs.remove(compDir);
 
-  spinner.succeed(`Component "${componentName}" added successfully!`);
+  spinner.succeed(
+    `Component "${componentName}" added successfully in the "${category}" category!`
+  );
 };
