@@ -5,9 +5,10 @@ import simpleGit from "simple-git";
 import prompts from "prompts"; // Import prompts for user input
 import { z } from "zod"; // Import Zod for validation
 import { Config, componentNameSchema } from "../utils/schema"; // Adjust the import path as needed
+import { modifyAndCopyFile } from "../utils/file-management/modify-and-copy";
 
 // Import fs-extra functions like this or dist will fail
-const { readJSON, pathExists, ensureDir, outputFile, readFile } = fs;
+const { readJSON, pathExists, ensureDir, remove } = fs;
 
 // Initialise simple-git
 const git = simpleGit();
@@ -126,36 +127,30 @@ export const add = async (componentName?: string) => {
     `${category}` // Use the category from the component's config.json
   );
 
-  spinner.start(`Adding component: ${componentName} to ${category}...`);
+  spinner.start(`Adding component: ${componentName}...`);
 
   // Ensure the directory exists
   await ensureDir(componentDir);
 
-  // Path to the component file in the selected template (e.g., Hero_1.tsx)
-  const selectedComponentFilePath = path.join(
+  const sourceFilePath = path.join(
     selectedComponentDir,
     `${selectedComponent}.tsx`
   );
 
   // Ensure the component file exists
-  if (!(await pathExists(selectedComponentFilePath))) {
+  if (!(await pathExists(sourceFilePath))) {
     spinner.fail(`Component file "${selectedComponent}.tsx" not found.`);
     return;
   }
 
-  // Read the content of the selected component file
-  const componentContent = await readFile(selectedComponentFilePath, "utf8");
+  // Destination file path (e.g., _components/blocks/Hero_1.tsx)
+  const destinationFilePath = path.join(componentDir, `${componentName}.tsx`);
 
-  // Create the new component file in the target directory
-  const newComponentFilePath = path.join(componentDir, `${componentName}.tsx`);
-
-  // Write the content to the new file
-  await outputFile(newComponentFilePath, componentContent);
+  // Modify and copy the selected component file
+  await modifyAndCopyFile(sourceFilePath, destinationFilePath);
 
   // Clean up by removing the temporary directory
-  await fs.remove(compDir);
+  await remove(compDir);
 
-  spinner.succeed(
-    `Component "${componentName}" added successfully in the "${category}" category!`
-  );
+  spinner.succeed(`Component "${componentName}" added successfully!`);
 };
