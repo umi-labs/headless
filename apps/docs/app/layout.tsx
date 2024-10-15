@@ -7,6 +7,7 @@ import { Footer } from "@/components/navigation/footer";
 import { Settings } from "@/lib/meta";
 import "./globals.css";
 import Provider from "@/components/provider";
+import { Analytics } from "@vercel/analytics/react";
 
 const baseUrl = Settings.metadataBase;
 
@@ -64,6 +65,7 @@ export default function RootLayout({
           <Footer />
         </Provider>
       </body>
+      <Analytics />
     </html>
   );
 }
