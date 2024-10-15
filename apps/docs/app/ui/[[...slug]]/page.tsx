@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getDocument } from "@/lib/markdown";
-import { CLIPageRoutes } from "@/lib/pageroutes";
+import { UIPageRoutes } from "@/lib/pageroutes";
 import { Settings } from "@/lib/meta";
 
 import PageBreadcrumb from "@/components/navigation/pagebreadcrumb";
@@ -16,7 +16,7 @@ type PageProps = {
 
 export default async function Pages({ params: { slug = [] } }: PageProps) {
   const pathName = slug.join("/");
-  const res = await getDocument(pathName, "cli");
+  const res = await getDocument(pathName, "ui");
 
   if (!res) notFound();
 
@@ -52,7 +52,7 @@ export default async function Pages({ params: { slug = [] } }: PageProps) {
 
 export async function generateMetadata({ params: { slug = [] } }: PageProps) {
   const pathName = slug.join("/");
-  const res = await getDocument(pathName, "cli");
+  const res = await getDocument(pathName, "ui");
 
   if (!res) return null;
 
@@ -69,7 +69,7 @@ export async function generateMetadata({ params: { slug = [] } }: PageProps) {
 }
 
 export function generateStaticParams() {
-  return CLIPageRoutes.filter((item) => item.href).map((item) => ({
+  return UIPageRoutes.filter((item) => item.href).map((item) => ({
     slug: item.href.split("/").slice(1),
   }));
 }

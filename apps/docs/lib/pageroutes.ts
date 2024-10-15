@@ -1,6 +1,6 @@
-import { Documents } from '@/settings/documents';
+import { CLIDocuments, UIDocuments } from "@/settings/documents";
 
-export type Paths = 
+export type Paths =
   | {
       title: string;
       href: string;
@@ -12,13 +12,14 @@ export type Paths =
       spacer: true;
     };
 
-export const Routes: Paths[] = [
-  ...Documents,
-];
+export const CLIRoutes: Paths[] = [...CLIDocuments];
+export const UIRoutes: Paths[] = [...UIDocuments];
 
 type Page = { title: string; href: string };
 
-function isRoute(node: Paths): node is Extract<Paths, { title: string; href: string }> {
+function isRoute(
+  node: Paths,
+): node is Extract<Paths, { title: string; href: string }> {
   return "title" in node && "href" in node;
 }
 
@@ -41,4 +42,5 @@ function getAllLinks(node: Paths): Page[] {
   return pages;
 }
 
-export const PageRoutes = Routes.map((it) => getAllLinks(it)).flat();
+export const CLIPageRoutes = CLIRoutes.map((it) => getAllLinks(it)).flat();
+export const UIPageRoutes = UIRoutes.map((it) => getAllLinks(it)).flat();

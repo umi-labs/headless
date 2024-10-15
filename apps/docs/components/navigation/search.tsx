@@ -16,7 +16,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import Anchor from "./anchor";
 import { advanceSearch, cn, debounce, highlight, search } from "@/lib/utils";
-import { Documents } from "@/settings/documents";
+import { CLIDocuments } from "@/settings/documents";
 
 export default function Search() {
   const [searchedInput, setSearchedInput] = useState("");
@@ -187,7 +187,7 @@ export default function Search() {
                     }
                     return null;
                   })
-                : renderDocuments(Documents)}
+                : renderDocuments(CLIDocuments)}
             </div>
           </ScrollArea>
         </DialogContent>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { buttonVariants } from "@/components/ui/button";
-import { PageRoutes } from "@/lib/pageroutes";
+import { CLIPageRoutes } from "@/lib/pageroutes";
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
       </p>
       <div className="flex items-center gap-5">
         <Link
-          href={`/cli${PageRoutes[0].href}`}
+          href={`/cli${CLIPageRoutes[0].href}`}
           className={buttonVariants({ className: "px-6", size: "lg" })}
         >
           Get Started

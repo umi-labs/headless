@@ -1,0 +1,129 @@
+---
+title: Installation
+description: This guide covers the installation of the UMI CLI package.
+keywords: ["installation", "package managers", "guide"]
+---
+
+To install the **UMI CLI**, you will need to check for several prerequisites, install the package globally and then ensure it is installed correctly on your system.
+
+## Install
+
+<Step>
+<StepItem title="System Requirements">
+
+  - **Node.js:** Make sure you have Node.js installed. This is crucial for the installation and use of the package.
+  - **Package Manager:** This project was built to be package manager agnostic so that `pnpm`, `npm` and `yarn` commands all work the same, ensure that your chosen package manager is installed.
+
+To verify installation, run:
+
+  ```bash
+  node -v
+  ```
+
+  > We are currently running support for node 18.19.0. However we are working bring a wider array of versions supported.
+
+  And then checking your package manager of choice is installed, run:
+
+  <Tabs defaultValue="pnpm" className="pt-5 pb-1">
+    <TabsList className="">
+      <TabsTrigger value="pnpm">pnpm</TabsTrigger>
+      <TabsTrigger value="npm">npm</TabsTrigger>
+      <TabsTrigger value="yarn">yarn</TabsTrigger>
+    </TabsList>
+    <TabsContent value="pnpm">
+    ```bash copy
+    pnpm -v
+  ````
+    </TabsContent>
+    <TabsContent value="npm">
+    ```bash copy
+    npm -v
+  ````
+    </TabsContent>
+    <TabsContent value="yarn">
+    ```bash copy
+    yarn -v
+  ````
+    </TabsContent>
+
+  </Tabs>
+
+</StepItem>
+<StepItem title="Installation">
+Now we will install the package onto your system.
+
+<Tabs defaultValue="pnpm" className="pt-5 pb-1">
+  <TabsList className="">
+    <TabsTrigger value="pnpm">pnpm</TabsTrigger>
+    <TabsTrigger value="npm">npm</TabsTrigger>
+    <TabsTrigger value="yarn">yarn</TabsTrigger>
+  </TabsList>
+  <TabsContent value="pnpm">
+  ```bash copy
+  pnpm add -g @umi-digital/cli
+````
+  </TabsContent>
+  <TabsContent value="npm">
+  ```bash copy
+  npm install -g @umi-digital/cli
+````
+  </TabsContent>
+  <TabsContent value="yarn">
+  ```bash copy
+  yarn add -g @umi-digital/cli
+````
+  </TabsContent>
+</Tabs>
+
+**Whilst installing the package be aware of any modules that are not installed correctly. If this happens contact the [project owner](mailto:isaac@umidigital.co.uk) immediately to organise a repair or remedy.**
+
+</StepItem>
+<StepItem title="Test Installation">
+Finally, we need to test the installation to ensure that it is on your system and working. To do this run:
+
+```bash copy
+umi
+```
+
+This should give you a read out something like this (this is subject to change as the package matures overtime):
+
+```bash
+umi
+Usage: umi [options] [command]
+
+A CLI tool for project management
+
+Options:
+  -v, --vers              display the current version
+  -h, --help              display help for command
+
+Commands:
+  init [options]          Initialises a new project
+  create [projectName]    Creates a new project
+  add [componentName]     Adds components or features to your project
+  remove [componentName]  Removes components or features from your project
+  help                    Displays help information for UMI CLI
+Usage: umi [options] [command]
+
+A CLI tool for project management
+
+Options:
+  -v, --vers              display the current version
+  -h, --help              display help for command
+
+Commands:
+  init [options]          Initialises a new project
+  create [projectName]    Creates a new project
+  add [componentName]     Adds components or features to your project
+  remove [componentName]  Removes components or features from your project
+  help                    Displays help information for UMI CLI
+````
+
+</StepItem>
+</Step>
+
+## Next Steps
+
+Now you have the package installed on your system we can move to usage and find out how we can use the package to create, initialise, add to and remove from our headless projects.
+
+Head over to the [Commands Guide](/cli/commands).

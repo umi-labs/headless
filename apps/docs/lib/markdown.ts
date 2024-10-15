@@ -10,7 +10,7 @@ import rehypeCodeTitles from "rehype-code-titles";
 import rehypeKatex from "rehype-katex";
 import { visit } from "unist-util-visit";
 
-import { PageRoutes } from "@/lib/pageroutes";
+import { CLIPageRoutes, UIPageRoutes } from "@/lib/pageroutes";
 import { components } from "@/lib/components";
 import { Settings } from "@/lib/meta";
 import { GitHubLink } from "@/settings/navigation";
@@ -43,25 +43,25 @@ type BaseMdxFrontmatter = {
   keywords: string;
 };
 
-const computeDocumentPath = (slug: string) => {
+const computeDocumentPath = (slug: string, base: string) => {
   return Settings.gitload
-    ? `${GitHubLink.href}/apps/docs/raw/main/contents/docs/${slug}/index.mdx`
-    : path.join(process.cwd(), "/contents/docs/", `${slug}/index.mdx`);
+    ? `${GitHubLink.href}/apps/docs/raw/main/contents/cli/${slug}/index.mdx`
+    : path.join(process.cwd(), `/contents/${base}/`, `${slug}/index.mdx`);
 };
 
 const getDocumentPathMemoized = (() => {
   const cache = new Map<string, string>();
-  return (slug: string) => {
+  return (slug: string, base: string) => {
     if (!cache.has(slug)) {
-      cache.set(slug, computeDocumentPath(slug));
+      cache.set(slug, computeDocumentPath(slug, base));
     }
     return cache.get(slug)!;
   };
 })();
 
-export async function getDocument(slug: string) {
+export async function getDocument(slug: string, baseRoute: string) {
   try {
-    const contentPath = getDocumentPathMemoized(slug);
+    const contentPath = getDocumentPathMemoized(slug, baseRoute);
     let rawMdx = "";
     let lastUpdated: string | null = null;
 
@@ -81,7 +81,7 @@ export async function getDocument(slug: string) {
     }
 
     const parsedMdx = await parseMdx<BaseMdxFrontmatter>(rawMdx);
-    const tocs = await getTable(slug);
+    const tocs = await getTable(slug, baseRoute);
 
     return {
       frontmatter: parsedMdx.frontmatter,
@@ -99,6 +99,7 @@ const headingsRegex = /^(#{2,4})\s(.+)$/gm;
 
 export async function getTable(
   slug: string,
+  base: string,
 ): Promise<Array<{ level: number; text: string; href: string }>> {
   const extractedHeadings: Array<{
     level: number;
@@ -108,7 +109,7 @@ export async function getTable(
   let rawMdx = "";
 
   if (Settings.gitload) {
-    const contentPath = `${GitHubLink.href}/apps/docs/raw/main/contents/docs/${slug}/index.mdx`;
+    const contentPath = `${GitHubLink.href}/apps/docs/raw/main/contents/cli/${slug}/index.mdx`;
     try {
       const response = await fetch(contentPath);
       if (!response.ok) {
@@ -124,7 +125,7 @@ export async function getTable(
   } else {
     const contentPath = path.join(
       process.cwd(),
-      "/contents/docs/",
+      `/contents/${base}/`,
       `${slug}/index.mdx`,
     );
     try {
@@ -159,20 +160,35 @@ function innerslug(text: string) {
     .replace(/[^a-z0-9-]/g, "");
 }
 
-const pathIndexMap = new Map(
-  PageRoutes.map((route, index) => [route.href, index]),
+const cliPathIndexMap = new Map(
+  CLIPageRoutes.map((route, index) => [route.href, index]),
 );
 
-export function getPreviousNext(path: string) {
-  const index = pathIndexMap.get(`/${path}`);
+const uiPathIndexMap = new Map(
+  UIPageRoutes.map((route, index) => [route.href, index]),
+);
 
-  if (index === undefined || index === -1) {
-    return { prev: null, next: null };
+export function getPreviousNext(path: string, base: string) {
+  let next, prev;
+  if (base === "cli") {
+    const index = cliPathIndexMap.get(`/${path}`);
+
+    if (index === undefined || index === -1) {
+      return { prev: null, next: null };
+    }
+
+    prev = index > 0 ? CLIPageRoutes[index - 1] : null;
+    next = index < CLIPageRoutes.length - 1 ? CLIPageRoutes[index + 1] : null;
+  } else if (base === "ui") {
+    const index = uiPathIndexMap.get(`/${path}`);
+
+    if (index === undefined || index === -1) {
+      return { prev: null, next: null };
+    }
+
+    prev = index > 0 ? UIPageRoutes[index - 1] : null;
+    next = index < UIPageRoutes.length - 1 ? UIPageRoutes[index + 1] : null;
   }
-
-  const prev = index > 0 ? PageRoutes[index - 1] : null;
-  const next = index < PageRoutes.length - 1 ? PageRoutes[index + 1] : null;
-
   return { prev, next };
 }
 

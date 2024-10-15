@@ -1,4 +1,4 @@
-import { PageRoutes } from "@/lib/pageroutes";
+import { UIPageRoutes, CLIPageRoutes } from "@/lib/pageroutes";
 
 export const Navigations = [
   {
@@ -8,7 +8,11 @@ export const Navigations = [
   },
   {
     title: "CLI",
-    href: `/cli${PageRoutes[0].href}`,
+    href: `/cli${CLIPageRoutes[0].href}`,
+  },
+  {
+    title: "UI",
+    href: `/ui${UIPageRoutes[0].href}`,
   },
 ];
 
