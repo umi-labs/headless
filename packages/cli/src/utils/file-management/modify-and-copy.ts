@@ -1,5 +1,7 @@
 import fs from "fs-extra";
 
+const { readFile, outputFile } = fs;
+
 // Define types for replacements and deletions
 interface Replacement {
   oldValue: string;
@@ -19,7 +21,7 @@ export const modifyAndCopyFile = async (
 ): Promise<void> => {
   try {
     // Read the file content from the source
-    let fileContent = await fs.readFile(sourceFilePath, "utf8");
+    let fileContent = await readFile(sourceFilePath, "utf8");
 
     // Apply replacements
     replacements.forEach(({ oldValue, newValue }) => {
@@ -37,7 +39,7 @@ export const modifyAndCopyFile = async (
     });
 
     // Write the modified content to the destination file
-    await fs.outputFile(destinationFilePath, fileContent);
+    await outputFile(destinationFilePath, fileContent);
     console.log(`File modified and copied to: ${destinationFilePath}`);
   } catch (error: any) {
     console.error(`Error modifying and copying file: ${error.message}`);
