@@ -8,7 +8,7 @@ import { Config, componentNameSchema } from "../utils/schema"; // Adjust the imp
 import { modifyAndCopyFile } from "../utils/file-management/modify-and-copy";
 
 // Import fs-extra functions like this or dist will fail
-const { readJSON, pathExists, ensureDir, readdir, outputFile } = fs;
+const { readJSON, pathExists, ensureDir, readdir, outputFile, remove } = fs;
 
 // Initialise simple-git
 const git = simpleGit();
@@ -48,6 +48,13 @@ export const add = async (componentName?: string) => {
   const spinner = ora();
   const componentsRepo = "https://github.com/umi-labs/umi";
   const compDir = path.join(process.cwd(), "temp-components");
+
+  // Check if temp-components directory exists and remove it if necessary
+  if (await pathExists(compDir)) {
+    spinner.start("Cleaning up old temp directory...");
+    await remove(compDir); // Remove the directory
+    spinner.succeed("Old temp directory removed.");
+  }
 
   spinner.start("Getting components...");
   await git.clone(componentsRepo, compDir);
@@ -140,17 +147,26 @@ export const add = async (componentName?: string) => {
     `${componentName}.tsx`
   );
 
+  const replacements = [
+    {
+      oldValue: 'import { cn } from "../../lib/utils";',
+      newValue: 'import { cn } from "@/lib/utils";',
+    },
+  ];
+
+  const deletions = [
+    { deleteLineContaining: `displayName = "` }, // Deletes any line containing `displayName = "`
+    { deleteLineContaining: `console.log(` }, // Deletes any line containing `console.log(`
+    { deleteLineContaining: "/* TO BE DELETED */" }, // Deletes any line containing `/* TO BE DELETED */`
+    { deleteLineContaining: "global.css" }, // Deletes any line containing `global.css`
+  ];
+
   // Perform replacements and deletions
   await modifyAndCopyFile(
     selectedComponentFile,
     destinationFilePath,
-    [
-      {
-        old: 'import { cn } from "../../lib/utils";',
-        new: 'import { cn } from "@/lib/utils";',
-      },
-    ],
-    ["someLineToDelete"] // Add any line you wish to delete
+    replacements,
+    deletions
   );
 
   // Convert Zod schema to TypeScript interface and Sanity schema
