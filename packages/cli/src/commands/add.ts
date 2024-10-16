@@ -1,12 +1,15 @@
+// External
 import fs from "fs-extra";
 import path from "path";
 import ora from "ora";
 import simpleGit from "simple-git";
-import prompts from "prompts"; // Import prompts for user input
-import { z } from "zod"; // Import Zod for validation
-import { Config, componentNameSchema } from "../utils/schema"; // Adjust the import path as needed
+import prompts from "prompts";
+import { z } from "zod";
+import { execa } from "execa";
+
+// Internal
+import { Config, componentNameSchema } from "../utils/schema";
 import { modifyAndCopyFile } from "../utils/file-management/modify-and-copy";
-import execa from "execa"; // Import execa for running commands
 
 // Import fs-extra functions like this or dist will fail
 const { readJSON, pathExists, ensureDir, readdir, outputFile, remove } = fs;
