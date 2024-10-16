@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { zodToTs } from "zod-to-ts";
-import fs from "fs-extra";
 import path from "path";
 
 // Helper interface for Sanity schema fields

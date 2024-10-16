@@ -8,7 +8,9 @@ import { exec } from "child_process";
 import util from "util";
 import { Config, componentNameSchema } from "../utils/schema";
 import { modifyAndCopyFile } from "../utils/file-management/modify-and-copy";
-import { zodToTSInterface, zodToSanitySchema } from "../utils/zod-utils"; // Assuming you have utils for Zod conversion
+import { zodToTSInterface, zodToSanitySchema } from "../utils/zod-utils";
+
+const { pathExists, remove, readdir, readJSON, ensureDir, outputFile } = fs;
 
 const execPromise = util.promisify(exec);
 const git = simpleGit();
@@ -19,9 +21,9 @@ export const add = async (componentName?: string) => {
   const compDir = path.join(process.cwd(), "temp-components");
 
   // Clean up old temporary directory if exists
-  if (await fs.pathExists(compDir)) {
+  if (await pathExists(compDir)) {
     spinner.start("Cleaning up old temp directory...");
-    await fs.remove(compDir);
+    await remove(compDir);
     spinner.succeed("Old temp directory removed.");
   }
 
@@ -37,7 +39,7 @@ export const add = async (componentName?: string) => {
     "src",
     "components"
   );
-  const components = await fs.readdir(componentsDir);
+  const components = await readdir(componentsDir);
 
   if (components.length === 0) {
     spinner.fail("No components found in the cloned repository.");
@@ -56,7 +58,7 @@ export const add = async (componentName?: string) => {
   });
 
   const componentDir = path.join(componentsDir, selectedComponent);
-  const componentConfig = await fs.readJSON(
+  const componentConfig = await readJSON(
     path.join(componentDir, "config.json")
   );
 
@@ -83,8 +85,8 @@ export const add = async (componentName?: string) => {
   spinner.succeed("Component name validated.");
 
   // Load the existing configuration
-  const existingConfig: Config | {} = (await fs.pathExists("umirc.json"))
-    ? await fs.readJSON("umirc.json")
+  const existingConfig: Config | {} = (await pathExists("umirc.json"))
+    ? await readJSON("umirc.json")
     : {};
 
   // Ensure the aliases for components are set in the configuration
@@ -100,7 +102,7 @@ export const add = async (componentName?: string) => {
     "shared",
     `${componentConfig.category}`
   );
-  await fs.ensureDir(componentDestDir);
+  await ensureDir(componentDestDir);
 
   const selectedComponentFile = path.join(
     componentDir,
@@ -137,7 +139,7 @@ export const add = async (componentName?: string) => {
   // Convert Zod schema to TypeScript interface and Sanity schema
   const schemaPath = path.join(componentDir, "schema.ts");
   const tsInterface = await zodToTSInterface(schemaPath);
-  await fs.outputFile(
+  await outputFile(
     path.join(componentDestDir, `${componentName}.d.ts`),
     tsInterface
   );
@@ -146,7 +148,7 @@ export const add = async (componentName?: string) => {
     schemaPath,
     componentConfig.category
   );
-  await fs.outputFile(
+  await outputFile(
     path.join(
       "sanity",
       "schemas",
