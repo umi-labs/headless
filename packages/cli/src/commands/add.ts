@@ -6,7 +6,7 @@ import prompts from "prompts"; // Import prompts for user input
 import { z } from "zod"; // Import Zod for validation
 import { Config, componentNameSchema } from "../utils/schema"; // Adjust the import path as needed
 import { modifyAndCopyFile } from "../utils/file-management/modify-and-copy";
-import { zodToTSInterface } from "../utils/zodToInterface";
+// import { zodToTSInterface } from "../utils/zodToInterface";
 
 // Import fs-extra functions like this or dist will fail
 const { readJSON, pathExists, ensureDir, readdir, outputFile } = fs;
@@ -14,9 +14,28 @@ const { readJSON, pathExists, ensureDir, readdir, outputFile } = fs;
 // Initialise simple-git
 const git = simpleGit();
 
-// Convert Zod schema into Sanity schema
-const zodToSanitySchema = (schemaPath: string, category: string): string => {
-  const schema = require(schemaPath);
+// Function to generate TypeScript interface from Zod schema (using dynamic import)
+const zodToTSInterface = async (schemaPath: string): Promise<string> => {
+  const schemaModule = await import(schemaPath); // Dynamically import Zod schema
+  const schema = schemaModule.default; // Assuming default export
+  const keys = Object.keys(schema.shape); // Get schema fields
+  const tsInterface = keys
+    .map((key) => {
+      const fieldType = schema.shape[key]._def.typeName; // Get field type from Zod
+      return `${key}: ${fieldType};`;
+    })
+    .join("\n");
+
+  return `interface ${path.basename(schemaPath)}Schema {\n${tsInterface}\n}`;
+};
+
+// Convert Zod schema into Sanity schema (using dynamic import)
+const zodToSanitySchema = async (
+  schemaPath: string,
+  category: string
+): Promise<string> => {
+  const schemaModule = await import(schemaPath); // Dynamically import Zod schema
+  const schema = schemaModule.default; // Assuming default export
   const fields = Object.keys(schema.shape).map((key) => {
     return `{name: "${key}", type: "${schema.shape[key]._def.typeName}"}`;
   });
