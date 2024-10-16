@@ -1,22 +1,40 @@
 import fs from "fs-extra";
 
-// Function to modify the import statement in a file
+// Define types for replacements and deletions
+interface Replacement {
+  oldValue: string;
+  newValue: string;
+}
+
+interface Deletion {
+  deleteLineContaining: string;
+}
+
+// Function to modify the file with multiple replacements and line deletions
 export const modifyAndCopyFile = async (
   sourceFilePath: string,
-  destinationFilePath: string
+  destinationFilePath: string,
+  replacements: Replacement[], // Array of replacement pairs
+  deletions: Deletion[] // Array of deletions
 ): Promise<void> => {
   try {
     // Read the file content from the source
     let fileContent = await fs.readFile(sourceFilePath, "utf8");
 
-    // Define the import statements to look for and replace
-    const oldImport = `import { cn } from "../../lib/utils";`;
-    const newImport = `import { cn } from "@/lib/utils";`;
+    // Apply replacements
+    replacements.forEach(({ oldValue, newValue }) => {
+      if (fileContent.includes(oldValue)) {
+        fileContent = fileContent.replace(new RegExp(oldValue, "g"), newValue);
+      }
+    });
 
-    // Replace the old import with the new one if it exists
-    if (fileContent.includes(oldImport)) {
-      fileContent = fileContent.replace(oldImport, newImport);
-    }
+    // Apply deletions
+    deletions.forEach(({ deleteLineContaining }) => {
+      const lines = fileContent.split("\n");
+      fileContent = lines
+        .filter((line) => !line.includes(deleteLineContaining))
+        .join("\n");
+    });
 
     // Write the modified content to the destination file
     await fs.outputFile(destinationFilePath, fileContent);

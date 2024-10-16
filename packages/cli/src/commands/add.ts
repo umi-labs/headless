@@ -124,6 +124,7 @@ export const add = async (componentName?: string) => {
     process.cwd(),
     "app",
     `_${config.aliases.components}`,
+    `shared`,
     `${category}` // Use the category from the component's config.json
   );
 
@@ -143,11 +144,29 @@ export const add = async (componentName?: string) => {
     return;
   }
 
-  // Destination file path (e.g., _components/blocks/Hero_1.tsx)
+  // Destination file path (e.g., _components/shared/heros/Hero_1.tsx)
   const destinationFilePath = path.join(componentDir, `${componentName}.tsx`);
 
-  // Modify and copy the selected component file
-  await modifyAndCopyFile(sourceFilePath, destinationFilePath);
+  const replacements = [
+    {
+      oldValue: 'import { cn } from "../../lib/utils";',
+      newValue: 'import { cn } from "@/lib/utils";',
+    },
+  ];
+
+  const deletions = [
+    { deleteLineContaining: `displayName = "` }, // Deletes any line containing `displayName = "`
+    { deleteLineContaining: `console.log(` }, // Deletes any line containing `console.log(`
+    { deleteLineContaining: "/* TO BE DELETED */" }, // Deletes any line containing `/* TO BE DELETED */`
+  ];
+
+  // Call the function with replacements and deletions
+  await modifyAndCopyFile(
+    sourceFilePath,
+    destinationFilePath,
+    replacements,
+    deletions
+  );
 
   // Clean up by removing the temporary directory
   await remove(compDir);
