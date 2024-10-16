@@ -4,15 +4,12 @@ import ora from "ora";
 import simpleGit from "simple-git";
 import prompts from "prompts";
 import { z } from "zod";
-import { exec } from "child_process";
-import util from "util";
 import { Config, componentNameSchema } from "../utils/schema";
 import { modifyAndCopyFile } from "../utils/file-management/modify-and-copy";
 import { zodToTSInterface, zodToSanitySchema } from "../utils/zod-utils";
 
 const { pathExists, remove, readdir, readJSON, ensureDir, outputFile } = fs;
 
-const execPromise = util.promisify(exec);
 const git = simpleGit();
 
 export const add = async (componentName?: string) => {
@@ -158,17 +155,6 @@ export const add = async (componentName?: string) => {
     ),
     sanitySchema
   );
-
-  // Compile TypeScript using ts-node
-  try {
-    spinner.start("Compiling TypeScript files with ts-node...");
-    await execPromise(`npx ts-node ${destinationFilePath}`);
-    spinner.succeed("TypeScript compilation completed.");
-  } catch (error) {
-    spinner.fail("TypeScript compilation failed.");
-    console.error(error);
-    return;
-  }
 
   spinner.succeed(
     `Component "${componentName}" added and compiled successfully!`
