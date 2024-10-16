@@ -6,7 +6,6 @@ import prompts from "prompts"; // Import prompts for user input
 import { z } from "zod"; // Import Zod for validation
 import { Config, componentNameSchema } from "../utils/schema"; // Adjust the import path as needed
 import { modifyAndCopyFile } from "../utils/file-management/modify-and-copy";
-// import { zodToTSInterface } from "../utils/zodToInterface";
 
 // Import fs-extra functions like this or dist will fail
 const { readJSON, pathExists, ensureDir, readdir, outputFile } = fs;
@@ -154,15 +153,16 @@ export const add = async (componentName?: string) => {
     ["someLineToDelete"] // Add any line you wish to delete
   );
 
-  // Convert Zod schema to TypeScript interface
-  const tsInterface = zodToTSInterface(path.join(componentDir, "schema.ts"));
+  // Convert Zod schema to TypeScript interface and Sanity schema
+  const tsInterface = await zodToTSInterface(
+    path.join(componentDir, "schema.ts")
+  );
   await outputFile(
     path.join(componentDestDir, `${componentName}.d.ts`),
     tsInterface
   );
 
-  // Convert Zod schema to Sanity schema
-  const sanitySchema = zodToSanitySchema(
+  const sanitySchema = await zodToSanitySchema(
     path.join(componentDir, "schema.ts"),
     componentConfig.category
   );
