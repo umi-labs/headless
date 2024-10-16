@@ -6,27 +6,35 @@ import prompts from "prompts"; // Import prompts for user input
 import { z } from "zod"; // Import Zod for validation
 import { Config, componentNameSchema } from "../utils/schema"; // Adjust the import path as needed
 import { modifyAndCopyFile } from "../utils/file-management/modify-and-copy";
+import { zodToTSInterface } from "../utils/zodToInterface";
 
 // Import fs-extra functions like this or dist will fail
-const { readJSON, pathExists, ensureDir, remove } = fs;
+const { readJSON, pathExists, ensureDir, readdir, outputFile } = fs;
 
 // Initialise simple-git
 const git = simpleGit();
 
+// Convert Zod schema into Sanity schema
+const zodToSanitySchema = (schemaPath: string, category: string): string => {
+  const schema = require(schemaPath);
+  const fields = Object.keys(schema.shape).map((key) => {
+    return `{name: "${key}", type: "${schema.shape[key]._def.typeName}"}`;
+  });
+  return `export default {\n title: "${category} Schema",\n name: "${category}Schema",\n type: "object",\n fields: [${fields.join(
+    ", "
+  )}]\n}`;
+};
+
 // Function to add a component
 export const add = async (componentName?: string) => {
   const spinner = ora();
-
-  // Clone the templates repository into a temporary directory
-  const componentsRepo = "https://github.com/umi-labs/umi"; // Correct repo URL
+  const componentsRepo = "https://github.com/umi-labs/umi";
   const compDir = path.join(process.cwd(), "temp-components");
 
   spinner.start("Getting components...");
   await git.clone(componentsRepo, compDir);
-
   spinner.succeed("Components found.");
 
-  // List available templates in the cloned directory
   const componentsDir = path.join(
     compDir,
     "packages",
@@ -34,14 +42,13 @@ export const add = async (componentName?: string) => {
     "src",
     "components"
   );
-  const components = await fs.readdir(componentsDir);
+  const components = await readdir(componentsDir);
 
   if (components.length === 0) {
     spinner.fail("No templates available in the cloned directory.");
     return;
   }
 
-  // Prompt user to select a template
   const { selectedComponent } = await prompts({
     type: "select",
     name: "selectedComponent",
@@ -52,44 +59,24 @@ export const add = async (componentName?: string) => {
     })),
   });
 
-  console.log(`Selected component: ${selectedComponent}`);
+  const componentDir = path.join(componentsDir, selectedComponent);
 
-  // Path to the selected component directory
-  const selectedComponentDir = path.join(componentsDir, selectedComponent);
+  // Get config.json
+  const componentConfig = await readJSON(
+    path.join(componentDir, "config.json")
+  );
 
-  // Read the config.json from the selected component directory
-  const componentConfigPath = path.join(selectedComponentDir, "config.json");
-
-  if (!(await pathExists(componentConfigPath))) {
-    spinner.fail(`No config.json found in ${selectedComponent}`);
-    return;
-  }
-
-  const componentConfig = await readJSON(componentConfigPath);
-  const category = componentConfig.category || "blocks"; // Default to "blocks" if category is not defined
-
-  console.log(`Component category: ${category}`);
-
-  // If no component name is provided, prompt for one
+  // Prompt for component name if not provided
   if (!componentName) {
-    // Prompt for component name
     const response = await prompts({
       type: "text",
-      name: "componentName", // This key corresponds to the value you'll access
+      name: "componentName",
       message: "What is the name of the component?",
       validate: (value) =>
-        value.length > 0 ? true : "Component name is required", // Validation for empty input
+        value.length > 0 ? true : "Component name is required",
     });
 
-    spinner.start("Validating component name...");
-
-    // Check if the prompt response contains the expected componentName
-    if (response.componentName) {
-      componentName = response.componentName as string; // Make sure you access the correct key
-    } else {
-      spinner.fail("No component name provided.");
-      return;
-    }
+    componentName = response.componentName;
   }
 
   // Validate the component name using Zod
@@ -102,7 +89,6 @@ export const add = async (componentName?: string) => {
 
   spinner.succeed("Component name validated.");
 
-  // Load existing configuration
   let existingConfig: Config | {} = {};
   const configPath = path.resolve(process.cwd(), "umirc.json");
 
@@ -110,66 +96,67 @@ export const add = async (componentName?: string) => {
     existingConfig = await readJSON(configPath);
   }
 
-  // Validate config
   const config = existingConfig as Config;
 
-  // Check if aliases and components are defined
   if (!config.aliases || !config.aliases.components) {
     spinner.fail("Component alias not defined in configuration.");
     return;
   }
 
-  // Path to the new component directory based on config and category
-  const componentDir = path.join(
+  const componentDestDir = path.join(
     process.cwd(),
-    "app",
-    `_${config.aliases.components}`,
-    `shared`,
-    `${category}` // Use the category from the component's config.json
+    "_components",
+    "shared",
+    `${componentConfig.category}`
   );
 
-  spinner.start(`Adding component: ${componentName}...`);
+  await ensureDir(componentDestDir);
 
-  // Ensure the directory exists
-  await ensureDir(componentDir);
-
-  const sourceFilePath = path.join(
-    selectedComponentDir,
+  // Get the selected component's file content
+  const selectedComponentFile = path.join(
+    componentDir,
     `${selectedComponent}.tsx`
   );
-
-  // Ensure the component file exists
-  if (!(await pathExists(sourceFilePath))) {
-    spinner.fail(`Component file "${selectedComponent}.tsx" not found.`);
-    return;
-  }
-
-  // Destination file path (e.g., _components/shared/heros/Hero_1.tsx)
-  const destinationFilePath = path.join(componentDir, `${componentName}.tsx`);
-
-  const replacements = [
-    {
-      oldValue: 'import { cn } from "../../lib/utils";',
-      newValue: 'import { cn } from "@/lib/utils";',
-    },
-  ];
-
-  const deletions = [
-    { deleteLineContaining: `displayName = "` }, // Deletes any line containing `displayName = "`
-    { deleteLineContaining: `console.log(` }, // Deletes any line containing `console.log(`
-    { deleteLineContaining: "/* TO BE DELETED */" }, // Deletes any line containing `/* TO BE DELETED */`
-  ];
-
-  // Call the function with replacements and deletions
-  await modifyAndCopyFile(
-    sourceFilePath,
-    destinationFilePath,
-    replacements,
-    deletions
+  const destinationFilePath = path.join(
+    componentDestDir,
+    `${componentName}.tsx`
   );
 
-  // Clean up by removing the temporary directory
-  await remove(compDir);
+  // Perform replacements and deletions
+  await modifyAndCopyFile(
+    selectedComponentFile,
+    destinationFilePath,
+    [
+      {
+        old: 'import { cn } from "../../lib/utils";',
+        new: 'import { cn } from "@/lib/utils";',
+      },
+    ],
+    ["someLineToDelete"] // Add any line you wish to delete
+  );
+
+  // Convert Zod schema to TypeScript interface
+  const tsInterface = zodToTSInterface(path.join(componentDir, "schema.ts"));
+  await outputFile(
+    path.join(componentDestDir, `${componentName}.d.ts`),
+    tsInterface
+  );
+
+  // Convert Zod schema to Sanity schema
+  const sanitySchema = zodToSanitySchema(
+    path.join(componentDir, "schema.ts"),
+    componentConfig.category
+  );
+  await outputFile(
+    path.join(
+      "sanity",
+      "schemas",
+      "objects",
+      componentConfig.category,
+      `${componentName}.js`
+    ),
+    sanitySchema
+  );
 
   spinner.succeed(`Component "${componentName}" added successfully!`);
 };
