@@ -7,6 +7,7 @@ export default defineConfig({
   target: "node20", // Target Node.js version
   outDir: "dist", // Output directory
   shims: true, // Includes node shims
+  external: ["fs", "path"],
   clean: true, // Clean the output directory before each build
   dts: true, // Generate .d.ts files for TypeScript
   minify: false, // Optional: Minify the output
