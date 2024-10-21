@@ -8,7 +8,15 @@ import { Config, componentNameSchema } from "../utils/schema";
 import { modifyAndCopyFile } from "../utils/file-management/modify-and-copy";
 import { zodToTSInterface, zodToSanitySchema } from "../utils/zod-utils";
 
-const { pathExists, remove, readdir, readJSON, ensureDir, outputFile } = fs;
+const {
+  pathExists,
+  remove,
+  readdir,
+  readJSON,
+  ensureDir,
+  readFile,
+  writeFile,
+} = fs;
 
 const git = simpleGit();
 
@@ -87,6 +95,7 @@ export const add = async (componentName?: string) => {
     : {};
 
   // Ensure the aliases for components are set in the configuration
+  // @ts-expect-error issue with config voiding
   if (!existingConfig.aliases || !existingConfig.aliases.components) {
     spinner.fail("Component alias not defined in configuration.");
     return;
@@ -133,28 +142,38 @@ export const add = async (componentName?: string) => {
     deletions
   );
 
-  // Convert Zod schema to TypeScript interface and Sanity schema
+  // Convert Zod schema to TypeScript type
   const schemaPath = path.join(componentDir, "schema.ts");
   const tsInterface = await zodToTSInterface(schemaPath);
-  await outputFile(
-    path.join(componentDestDir, `${componentName}.d.ts`),
-    tsInterface
-  );
 
-  const sanitySchema = await zodToSanitySchema(
-    schemaPath,
-    componentConfig.category
-  );
-  await outputFile(
-    path.join(
-      "sanity",
-      "schemas",
-      "objects",
-      componentConfig.category,
-      `${componentName}.js`
-    ),
-    sanitySchema
-  );
+  // Read the existing component file content
+  const componentFileContent = await readFile(destinationFilePath, "utf-8");
+
+  // Insert the TypeScript type into the component file
+  const newComponentFileContent = `
+      ${tsInterface}
+
+      ${componentFileContent}
+    `;
+
+  // Write the updated component file with the type
+  await writeFile(destinationFilePath, newComponentFileContent);
+
+  // const sanitySchema = await zodToSanitySchema(
+  //   schemaPath,
+  //   componentConfig.category
+  // );
+
+  // await outputFile(
+  //   path.join(
+  //     "sanity",
+  //     "schemas",
+  //     "objects",
+  //     componentConfig.category,
+  //     `${componentName}.js`
+  //   ),
+  //   sanitySchema
+  // );
 
   spinner.succeed(
     `Component "${componentName}" added and compiled successfully!`

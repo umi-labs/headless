@@ -64,13 +64,15 @@ export const zodToSanitySchema = async (
     const sanityFields: string[] = generateSanityFieldsFromZodSchema(schema);
 
     // Construct Sanity schema with defineType
-    const sanitySchema = `export const defineType({
-  name: '${category}',
-  type: 'object',
-  fields: [
-    ${sanityFields.join(",\n    ")}
-  ]
-});`;
+    const sanitySchema = `
+      export const defineType({
+        name: '${category}',
+        type: 'object',
+        fields: [
+          ${sanityFields.join(",\n    ")}
+        ]
+      });
+    `;
 
     return `// Generated Sanity schema from Zod schema
 import { defineType, defineField } from "sanity";
