@@ -24,5 +24,8 @@ jobs:
       - name: Check Vite Config
         run: ls -la ./packages/ui/vite.config.ts # Verify the Vite config file is present
 
+      - name: Run build
+        run: npm run build
+
       - name: Run Create Components Script
         run: npm run actions:create-components
