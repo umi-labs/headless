@@ -2,9 +2,10 @@
 
 UMI is the monorepo for the UMI Headless Stack, this encompasses the following:
 
-- UMI Headless Templates (templates/*)
-- UMI Headless UI (packages/ui) + Docs (apps/ui-docs)
-- UMI Headless CLI (packages/cli) + Docs (apps/cli-docs)
+- Templates (templates/*)
+- UI (packages/ui)
+- CLI (packages/cli)
+- Docs (apps/docs)
 
 ## Getting Started
 
@@ -22,11 +23,11 @@ UMI is the monorepo for the UMI Headless Stack, this encompasses the following:
 
 1. Clone the repo
 2. Install dependencies
-   ```sh
+   ```sh copy
    pnpm install
    ```
 5. Start the development server
-   ```sh
+   ```sh copy
    turbo dev
    ```
 
