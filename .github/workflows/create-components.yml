@@ -35,7 +35,7 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git add -A
+          git add .
           git commit -m "chore: update components"
           git push
         if: success()
