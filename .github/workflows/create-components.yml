@@ -1,0 +1,25 @@
+name: Run Create Components
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-create-components:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20.x.x"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Create Components Script
+        run: npm run create-components

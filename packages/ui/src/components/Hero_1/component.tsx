@@ -1,12 +1,12 @@
 import "../../global.css";
 import { cn } from "../../lib/utils";
-import { Hero1Type } from "./schema";
+import { Type as Hero_1Props } from "./schema";
 
 export default function Hero1({
   data,
   textAlignHoz = "center",
   textAlignVer,
-}: Hero1Type) {
+}: Hero_1Props) {
   return (
     <section className="h-screen w-full relative flex items-center justify-center">
       <div className="absolute top-0 left-0 z-0 h-screen w-full">

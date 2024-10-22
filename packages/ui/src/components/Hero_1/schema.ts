@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const Hero1Schema = z.object({
+export const Schema = z.object({
   data: z.object({
     tagline: z.string(),
     heading: z.string(),
@@ -26,9 +26,9 @@ export const Hero1Schema = z.object({
     .optional(),
 });
 
-export type Hero1Type = z.infer<typeof Hero1Schema>;
+export type Type = z.infer<typeof Schema>;
 
-export const TEST_DATA: Hero1Type["data"] = {
+export const TEST_DATA: Type["data"] = {
   heading: "Medium length hero heading goes here",
   descritpion:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",

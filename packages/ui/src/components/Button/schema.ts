@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const ButtonSchema = z.object({
+export const Schema = z.object({
   label: z.string(),
   onClick: z.function(),
   variant: z
@@ -9,4 +9,4 @@ export const ButtonSchema = z.object({
     .optional(),
 });
 
-export type ButtonType = z.infer<typeof ButtonSchema>;
+export type Type = z.infer<typeof Schema>;

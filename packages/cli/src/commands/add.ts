@@ -2,10 +2,11 @@ import fs from "fs-extra";
 import path from "path";
 import ora from "ora";
 import simpleGit from "simple-git";
-import prompts from "prompts"; // Import prompts for user input
-import { z } from "zod"; // Import Zod for validation
-import { Config, componentNameSchema } from "../utils/schema"; // Adjust the import path as needed
+import prompts from "prompts";
+import { z } from "zod";
+import { Config, componentNameSchema } from "../utils/schema.js";
 import { modifyAndCopyFile } from "../utils/file-management/modify-and-copy";
+import { processSchemaAndInsert } from "../utils/zod/schemaToTS";
 
 // Import fs-extra functions like this or dist will fail
 const { readJSON, pathExists, ensureDir, remove } = fs;
@@ -21,10 +22,17 @@ export const add = async (componentName?: string) => {
   const componentsRepo = "https://github.com/umi-labs/umi"; // Correct repo URL
   const compDir = path.join(process.cwd(), "temp-components");
 
+  // Clean up old temporary directory if exists
+  if (await pathExists(compDir)) {
+    spinner.start("Cleaning up old temp directory...");
+    await remove(compDir);
+    spinner.succeed("Old temp directory removed.");
+  }
+
+  // Clone the components repository
   spinner.start("Getting components...");
   await git.clone(componentsRepo, compDir);
-
-  spinner.succeed("Components found.");
+  spinner.succeed("Components repository cloned.");
 
   // List available templates in the cloned directory
   const componentsDir = path.join(
@@ -158,6 +166,8 @@ export const add = async (componentName?: string) => {
     { deleteLineContaining: `displayName = "` }, // Deletes any line containing `displayName = "`
     { deleteLineContaining: `console.log(` }, // Deletes any line containing `console.log(`
     { deleteLineContaining: "/* TO BE DELETED */" }, // Deletes any line containing `/* TO BE DELETED */`
+    { deleteLineContaining: "./schema" }, // Deletes any line containing `./schema`
+    { deleteLineContaining: "global.css" }, // Deletes any line containing `global.css`
   ];
 
   // Call the function with replacements and deletions
@@ -167,6 +177,9 @@ export const add = async (componentName?: string) => {
     replacements,
     deletions
   );
+
+  // Call the schema processing function to insert the TypeScript interface
+  // await processSchemaAndInsert(selectedComponentDir, destinationFilePath);
 
   // Clean up by removing the temporary directory
   await remove(compDir);

@@ -29,6 +29,10 @@
     "format": {
       "cache": false,
       "persistent": true
+    },
+    "create-components": {
+      "cache": false,
+      "persistent": true
     }
   }
 }

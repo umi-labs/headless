@@ -1,5 +1,5 @@
 import "./button.scss";
-import { ButtonType } from "./schema";
+import { Type as ButtonProps } from "./schema";
 import { cn } from "../../lib/utils";
 
 const baseStyles =
@@ -20,7 +20,7 @@ export default function Button({
   variant = "primary",
   onClick,
   ...props
-}: ButtonType) {
+}: ButtonProps) {
   console.log(stylePicker(variant));
 
   return (

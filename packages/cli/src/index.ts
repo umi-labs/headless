@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { create, init, add, remove, help } from "./commands";
+import { init, create, add, remove, help } from "./commands";
 
 import { getPackageInfo } from "./utils/package";
 
@@ -34,7 +34,7 @@ async function main() {
       await create(projectName);
     });
 
-  // Command for adding components or features
+  // // Command for adding components or features
   program
     .command("add [componentName]")
     .description("Adds components or features to your project")
