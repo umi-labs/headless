@@ -14,7 +14,7 @@ const {
   readJsonSync,
 } = fs;
 
-const outputDir = path.resolve(__dirname, "../../output");
+const outputDir = path.resolve(__dirname, "../../packages/ui/output");
 const componentsDir = path.resolve(__dirname, "../../src/components");
 
 const components = fs
