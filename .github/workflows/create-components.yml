@@ -19,7 +19,7 @@ jobs:
           node-version: "20.x.x"
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm install --legacy-peer-deps
 
       - name: Run Create Components Script
-        run: npx vite-node ./packages/ui/src/scripts/create-components.ts
+        run: npm run actions:create-components
