@@ -22,9 +22,9 @@ jobs:
         run: npm install --legacy-peer-deps
         working-directory: ./packages/ui
 
-      - name: Run build
-        run: npm run build
-        working-directory: ./packages/ui
+      # - name: Run build
+      #   run: npm run build
+      #   working-directory: ./packages/ui
 
       - name: Run Create Components Script
         run: npm run actions:create-components
