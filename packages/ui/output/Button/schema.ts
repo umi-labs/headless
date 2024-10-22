@@ -1,8 +1,31 @@
-export const ButtonSanitySchema = {
-  title: 'Button Schema',
+import { defineType } from 'sanity'
+
+export default defineType({
+  name: 'button',
+  title: 'Button',
+  type: 'object',
   fields: [
-    { name: 'label', type: 'string' },
-    { name: 'onClick', type: 'object' },
-    { name: 'variant', type: 'object' }
-  ]
-};
+    {
+          name: 'label',
+          title: 'Label',
+          type: 'string'
+        },
+    {
+          name: 'onClick',
+          title: 'OnClick',
+          type: 'object'
+        },
+    {
+          name: 'variant',
+          title: 'Variant',
+          type: 'object'
+        }
+  ],
+  preview: {
+    prepare() {
+      return {
+        title: 'Button',
+      }
+    },
+  },
+})

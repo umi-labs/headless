@@ -1,8 +1,31 @@
-export const HeadingSanitySchema = {
-  title: 'Heading Schema',
+import { defineType } from 'sanity'
+
+export default defineType({
+  name: 'heading',
+  title: 'Heading',
+  type: 'object',
   fields: [
-    { name: 'children', type: 'string' },
-    { name: 'variant', type: 'object' },
-    { name: 'classNames', type: 'object' }
-  ]
-};
+    {
+          name: 'children',
+          title: 'Children',
+          type: 'string'
+        },
+    {
+          name: 'variant',
+          title: 'Variant',
+          type: 'object'
+        },
+    {
+          name: 'classNames',
+          title: 'ClassNames',
+          type: 'object'
+        }
+  ],
+  preview: {
+    prepare() {
+      return {
+        title: 'Heading',
+      }
+    },
+  },
+})

@@ -1,9 +1,36 @@
-export const Hero_1SanitySchema = {
-  title: 'Hero_1 Schema',
+import { defineType } from 'sanity'
+
+export default defineType({
+  name: 'hero_1',
+  title: 'Hero_1',
+  type: 'object',
   fields: [
-    { name: 'data', type: 'object' },
-    { name: 'textAlignHoz', type: 'object' },
-    { name: 'textAlignVer', type: 'object' },
-    { name: 'variant', type: 'object' }
-  ]
-};
+    {
+          name: 'data',
+          title: 'Data',
+          type: 'object'
+        },
+    {
+          name: 'textAlignHoz',
+          title: 'TextAlignHoz',
+          type: 'object'
+        },
+    {
+          name: 'textAlignVer',
+          title: 'TextAlignVer',
+          type: 'object'
+        },
+    {
+          name: 'variant',
+          title: 'Variant',
+          type: 'object'
+        }
+  ],
+  preview: {
+    prepare() {
+      return {
+        title: 'Hero_1',
+      }
+    },
+  },
+})
