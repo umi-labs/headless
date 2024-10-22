@@ -80,8 +80,6 @@ components.forEach(async (componentName) => {
       );
       const sanitySchema = parseZodSchemaToSanity(schemaContent, componentName);
 
-      console.log("TypeScript Interface:", tsInterface, componentName); // Debugging output
-
       // Insert TypeScript interface into component.tsx below the imports
       const componentFileContent = readFileSync(
         destinationComponentFilePath,
