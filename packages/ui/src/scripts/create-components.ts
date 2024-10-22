@@ -21,6 +21,14 @@ const outputDir = path.resolve(
 
 console.log("Output directory:", outputDir);
 
+ensureDirSync(outputDir);
+
+if (!fs.existsSync(outputDir)) {
+  console.error(`Failed to create output directory: ${outputDir}`);
+} else {
+  console.log(`Successfully created output directory: ${outputDir}`);
+}
+
 const componentsDir = path.resolve(__dirname, "../../src/components");
 
 const components = fs

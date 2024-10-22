@@ -25,6 +25,8 @@ jobs:
       - name: Run Create Components Script
         run: npm run actions:create-components
         working-directory: ./packages/ui
+        env:
+          GITHUB_WORKSPACE: ${{ github.workspace }}
 
       - name: Commit Changes
         run: |
@@ -36,5 +38,6 @@ jobs:
           git add -A
           git commit -m "chore: update components"
           git push
+        if: success()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
