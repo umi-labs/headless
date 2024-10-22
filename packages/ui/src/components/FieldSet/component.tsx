@@ -1,11 +1,11 @@
 import "./FieldSet.scss";
-import { FIELDSET_TYPE } from "./types";
+import { FIELDSET_TYPE as FieldSetProps } from "./types";
 
 export default function FieldSet({
   classNames,
   children,
   ...props
-}: FIELDSET_TYPE) {
+}: FieldSetProps) {
   return (
     <fieldset className={classNames} data-testid="test" {...props}>
       {children}

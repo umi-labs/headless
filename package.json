@@ -13,7 +13,8 @@
     "cli:release": "cd packages/cli && pnpm pub:release",
     "cli:beta": "cd packages/cli && pnpm pub:beta",
     "cli:next": "cd packages/cli && pnpm pub:next",
-    "ui:pub:beta": "cd packages/ui && pnpm pub:beta"
+    "ui:pub:beta": "cd packages/ui && pnpm pub:beta",
+    "ui:create-components": "cd packages/ui && pnpm create-components"
   },
   "devDependencies": {
     "prettier": "^3.2.5",

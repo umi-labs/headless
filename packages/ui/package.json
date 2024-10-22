@@ -22,7 +22,8 @@
     "prepare": "husky",
     "new:component": "cd .hygen && hygen new component",
     "hygen:help": "cd .hygen && hygen help index.ejs.t",
-    "pub:beta": "npm run build && changeset && npm publish --access public --no-git-checks --tag beta"
+    "pub:beta": "npm run build && changeset && npm publish --access public --no-git-checks --tag beta",
+    "create-components": "vite-node ./src/scripts/create-components.ts"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
@@ -55,6 +56,7 @@
     "@storybook/test": "^8.3.2",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.1",
+    "@types/fs-extra": "^11.0.4",
     "@types/react": "^18.3.8",
     "@typescript-eslint/eslint-plugin": "^8.6.0",
     "@typescript-eslint/parser": "^8.6.0",
@@ -80,9 +82,11 @@
     "tailwindcss": "^3.4.13",
     "typescript": "^5.6.2",
     "vite": "^5.4.7",
+    "vite-node": "^2.1.3",
     "vite-plugin-dts": "^4.2.1",
     "vitest": "^2.1.1",
-    "vitest-browser-react": "^0.0.1"
+    "vitest-browser-react": "^0.0.1",
+    "zod-to-ts": "^1.2.0"
   },
   "peerDependencies": {
     "react": "^18.0.0",
@@ -90,6 +94,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.1",
+    "fs-extra": "^11.2.0",
     "zod": "^3.23.8"
   }
 }

@@ -1,11 +1,11 @@
-import { HeadingType } from "./schema";
+import { Type as HeadingProps } from "./schema";
 import { cn } from "../../lib/utils";
 
 export default function Heading({
   children,
   variant = "h1",
   classNames = "",
-}: HeadingType) {
+}: HeadingProps) {
   switch (variant) {
     case "h1":
       return <h1 className={cn(classNames)}>{children}</h1>;

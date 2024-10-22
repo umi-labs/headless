@@ -1,5 +1,5 @@
 import "./input.scss";
-import { INPUT_TYPE } from "./types";
+import { INPUT_TYPE as Type } from "./types";
 
 export default function Input({
   id,
@@ -10,7 +10,7 @@ export default function Input({
   classNames,
   register,
   ...props
-}: INPUT_TYPE) {
+}: Type) {
   return (
     <input
       id={id}
