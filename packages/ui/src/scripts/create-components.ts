@@ -14,7 +14,13 @@ const {
   readJsonSync,
 } = fs;
 
-const outputDir = path.resolve(__dirname, "../../packages/ui/output");
+const outputDir = path.resolve(
+  process.env.GITHUB_WORKSPACE || "",
+  "packages/ui/output",
+);
+
+console.log("Output directory:", outputDir);
+
 const componentsDir = path.resolve(__dirname, "../../src/components");
 
 const components = fs
