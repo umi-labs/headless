@@ -1,1 +1,1 @@
-export { default } from "./Hero_1";
+export { default } from "./component";

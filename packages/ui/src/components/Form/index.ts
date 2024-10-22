@@ -1,4 +1,4 @@
-import { Root, Field, Control, Label } from "./Form";
+import { Root, Field, Control, Label } from "./component";
 
 interface FormComponents {
   Root: typeof Root;
@@ -14,6 +14,6 @@ const Form: FormComponents = {
   Label: Label,
 };
 
-export type { FormProps, FieldProps, ControlProps } from "./Form";
+export type { FormProps, FieldProps, ControlProps } from "./component";
 
 export default Form;
