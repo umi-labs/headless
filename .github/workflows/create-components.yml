@@ -21,5 +21,8 @@ jobs:
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Check Vite Config
+        run: ls -la ./packages/ui/vite.config.ts # Verify the Vite config file is present
+
       - name: Run Create Components Script
         run: npm run actions:create-components
