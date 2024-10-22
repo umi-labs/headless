@@ -33,7 +33,7 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-          git add .
+          git add -A
           git commit -m "chore: update components"
           git push
         env:
