@@ -23,7 +23,8 @@
     "new:component": "cd .hygen && hygen new component",
     "hygen:help": "cd .hygen && hygen help index.ejs.t",
     "pub:beta": "npm run build && changeset && npm publish --access public --no-git-checks --tag beta",
-    "create-components": "vite-node ./src/scripts/create-components.ts"
+    "create-components": "vite-node ./src/scripts/create-components.ts",
+    "actions:create-components": "npx vite-node ./src/scripts/create-components.ts"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
