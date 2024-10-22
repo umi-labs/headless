@@ -22,4 +22,4 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: Run Create Components Script
-        run: npx vite-node ./src/scripts/create-components.ts
+        run: npx vite-node ./packages/ui/src/scripts/create-components.ts
