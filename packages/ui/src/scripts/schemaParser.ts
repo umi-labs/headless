@@ -27,13 +27,32 @@ export const parseZodSchemaToSanity = (
   const schema = extractZodSchema(schemaContent);
   const sanityFields = schema
     ? Object.keys(schema.shape).map((key) => {
-        return `{ name: '${key}', type: '${getSanityTypeFromZodType(schema.shape[key])}' }`;
+        return `{
+          name: '${key}',
+          title: '${key.charAt(0).toUpperCase() + key.slice(1)}',
+          type: '${getSanityTypeFromZodType(schema.shape[key])}'
+        }`;
       })
     : [];
 
-  return `export const ${componentName}SanitySchema = {\n  title: '${componentName} Schema',\n  fields: [\n    ${sanityFields.join(
-    ",\n    ",
-  )}\n  ]\n};`;
+  return `import { defineType } from 'sanity'
+
+export default defineType({
+  name: '${componentName.toLowerCase()}',
+  title: '${componentName}',
+  type: 'object',
+  fields: [
+    ${sanityFields.join(",\n    ")}
+  ],
+  preview: {
+    prepare() {
+      return {
+        title: '${componentName}',
+      }
+    },
+  },
+})
+`;
 };
 
 // Extract Zod schema object from the schema content string

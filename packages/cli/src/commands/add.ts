@@ -6,10 +6,9 @@ import prompts from "prompts";
 import { z } from "zod";
 import { Config, componentNameSchema } from "../utils/schema.js";
 import { modifyAndCopyFile } from "../utils/file-management/modify-and-copy";
-import { processSchemaAndInsert } from "../utils/zod/schemaToTS";
 
 // Import fs-extra functions like this or dist will fail
-const { readJSON, pathExists, ensureDir, remove } = fs;
+const { readJSON, pathExists, ensureDir, remove, outputFile, readFile } = fs;
 
 // Initialise simple-git
 const git = simpleGit();
@@ -17,6 +16,8 @@ const git = simpleGit();
 // Function to add a component
 export const add = async (componentName?: string) => {
   const spinner = ora();
+
+  const sanity = path.join(process.cwd(), "sanity", "schemas", "objects");
 
   // Clone the templates repository into a temporary directory
   const componentsRepo = "https://github.com/umi-labs/umi"; // Correct repo URL
@@ -35,13 +36,7 @@ export const add = async (componentName?: string) => {
   spinner.succeed("Components repository cloned.");
 
   // List available templates in the cloned directory
-  const componentsDir = path.join(
-    compDir,
-    "packages",
-    "ui",
-    "src",
-    "components"
-  );
+  const componentsDir = path.join(compDir, "packages", "ui", "output");
   const components = await fs.readdir(componentsDir);
 
   if (components.length === 0) {
@@ -133,7 +128,7 @@ export const add = async (componentName?: string) => {
     "app",
     `_${config.aliases.components}`,
     `shared`,
-    `${category}` // Use the category from the component's config.json
+    `${category}`, // Use the category from the component's config.json
   );
 
   spinner.start(`Adding component: ${componentName}...`);
@@ -141,13 +136,13 @@ export const add = async (componentName?: string) => {
   // Ensure the directory exists
   await ensureDir(componentDir);
 
-  const sourceFilePath = path.join(
+  const componentSourceFilePath = path.join(
     selectedComponentDir,
-    `${selectedComponent}.tsx`
+    `${selectedComponent}.tsx`,
   );
 
   // Ensure the component file exists
-  if (!(await pathExists(sourceFilePath))) {
+  if (!(await pathExists(componentSourceFilePath))) {
     spinner.fail(`Component file "${selectedComponent}.tsx" not found.`);
     return;
   }
@@ -155,34 +150,30 @@ export const add = async (componentName?: string) => {
   // Destination file path (e.g., _components/shared/heros/Hero_1.tsx)
   const destinationFilePath = path.join(componentDir, `${componentName}.tsx`);
 
-  const replacements = [
-    {
-      oldValue: 'import { cn } from "../../lib/utils";',
-      newValue: 'import { cn } from "@/lib/utils";',
-    },
-  ];
+  let fileContent = await readFile(componentSourceFilePath, "utf8");
 
-  const deletions = [
-    { deleteLineContaining: `displayName = "` }, // Deletes any line containing `displayName = "`
-    { deleteLineContaining: `console.log(` }, // Deletes any line containing `console.log(`
-    { deleteLineContaining: "/* TO BE DELETED */" }, // Deletes any line containing `/* TO BE DELETED */`
-    { deleteLineContaining: "./schema" }, // Deletes any line containing `./schema`
-    { deleteLineContaining: "global.css" }, // Deletes any line containing `global.css`
-  ];
+  await outputFile(destinationFilePath, fileContent);
 
-  // Call the function with replacements and deletions
-  await modifyAndCopyFile(
-    sourceFilePath,
-    destinationFilePath,
-    replacements,
-    deletions
-  );
+  spinner.succeed(`Component "${componentName}" added successfully!`);
 
-  // Call the schema processing function to insert the TypeScript interface
-  // await processSchemaAndInsert(selectedComponentDir, destinationFilePath);
+  spinner.start("Inserting schema...");
+
+  const schemaSourceFilePath = path.join(selectedComponentDir, `schema.ts`);
+
+  const schemaDestinationFilePath = path.join(sanity, `${componentName}.js`);
+
+  let schemaFileContent = await readFile(schemaSourceFilePath, "utf8");
+
+  // Ensure the component file exists
+  if (!(await pathExists(schemaSourceFilePath))) {
+    spinner.fail(`We cannot find the schema file for this component.`);
+    return;
+  }
+
+  await outputFile(schemaDestinationFilePath, schemaFileContent);
+
+  spinner.succeed(`Component schema file  added successfully!`);
 
   // Clean up by removing the temporary directory
   await remove(compDir);
-
-  spinner.succeed(`Component "${componentName}" added successfully!`);
 };
