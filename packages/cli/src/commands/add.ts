@@ -5,7 +5,8 @@ import simpleGit from "simple-git";
 import prompts from "prompts";
 import { z } from "zod";
 import { Config, componentNameSchema } from "../utils/schema.js";
-import { modifyAndCopyFile } from "../utils/file-management/modify-and-copy";
+import { addImportBelowObjects } from "../utils/file-management/addImportsBelowObjects.js";
+import { cleanComponentName } from "../utils/nameCleaner.js";
 
 // Import fs-extra functions like this or dist will fail
 const { readJSON, pathExists, ensureDir, remove, outputFile, readFile } = fs;
@@ -14,7 +15,7 @@ const { readJSON, pathExists, ensureDir, remove, outputFile, readFile } = fs;
 const git = simpleGit();
 
 // Function to add a component
-export const add = async (componentName?: string) => {
+export const add = async (name: string) => {
   const spinner = ora();
 
   const sanity = path.join(process.cwd(), "sanity", "schemas", "objects");
@@ -73,6 +74,8 @@ export const add = async (componentName?: string) => {
 
   console.log(`Component category: ${category}`);
 
+  let componentName = cleanComponentName(name);
+
   // If no component name is provided, prompt for one
   if (!componentName) {
     // Prompt for component name
@@ -88,7 +91,7 @@ export const add = async (componentName?: string) => {
 
     // Check if the prompt response contains the expected componentName
     if (response.componentName) {
-      componentName = response.componentName as string; // Make sure you access the correct key
+      componentName = cleanComponentName(response.componentName as string); // Make sure you access the correct key
     } else {
       spinner.fail("No component name provided.");
       return;
@@ -173,6 +176,14 @@ export const add = async (componentName?: string) => {
   await outputFile(schemaDestinationFilePath, schemaFileContent);
 
   spinner.succeed(`Component schema file  added successfully!`);
+
+  spinner.start(`Adding imports...`);
+
+  await addImportBelowObjects({
+    componentName: componentName!,
+  });
+
+  spinner.succeed("Imports added");
 
   // Clean up by removing the temporary directory
   await remove(compDir);
