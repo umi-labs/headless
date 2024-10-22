@@ -14,7 +14,8 @@
     "cli:beta": "cd packages/cli && pnpm pub:beta",
     "cli:next": "cd packages/cli && pnpm pub:next",
     "ui:pub:beta": "cd packages/ui && pnpm pub:beta",
-    "ui:create-components": "cd packages/ui && pnpm create-components"
+    "ui:create-components": "cd packages/ui && pnpm create-components",
+    "actions:create-components": "cd packages/ui && npm create-components"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
