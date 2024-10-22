@@ -22,10 +22,19 @@ jobs:
         run: npm install --legacy-peer-deps
         working-directory: ./packages/ui
 
-      # - name: Run build
-      #   run: npm run build
-      #   working-directory: ./packages/ui
-
       - name: Run Create Components Script
         run: npm run actions:create-components
         working-directory: ./packages/ui
+
+      - name: Commit Changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Commit and Push Changes
+        run: |
+          git add .
+          git commit -m "chore: update components"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
