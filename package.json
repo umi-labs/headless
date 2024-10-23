@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo build",
     "build:cli": "turbo build --filter=@umi-digital/cli",
+    "build:docs": "turbo build --filter=@umi-digital/docs",
     "link:cli": "cd packages/cli && npm link",
     "dev": "turbo dev",
     "dev:docs": "turbo dev --filter=@umi-digital/docs",

@@ -1,15 +1,25 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { CLIRoutes, UIRoutes } from "@/lib/pageroutes";
+import { CLIRoutes, UIRoutes, FlowRoutes } from "@/lib/pageroutes";
 import SubLink from "@/components/navigation/sublink";
 
 export default function PageMenu({ isSheet = false }) {
   const pathname = usePathname();
   const baseRoute = pathname.split("/")[1];
-  if (!pathname.startsWith("/cli") && !pathname.startsWith("/ui")) return null;
+  if (
+    !pathname.startsWith("/cli") &&
+    !pathname.startsWith("/ui") &&
+    !pathname.startsWith("/flow")
+  )
+    return null;
 
-  const Routes = baseRoute === "cli" ? CLIRoutes : UIRoutes;
+  const Routes =
+    baseRoute === "cli"
+      ? CLIRoutes
+      : baseRoute === "ui"
+        ? UIRoutes
+        : FlowRoutes;
 
   return (
     <div className="flex flex-col gap-3.5 mt-5 pb-6">

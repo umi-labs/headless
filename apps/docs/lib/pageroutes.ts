@@ -1,4 +1,4 @@
-import { CLIDocuments, UIDocuments } from "@/settings/documents";
+import { CLIDocuments, FlowDocuments, UIDocuments } from "@/settings/documents";
 
 export type Paths =
   | {
@@ -14,6 +14,7 @@ export type Paths =
 
 export const CLIRoutes: Paths[] = [...CLIDocuments];
 export const UIRoutes: Paths[] = [...UIDocuments];
+export const FlowRoutes: Paths[] = [...FlowDocuments];
 
 type Page = { title: string; href: string };
 
@@ -44,3 +45,4 @@ function getAllLinks(node: Paths): Page[] {
 
 export const CLIPageRoutes = CLIRoutes.map((it) => getAllLinks(it)).flat();
 export const UIPageRoutes = UIRoutes.map((it) => getAllLinks(it)).flat();
+export const FlowPageRoutes = FlowRoutes.map((it) => getAllLinks(it)).flat();

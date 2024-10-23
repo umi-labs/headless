@@ -14,6 +14,10 @@ export const Navigations = [
     title: "UI",
     href: `/ui${UIPageRoutes[0].href}`,
   },
+  {
+    title: "Flow",
+    href: `/flow${UIPageRoutes[0].href}`,
+  },
 ];
 
 export const GitHubLink = {

@@ -132,3 +132,11 @@ export const UIDocuments: Paths[] = [
     ],
   },
 ];
+
+export const FlowDocuments: Paths[] = [
+  {
+    title: "Introduction",
+    href: "/introduction",
+    heading: "Getting started",
+  },
+];
