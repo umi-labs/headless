@@ -3,78 +3,140 @@ title: Overview
 description: This section provides an overview of development on the cli package.
 ---
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam iste dolorum tempore consectetur explicabo tempora provident quia maxime, molestiae, facilis aperiam et, error illum vel ullam? Quis architecto dolore ullam
+This is the **UMI CLI** package development overview. Below there are guides for getting setup, understanding the project structure, its dependencies and how it works.
 
-- [x] Write the press release
-- [ ] Update the website
-- [ ] Contact the media
+## Table of Contents
 
-| Syntax        | Description |   Test Text |
-| :------------ | :---------: | ----------: |
-| Header        |    Title    | Here's this |
-| Paragraph     |    Text     |    And more |
-| Strikethrough |             |    ~~Text~~ |
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Dependencies](#dependencies)
 
 ## Getting Started
 
-To begin using the Documentation Template, follow these simple steps:
+To begin using the **UMI CLI**, follow these simple steps:
 
-- Start by cloning the repository to your local machine.
+- Start by cloning the monorepo repository to your local machine.
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit quae iure nulla deserunt dolore quam pariatur minus sapiente accusantium. Optio, necessitatibus sequi. Veritatis, aspernatur? Possimus quis repellat eum vitae eveniet.
+<Step>
+<StepItem title="Installing PNPM">
 
-## Blockquotes
+The **UMI CLI** uses [PNPM](https://pnpm.io/) as its package manager. To install PNPM, follow the instructions provided in the [PNPM documentation](https://pnpm.io/installation).
 
-Blockquotes are useful for emphasizing key points or quoting external sources:
+I would recommend using brew to install PNPM on macOS:
 
-> "Documentation is a love letter that you write to your future self." - Damian Conway
-
-Feel free to use blockquotes to highlight important information or quotes relevant to your documentation.
-
-## Code Examples with switch
-
-Here a custom tab component from shadcn ui is used.
-
-<Tabs defaultValue="js" className="pt-5 pb-1">
-  <TabsList className="">
-    <TabsTrigger value="js">layout.jsx</TabsTrigger>
-    <TabsTrigger value="ts">layout.tsx</TabsTrigger>
-  </TabsList>
-  <TabsContent value="js">
-  ```jsx {7} showLineNumbers
-import ThemeProvider from './theme-provider'
-
-export default function RootLayout({ children }) {
-  return (
-    <html>
-      <body className="container">
-        <ThemeProvider>{children}</ThemeProvider>
-      </body>
-    </html>
-  )}
-````
-  </TabsContent>
-  <TabsContent value="ts">
-```tsx {11} showLineNumbers
-import ThemeProvider from './theme-provider'
-
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html>
-      <body className="container">
-        <ThemeProvider>{children}</ThemeProvider>
-      </body>
-    </html>
-  )
-}
+```bash copy
+brew install pnpm
 ```
-  </TabsContent>
-</Tabs>
 
-## Conclusion
+</StepItem>
+<StepItem title="Cloning the Repository">
 
-Thank you for choosing the Documentation Template for your project. Whether you're documenting software, APIs, or processes, we're here to support you in creating clear and effective documentation. Happy documenting!
+I would recommend using SSH to clone the repository. To do this, run the following command:
+
+```bash copy
+git clone git@github.com:umi-labs/umi.git
+```
+
+Ensure that you have set up your SSH keys and have configured your GitHub account to use SSH. If not, follow the instructions provided in the [GitHub documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+<Note title="SSH Keys within an Organisation" type="warning">
+  As repo is within an organisation you may need to configure your SSH key to allow yourself to clone. If you have any problems please contact the [project lead](mailto:isaac@umidigital.co.uk).
+</Note>
+
+</StepItem>
+<StepItem title="Installing Dependencies">
+
+```bash copy
+pnpm install
+```
+
+Ensure that you have set up your SSH keys and have configured your GitHub account to use SSH. If not, follow the instructions provided in the [GitHub documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+</StepItem>
+<StepItem title="Running the Development Server">
+
+Once the installation is complete, you can start the development server by running the following command:
+
+```bash copy
+turbo dev
+```
+
+The monorepo uses [Turborepo](https://turborepo.org/) to manage the development environment. Turborepo is a monorepo management tool that allows you to run multiple packages in parallel, making it easier to manage and develop your project.
+
+Whilst the CLI doesn't use a development server it is useful to run this to make sure that the project is running correctly.
+
+</StepItem>
+</Step>
+
+## Project Structure
+
+The project structure is as follows:
+
+<Note title="Note" type="">
+This is just a rough structure of the project, it is not a complete representation - additionally this is subject to change as the project evolves
+</Note>
+
+<Spacer />
+
+<FileTree>
+  <Folder name="apps" label="Apps">
+    <Folder name="docs" label="Docs" />
+  </Folder>
+  <Folder name="packages" label="Packages" open="true">
+    <Folder name="cli" label="CLI" open="true">
+      <Folder name="src" label="Source" open="true">
+        <Folder name="commands" label="Commands" open="true">
+          <File name="create.ts" label="Create" />
+          <File name="init.ts" label="Init" />
+          <File name="add.ts" label="Add" />
+          <File name="remove.ts" label="Remove" />
+        </Folder>
+        <Folder name="utils" label="Utilities" />
+      </Folder>
+      <File name="package.json" label="Package.json" />
+      <File name="tsconfig.json" label="tsconfig.json" />
+      <File name="tsup.config.ts" label="tsup.config.ts" />
+    </Folder>
+    <Folder name="ui" label="UI">
+      <File name="src" label="Source Code" />
+    </Folder>
+  </Folder>
+  <Folder name="templates" label="Templates">
+    <Folder name="basic" label="Basic" />
+    <Folder name="marketing" label="Marketing" />
+  </Folder>
+</FileTree>
+
+## Dependencies
+
+<Note title="Note">
+This is not an extensive list of dependencies, it is just a list of the most important ones.
+</Note>
+
+The project uses the following dependencies:
+
+- [chalk](https://www.npmjs.com/package/chalk)
+- [commander](https://www.npmjs.com/package/commander)
+- [cosmiconfig](https://www.npmjs.com/package/cosmiconfig)
+- [execa](https://www.npmjs.com/package/execa)
+- [kleur](https://www.npmjs.com/package/kleur)
+- [ora](https://www.npmjs.com/package/ora)
+- [path](https://www.npmjs.com/package/path)
+- [prompts](https://www.npmjs.com/package/prompts)
+- [simple-git](https://www.npmjs.com/package/simple-git)
+- [tsup](https://www.npmjs.com/package/tsup)
+- [zod](https://www.npmjs.com/package/zod)
+
+| Package | Usage |
+| --- | --- |
+| Chalk   | **Chalk** is a simple terminal coloring library, allowing you to add color to your terminal output. |
+| Commander | **Commander** is a complete solution for node.js command-line interfaces. |
+| cosmiconfig | **cosmiconfig** is a complete solution for finding and loading configuration from JSON, YAML, TOML, and JavaScript files. |
+| execa | **execa** is a cross-platform child_process replacement that works on top of the Node.js APIs. |
+| kleur | **kleur** is a styling library for terminal output. |
+| ora | **ora** is a Node.js library for creating terminal spinners. |
+| path | **path** is a Node.js module that provides utilities for working with file and directory paths. |
+| prompts | **prompts** is a collection of reusable prompt objects. |
+| simple-git | **simple-git** is a simple, lightweight, and opinionated Git client for Node.js. |
+| tsup | **tsup** is a zero-config CLI for fast bundlerless TypeScript libraries and applications. |
+| zod | **zod** is a TypeScript-first schema validation library with static type inference. |

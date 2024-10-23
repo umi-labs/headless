@@ -41,7 +41,7 @@ export const addImportBelowObjects = async ({
           "export const schema = [",
         );
         const schemaEndIndex =
-          updatedContent.indexOf("]", schemaArrayIndex) + 1;
+          updatedContent.indexOf(`/n]`, schemaArrayIndex) + 1;
 
         // Insert the cleaned component name right before the closing bracket
         const updatedSchemaContent =

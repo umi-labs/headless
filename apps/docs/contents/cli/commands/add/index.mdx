@@ -17,9 +17,7 @@ umi add
 | Option | Description | Default |
 | ------- | --- | --- |
 | `componentName` | The name of the component to add. | None |
-| `--name` `-n` | Custom name for the component. | None |
-| `--help` `-h` | Display help information. | None |
-| `--list` `-l` | List available components. | None |
+| `--list` `-l` | List available components. (under development) | None |
 
 ## Examples
 
@@ -29,14 +27,199 @@ umi add
 umi add Button
 ```
 
-### List available components
+### List available components (Under development)
 
 ```bash copy
 umi add --list
 ```
 
-### Giving the component a name
+## Usage
 
-```bash copy
-umi add Button --name="CustomButton"
+<Step>
+<StepItem title="Running The Command">
+
+Get started by running the command
+
+  ```bash
+  umi add
+  ```
+
+</StepItem>
+<StepItem title="Select A Component">
+
+Choose a component from the list of available components. This will clone the component from the [umi-digital/ui](https://github.com/umi-labs/umi/tree/main/packages/ui/output) package.
+
+```bash
+✔ Components repository cloned.
+? Select a component to add: › - Use arrow-keys. Return to submit.
+❯   Button
+    FieldSet
+    Form
+    Heading
+    Hero_1
+    Input
+    TextArea
 ```
+
+</StepItem>
+<StepItem title="Name Your Component">
+
+Next enter the name for the component you are looking to add.
+
+```bash
+✔ Components repository cloned.
+✔ Select a component to add: › Hero_1
+Selected component: Hero_1
+Component category: heros
+? What is the name of the component? ›
+```
+
+You will also notice that your terminal is showing the component category and the component name.
+This is because the component is being added to the `shared` directory within the `_components` directory. In the future, this will be configurable.
+
+</StepItem>
+<StepItem title="Scaffolding & Importing">
+
+Great! Now you have chosen your name, we do a few things in the background to get the component set up - if these have been done correctly you should see the messages below.
+
+```bash
+✔ Components repository cloned.
+✔ Select a component to add: › Hero_1
+Selected component: Hero_1
+Component category: heros
+✔ What is the name of the component? … hero-1
+✔ Component name validated.
+✔ Component "hero1" added successfully!
+✔ Component schema file  added successfully!
+⠋ Adding imports...Import and component added successfully!
+✔ Imports added
+```
+
+The component has been added to the `shared` directory within the `_components` directory. The component is also imported into the `index.js` file in the `schemas` directory.
+
+</StepItem>
+<StepItem title="Checking the Component">
+
+Now that the component has been added, you can start using the component within your project.
+
+But first, let's check the component to make sure it is working correctly.
+
+Open the `app/_components/shared/heros/hero1.tsx` file, if you followed along with this guide you should see something similar to the following:
+
+```tsx showLineNumbers
+import { cn } from '@/lib/utils'
+
+interface Hero_1Props {
+  data: {
+    tagline: string
+    heading: string
+    descritpion: string
+    image: {
+      src: string
+      alt: string
+      width: number
+      height: number
+    }
+  }
+  textAlignHoz?: ('left' | 'center' | 'right') | undefined
+  textAlignVer?: ('top' | 'center' | 'bottom') | undefined
+  variant?: ('primary' | 'secondary' | 'tertiary') | undefined
+}
+
+export default function Hero1({
+  data,
+  textAlignHoz = 'center',
+  textAlignVer,
+}: Hero_1Props) {
+  return (
+    <section className="h-screen w-full relative flex items-center justify-center">
+      <div className="absolute top-0 left-0 z-0 h-screen w-full">
+        <div className="absolute top-0 left-0 z-0 h-screen w-full bg-gradient-to-b from-black/50 to-black" />
+        <picture className="">
+          <source srcSet={data.image.src} />
+          <img
+            src={data.image.src}
+            alt={data.image.alt}
+            width={data.image.width}
+            height={data.image.height}
+            className="object-cover object-center h-screen w-full"
+          />
+        </picture>
+      </div>
+      <div
+        className={cn(
+          'z-10 text-white gap-4 max-w-[768px] mx-auto',
+          `text-${textAlignHoz}`,
+          textAlignVer,
+        )}
+      >
+        <span className="text-base font-semibold">{data.tagline}</span>
+        <div className="flex flex-col items-center justify-center gap-6">
+          <h1 className="text-6xl font-bold">{data.heading}</h1>
+          <p className="text-lg">{data.descritpion}</p>
+        </div>
+      </div>
+    </section>
+  )
+}
+```
+
+The first thing to check are the imports, ensure that they are correctly linking up where they need to and there aren't any type issues etc.
+
+Next lets check the type - this has be dynamically generated when @umi-digital/ui gets built, this means that there aren't many meaningful ways of testing this and so there may be some mistakes. Check this now.
+
+Finally, ensure that there are no other errors with the component.
+
+Moving onto the schema we need to head to `sanity/schemas/objects/hero1.js`. You should see something similar to this:
+
+```js showLineNumbers
+import { defineType } from 'sanity'
+
+export default defineType({
+  name: 'hero_1',
+  title: 'Hero_1',
+  type: 'object',
+  fields: [
+    {
+      name: 'data',
+      title: 'Data',
+      type: 'object',
+    },
+    {
+      name: 'textAlignHoz',
+      title: 'TextAlignHoz',
+      type: 'object',
+    },
+    {
+      name: 'textAlignVer',
+      title: 'TextAlignVer',
+      type: 'object',
+    },
+    {
+      name: 'variant',
+      title: 'Variant',
+      type: 'object',
+    },
+  ],
+  preview: {
+    prepare() {
+      return {
+        title: 'Hero_1',
+      }
+    },
+  },
+})
+```
+
+<Note title="Nested Fields" type="">
+  Nested fields are not currently supported, but will be added in the future. For now please complete these fields manually.
+</Note>
+
+Check that this follows the type as shown in the component as this will make your workflow a lot easier.
+
+</StepItem>
+</Step>
+
+## Next Steps
+
+Congrats! Now you have a component added to your project. You can now start modifying the component to suit your needs.

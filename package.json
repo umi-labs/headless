@@ -6,6 +6,8 @@
     "build:cli": "turbo build --filter=@umi-digital/cli",
     "link:cli": "cd packages/cli && npm link",
     "dev": "turbo dev",
+    "dev:docs": "turbo dev --filter=@umi-digital/docs",
+    "dev:templates": "turbo dev --filter=\"./templates/*\"",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "cli:test:local": "cd packages/cli && pnpm run dev:local",

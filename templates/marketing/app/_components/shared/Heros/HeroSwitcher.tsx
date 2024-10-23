@@ -1,6 +1,5 @@
 import { Header } from '@/app/_components/shared/Header'
 import BasicHero from '@/app/_components/shared/Heros/BasicHero'
-import HomeHero from '@/app/_components/shared/Heros/HomeHero'
 import PrimaryHero from '@/app/_components/shared/Heros/PrimaryHero'
 
 export default function HeroSwitcher({

@@ -24,7 +24,7 @@ const config = {
         'satoshi-italic': ['var(--font-satoshi-italic)'],
       },
       colors: {
-        isabelline: {
+        foreground: {
           DEFAULT: '#faf7f2',
           100: '#47371b',
           200: '#8d6d37',
@@ -36,7 +36,7 @@ const config = {
           800: '#fdfbf9',
           900: '#fefdfc',
         },
-        'cadet-gray': {
+        background: {
           DEFAULT: '#94a3b8',
           100: '#1b2028',
           200: '#354050',

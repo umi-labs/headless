@@ -33,6 +33,7 @@ export const create = async (projectName?: string) => {
 
     // Check if the target directory already exists
     if (await fs.pathExists(targetDir)) {
+      spinner.fail(`The directory ${projectName} already exists.`);
       const { overwrite } = await prompts({
         type: "confirm",
         name: "overwrite",
@@ -120,26 +121,26 @@ export const create = async (projectName?: string) => {
     // Offering helpful tips to the user
     const tips = [
       `${bold("1.")} Navigate into your new project folder: ${bold(
-        `cd ${projectName}`
+        `cd ${projectName}`,
       )}`,
       `${bold("2.")} Run ${bold("umi init")} to initialise your project.`,
       `${bold("3.")} Start your development server: ${bold(
         `${packageManager.manager} ${
           packageManager.manager === "npm" ? "run" : ""
-        } dev`
+        } dev`,
       )}`,
       `${bold("4.")} Check the ${bold(
-        "README.md"
+        "README.md",
       )} file for more setup instructions.`,
       `${bold(
-        "5."
+        "5.",
       )} Explore the available templates to customise your project further.`,
     ];
 
     console.log(
       `\n🎉 Project created successfully! ${bold(
-        green("Let's get you started:\n")
-      )}`
+        green("Let's get you started:\n"),
+      )}`,
     );
     tips.forEach((tip) => console.log(tip));
   } catch (error) {

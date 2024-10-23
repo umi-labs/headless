@@ -40,10 +40,6 @@ export const CLIDocuments: Paths[] = [
         title: "Remove",
         href: "/remove",
       },
-      {
-        title: "Help",
-        href: "/help",
-      },
     ],
   },
   {
@@ -55,53 +51,9 @@ export const CLIDocuments: Paths[] = [
     heading: "Contributing",
     items: [
       { title: "Overview", href: "/overview" },
-      { title: "Structure", href: "/structure" },
-      { title: "The Code", href: "/the-code" },
+      // { title: "The Code", href: "/the-code" },
     ],
   },
-  // {
-  //   title: "Markup",
-  //   href: "/markup",
-  //   heading: "Components",
-  //   items: [
-  //     {
-  //       title: "Cards",
-  //       href: "/cards",
-  //     },
-  //     {
-  //       title: "Diagrams",
-  //       href: "/diagrams",
-  //     },
-  //     {
-  //       title: "Filetree",
-  //       href: "/filetree",
-  //     },
-  //     {
-  //       title: "Lists",
-  //       href: "/lists",
-  //     },
-  //     {
-  //       title: "Maths",
-  //       href: "/maths",
-  //     },
-  //     {
-  //       title: "Notes",
-  //       href: "/notes",
-  //     },
-  //     {
-  //       title: "Steps",
-  //       href: "/steps",
-  //     },
-  //     {
-  //       title: "Table",
-  //       href: "/table",
-  //     },
-  //     {
-  //       title: "Tabs",
-  //       href: "/tabs",
-  //     },
-  //   ],
-  // },
 ];
 
 export const UIDocuments: Paths[] = [
