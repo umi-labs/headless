@@ -46,8 +46,8 @@ export default defineType({
     }),
     defineField({
       name: 'blocks',
-      description: 'Used to add Blocks to the home page',
-      title: 'Blocks',
+      description: 'Used to add blocks to the home page',
+      title: 'blocks',
       type: 'array',
       of: [
         defineArrayMember({

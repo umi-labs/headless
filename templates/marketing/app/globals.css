@@ -3,35 +3,45 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    @apply overflow-x-hidden;
-  }
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply overflow-x-hidden bg-primary-background text-primary-foreground;
+    }
+
+    body::-webkit-scrollbar {
+        @apply w-2;
+    }
+
+    body::-webkit-scrollbar-track {
+        @apply bg-transparent;
+    }
+
+    body::-webkit-scrollbar-thumb {
+        @apply bg-primary-foreground rounded-none;
+    }
+
+    body .custom-cursor {
+        @apply lg:cursor-none;
+    }
+
+    button {
+        @apply bg-primary-accent;
+    }
+
+    .test-container {
+        @apply h-screen w-screen flex flex-col items-center justify-center p-8;
+    }
+
 }
 
-body::-webkit-scrollbar {
-  width: 8px;
+.inVCpJ,
+.bzuUuj {
+    border-left: 0 !important;
 }
 
-body::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: #212529;
-  border-radius: 0;
-}
-
-body .custom-cursor {
-  @media (min-width: 1024px) {
-    cursor: none;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+.btLGWs {
+    padding-left: 0 !important;
 }

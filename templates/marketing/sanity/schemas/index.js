@@ -1,10 +1,7 @@
 // import type { SchemaTypeDefinition } from 'sanity'
 
 // Singletons
-import home from '@/sanity/schemas/singletons/home'
-import siteSettings from '@/sanity/schemas/singletons/site-settings'
-import themeSettings from '@/sanity/schemas/singletons/theme-settings'
-import seoSettings from '@/sanity/schemas/singletons/seo-settings'
+import { blocks, home, seoSettings, siteSettings, themeSettings } from '@/sanity/schemas/singletons'
 
 // Documents
 import page from '@/sanity/schemas/documents/page'
@@ -25,6 +22,8 @@ import metaData from '@/sanity/schemas/objects/meta-data'
 import navItem from '@/sanity/schemas/objects/navigation/nav-item'
 import navList from '@/sanity/schemas/objects/navigation/nav-list'
 import link from '@/sanity/schemas/objects/navigation/link'
+import favicon from '@/sanity/schemas/objects/favicon'
+import postType from '@/sanity/schemas/documents/post-type'
 
 export const schema = [
   // Singletons
@@ -32,10 +31,12 @@ export const schema = [
   siteSettings,
   themeSettings,
   seoSettings,
+  blocks,
 
   // Documents
   page,
   post,
+  postType,
   contactForm,
   form,
   inbox,
@@ -52,11 +53,12 @@ export const schema = [
   navItem,
   navList,
   link,
+  favicon,
 ]
 
 export const singletons = [
   home,
-  // siteSettings.name,
+  siteSettings.name,
   themeSettings.name,
   seoSettings.name,
 ]

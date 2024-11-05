@@ -1,3 +1,4 @@
-import { DevelopmentNavbar, ProductionNavbar } from './navbar'
+import { Navbar } from './navbar'
+import { configGenerator } from './configGenerator'
 
-export { DevelopmentNavbar, ProductionNavbar }
+export { Navbar, configGenerator }

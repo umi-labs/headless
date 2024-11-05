@@ -26,7 +26,7 @@ export function HomePage({ data, encodeDataAttribute }: HomePageProps) {
           />
         ))}
 
-      {/* Blocks */}
+      {/* blocks */}
       {blocks && (
         <CustomPortableText
           paragraphClasses="font-serif max-w-3xl text-gray-600 text-xl"

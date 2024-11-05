@@ -1,4 +1,4 @@
-import { ImageSquare, Files } from '@phosphor-icons/react'
+import { Files, ImageSquare } from '@phosphor-icons/react'
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
 export default defineType({
@@ -72,7 +72,7 @@ export default defineType({
           },
           styles: [],
         }),
-        // Custom Blocks
+        // Custom blocks
         defineField({
           type: 'image',
           icon: ImageSquare,

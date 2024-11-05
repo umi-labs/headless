@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { Hero1Type } from "../schema";
-import Hero1 from "../Hero_1";
+import Hero1 from "../component";
 
 const Example: FC<Hero1Type> = ({ data }) => {
   return (

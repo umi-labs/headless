@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 import { cn } from '@/lib/utils'
 import { resolveHref } from '@/sanity/lib/utils'
-import type { MainNav, MenuItem, NavItem, SettingsPayload } from '@/types'
+import type { NavItem, SettingsPayload } from '@/types'
 
 interface MenuProps {
   show: boolean
@@ -15,7 +15,7 @@ interface MenuProps {
 
 const MenuStyles = {
   default: cn(
-    'bg-isabelline h-[80vh] w-full fixed top-0 left-0 overflow-hidden z-[90] transition-all translate-y-0 shadow-md duration-300 ease-in-out',
+    'bg-primary-background h-[80vh] w-full fixed top-0 left-0 overflow-hidden z-[90] transition-all translate-y-0 shadow-md duration-300 ease-in-out',
   ),
   closed: cn('translate-y-[-100%] shadow-none'),
 }
@@ -80,7 +80,7 @@ export default function Menu({ data, show, setShow }: MenuProps) {
       {show && (
         <div
           onClick={() => setShow(!show)}
-          className="absolute top-0 w-screen h-screen bg-black opacity-30 z-[89] left-0 overflow-hidden"
+          className="absolute top-0 w-screen h-screen bg-primary-background opacity-30 z-[89] left-0 overflow-hidden"
         />
       )}
     </>

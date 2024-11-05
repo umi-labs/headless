@@ -6,9 +6,52 @@ export default defineType({
   title: 'Theme Settings',
   type: 'document',
   icon: Palette,
-  // Uncomment below to have edits publish automatically as you type
-  // liveEdit: true,
-  fields: [defineField({ name: 'name', title: 'Name', type: 'string' })],
+  groups: [
+    {
+      name: 'branding',
+      title: 'Branding',
+    },
+    {
+      name: 'colours',
+      title: 'Colours',
+    },
+    {
+      name: 'misc',
+      title: 'MISC',
+    },
+  ],
+  fields: [
+    defineField({
+      name: 'logo',
+      title: 'Logo',
+      type: 'image',
+      group: 'branding',
+    }),
+    defineField({
+      name: 'favicon',
+      title: 'Favicon',
+      type: 'favicon',
+      group: 'branding',
+    }),
+    defineField({
+      name: 'foreground',
+      title: 'Foreground',
+      type: 'color',
+      group: 'colours',
+    }),
+    defineField({
+      name: 'background',
+      title: 'Background',
+      type: 'color',
+      group: 'colours',
+    }),
+    defineField({
+      name: 'accent',
+      title: 'Accent',
+      type: 'color',
+      group: 'colours',
+    }),
+  ],
   preview: {
     prepare() {
       return {

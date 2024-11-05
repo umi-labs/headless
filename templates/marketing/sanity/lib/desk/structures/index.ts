@@ -5,5 +5,6 @@ import { Blog } from './blog'
 import { Forms } from './forms'
 import { Media } from './media'
 import { Inbox } from './inbox'
+import { PostTypes } from './post-types'
 
-export { Pages, Settings, Navigation, Blog, Forms, Media, Inbox }
+export { Pages, Settings, Navigation, Blog, Forms, Media, Inbox, PostTypes }

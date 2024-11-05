@@ -6,9 +6,8 @@ import {
 import type { Image } from 'sanity'
 import Link from 'next/link'
 
-import ImageWText from '@/app/_components/shared/Blocks/ImageWText'
+import ImageWText from '@/app/_components/shared/blocks/ImageWText'
 import ImageBox from '@/app/_components/shared/ImageBox'
-import ContactForm from '@/app/_components/shared/Blocks/ContactForm/ContactForm'
 import { FormBuilderBlock } from '@/app/_components/global/FormBuilder/FormBuilder'
 
 export function CustomPortableText({
@@ -62,12 +61,17 @@ export function CustomPortableText({
         const { content, images } = value || {}
         return <ImageWText content={content} images={images} />
       },
-      contactFormBlock: ({}) => {
-        return <ContactForm />
-      },
-      formBuilder: ({ value }) => {
-        const { formFields, _key } = value || {}
-        return <FormBuilderBlock formFields={formFields} uid={_key} />
+      form: ({ value }) => {
+        const { formFields, _key, inbox } = value || {}
+        return (
+          <div className="h-screen w-screen flex justify-center items-center">
+            <FormBuilderBlock
+              formFields={formFields}
+              uid={_key}
+              inbox={inbox}
+            />
+          </div>
+        )
       },
     },
   }

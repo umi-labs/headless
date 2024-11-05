@@ -3,12 +3,13 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 
-import { STATUS, STATUS_TYPE, STATUS_ENUM } from '@/lib/types'
+import { STATUS, STATUS_ENUM, STATUS_TYPE } from '@/lib/types'
 
-import { INPUT, TEXTAREA, FIELDSET } from '@/app/_components/ui/Forms'
+import { FIELDSET, INPUT } from '@/app/_components/ui/Forms'
 
-export const FormBuilderBlock = ({ formFields, uid }) => {
+export const FormBuilderBlock = ({ formFields, uid, inbox }) => {
   const [formData, setFormData] = React.useState({
+    inbox: 'test',
     name: '',
     email: '',
     message: '',
@@ -21,12 +22,18 @@ export const FormBuilderBlock = ({ formFields, uid }) => {
   const handleChange = (e) => {
     setFormData({
       ...formData,
+      inbox: inbox.name,
       [e.target.name]: e.target.value,
     })
   }
 
   const onSubmit = async (data: any) => {
     setStatus(STATUS[1])
+
+    data = {
+      ...data,
+      inbox: inbox.id,
+    }
 
     const response = await fetch('/api/contact/form-builder', {
       method: 'POST',

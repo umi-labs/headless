@@ -11,6 +11,14 @@ export default defineType({
       name: 'seo',
       title: 'SEO',
     },
+    {
+      name: 'content',
+      title: 'Content',
+    },
+    {
+      name: 'misc',
+      title: 'MISC',
+    },
   ],
   fields: [
     defineField({
@@ -43,31 +51,25 @@ export default defineType({
           type: 'basicHero',
         }),
       ],
+      group: 'content',
     }),
     defineField({
       name: 'blocks',
-      description: 'Used to add Blocks to the home page',
+      description: 'Used to add blocks to the home page',
       title: 'Blocks',
-      type: 'array',
-      of: [
-        defineArrayMember({
-          name: 'imageWithText',
-          type: 'imageWithText',
-        }),
-        defineArrayMember({
-          name: 'formBuilder',
-          type: 'formBuilder',
-        }),
-        defineArrayMember({
-          name: 'contactFormBlock',
-          type: 'contactFormBlock',
-        }),
-      ],
+      type: 'blocks',
+      group: 'content',
     }),
     defineField({
       name: 'metaData',
       type: 'metaData',
       group: 'seo',
+    }),
+    defineField({
+      name: 'postType',
+      type: 'reference',
+      to: [{ type: 'postType' }],
+      group: 'misc',
     }),
   ],
   preview: {

@@ -9,6 +9,7 @@
     "dev": "turbo dev",
     "dev:docs": "turbo dev --filter=@umi-digital/docs",
     "dev:templates": "turbo dev --filter=\"./templates/*\"",
+    "dev:templates:marketing": "turbo dev --filter=\"./templates/marketing*\"",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "cli:test:local": "cd packages/cli && pnpm run dev:local",
