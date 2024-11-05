@@ -7,8 +7,10 @@ import { client } from '@/sanity/lib/client'
 import {
   homePageQuery,
   pagesBySlugQuery,
-  settingsQuery,
+  pagesBySlugQuery2,
   seoSettingsQuery,
+  settingsQuery,
+  themeSettingsQuery,
 } from '@/sanity/lib/queries'
 import { token } from '@/sanity/lib/token'
 import {
@@ -16,11 +18,11 @@ import {
   PagePayload,
   SEOSettingsPayload,
   SettingsPayload,
+  ThemeSettingsPayload,
 } from '@/types'
 
 const serverClient = client.withConfig({
   token,
-  // Enable stega if it's a Vercel preview deployment, as the Vercel Toolbar has controls that shows overlays
   stega: process.env.VERCEL_ENV === 'preview',
 })
 
@@ -78,6 +80,14 @@ export function loadSEOSettings() {
   )
 }
 
+export function loadThemeSettings() {
+  return loadQuery<ThemeSettingsPayload>(
+    themeSettingsQuery,
+    {},
+    { next: { tags: ['settings', 'home', 'page'] } },
+  )
+}
+
 export function loadHomePage() {
   return loadQuery<HomePagePayload | null>(
     homePageQuery,
@@ -89,6 +99,14 @@ export function loadHomePage() {
 export function loadPage(slug: string) {
   return loadQuery<PagePayload | null>(
     pagesBySlugQuery,
+    { slug },
+    { next: { tags: [`page:${slug}`] } },
+  )
+}
+
+export function loadPage2(slug: string) {
+  return loadQuery<PagePayload | null>(
+    pagesBySlugQuery2,
     { slug },
     { next: { tags: [`page:${slug}`] } },
   )

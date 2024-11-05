@@ -36,7 +36,7 @@ const config = {
           800: '#fdfbf9',
           900: '#fefdfc',
         },
-        background: {
+        'cadet-gray': {
           DEFAULT: '#94a3b8',
           100: '#1b2028',
           200: '#354050',
@@ -123,11 +123,14 @@ const config = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
+          background: 'var(--background-color)',
+          foreground: 'var(--foreground-color)',
+          accent: 'var(--accent-color)',
+        },
+        test: {
+          '1': 'var(--background-color)',
+          '2': 'var(--foreground-color)',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',

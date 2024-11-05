@@ -3,7 +3,11 @@ import { client } from '@/sanity/lib/client'
 export async function POST(req: Request) {
   const data = await req.json()
 
-  /* return new Response(JSON.stringify({ _type: "formBuilder", ...data }), { status: 200 }) */
+  console.log(data)
+
+  // return new Response(JSON.stringify({ _type: 'formBuilder', ...data }), {
+  //   status: 200,
+  // })
 
   /* const test = await client.config()
     return new Response(JSON.stringify(test), { status: 200 }) */
@@ -16,7 +20,7 @@ export async function POST(req: Request) {
     } */
 
   try {
-    const result = await client.create({
+    const result = await client.patch({
       _type: 'form',
       ...data,
     })

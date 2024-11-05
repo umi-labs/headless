@@ -12,8 +12,8 @@ import { Navbar } from '@/app/_components/global/Navbar'
 import { urlForOpenGraphImage } from '@/sanity/lib/utils'
 import {
   loadHomePage,
-  loadSettings,
   loadSEOSettings,
+  loadSettings,
 } from '@/sanity/loader/loadQuery'
 import { config } from '@/lib/config'
 import NavbarSkeleton from '@/app/_components/global/Navbar/NavbarSkeleton'
@@ -48,7 +48,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#000',
+  themeColor: '--background-color',
 }
 
 export default async function Layout({
@@ -61,7 +61,7 @@ export default async function Layout({
   return (
     <>
       <div
-        className={`flex min-h-screen flex-col bg-isabelline text-black font-space-grotesk ${settings?.customCursor ? 'custom-cursor' : ''}`}
+        className={`flex min-h-screen flex-col font-space-grotesk ${settings?.customCursor ? 'custom-cursor' : ''}`}
       >
         <Suspense fallback={<NavbarSkeleton />}>
           <Navbar />

@@ -1,4 +1,4 @@
-import { NavigationArrow, List } from '@phosphor-icons/react'
+import { NavigationArrow } from '@phosphor-icons/react'
 
 export const Navigation = (S) =>
   S.listItem()
@@ -10,7 +10,7 @@ export const Navigation = (S) =>
         .items([
           S.listItem()
             .title('Menus')
-            .icon(List)
+            .icon(NavigationArrow)
             .child(S.document().schemaType('navigation').title('Navigation')),
         ]),
     )
