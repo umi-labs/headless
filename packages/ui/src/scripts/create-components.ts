@@ -15,7 +15,7 @@ const {
 } = fs;
 
 const outputDir = path.resolve(
-  process.env.GITHUB_WORKSPACE || "",
+  process.env.GITHUB_WORKSPACE || "../",
   "packages/ui/output",
 );
 

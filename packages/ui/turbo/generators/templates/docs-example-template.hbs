@@ -1,0 +1,23 @@
+import { FC } from "react";
+import { Type as {{ title }}Type } from "../schema";
+import {{ title }} from "../component";
+
+const Example: FC
+<{{ title }}Type> = ({ data }) => {
+  const style = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100%",
+  };
+
+  return (
+  <div
+    style={style}
+  >
+    <{{ title }} data={data} />
+  </div>
+  );
+  };
+
+  export default Example;

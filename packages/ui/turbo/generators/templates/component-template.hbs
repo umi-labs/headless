@@ -1,0 +1,13 @@
+import "../../global.css";
+import { cn } from "../../lib/utils";
+import { Type as {{ title }}Props } from "./schema";
+
+export default function {{ title }}({ data }: {{ title }}Props) {
+return (
+<section className="h-screen w-full relative flex items-center justify-center">
+  {data.title}
+</section>
+);
+}
+
+{{ title }}.displayName = "{{ title }}";

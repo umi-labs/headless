@@ -1,0 +1,25 @@
+import type { Meta, StoryObj } from "@storybook/react";
+import {{ title }} from "../component";
+import { TEST_DATA } from "../schema";
+
+const meta = {
+title: "{{ category }}/{{ title }}",
+component: {{ title }},
+argTypes: {
+
+},
+},
+} satisfies Meta
+<typeof {{ title }}>;
+
+  export default meta;
+
+  type Story = StoryObj
+  <typeof {{ title }}>;
+
+    export const Primary: Story = {
+    args: {
+    data: TEST_DATA,
+    },
+    };
+    

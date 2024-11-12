@@ -8,6 +8,7 @@
     "link:cli": "cd packages/cli && npm link",
     "dev": "turbo dev",
     "dev:docs": "turbo dev --filter=@umi-digital/docs",
+    "dev:ui": "turbo dev --filter=@umi-digital/ui",
     "dev:templates": "turbo dev --filter=\"./templates/*\"",
     "dev:templates:marketing": "turbo dev --filter=\"./templates/marketing*\"",
     "lint": "turbo lint",
@@ -22,6 +23,7 @@
     "actions:create-components": "cd packages/ui && npm run actions:create-components"
   },
   "devDependencies": {
+    "@turbo/gen": "^2.2.3",
     "prettier": "^3.2.5",
     "turbo": "^2.1.2",
     "typescript": "^5.4.5"

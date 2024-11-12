@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zodToTs, printNode } from "zod-to-ts";
+import { printNode, zodToTs } from "zod-to-ts"; // Parse Zod schema to TypeScript interface
 
 // Parse Zod schema to TypeScript interface
 export const parseZodSchemaToInterface = (
@@ -27,15 +27,15 @@ export const parseZodSchemaToSanity = (
   const schema = extractZodSchema(schemaContent);
   const sanityFields = schema
     ? Object.keys(schema.shape).map((key) => {
-        return `{
+        return `defineField({
           name: '${key}',
           title: '${key.charAt(0).toUpperCase() + key.slice(1)}',
           type: '${getSanityTypeFromZodType(schema.shape[key])}'
-        }`;
+        })`;
       })
     : [];
 
-  return `import { defineType } from 'sanity'
+  return `import { defineType, defineField } from 'sanity'
 
 export default defineType({
   name: '${componentName.toLowerCase()}',
