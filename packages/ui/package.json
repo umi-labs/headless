@@ -93,6 +93,7 @@
     "react-dom": "^18.0.0"
   },
   "dependencies": {
+    "@portabletext/react": "^3.1.0",
     "@vitejs/plugin-react": "^4.3.1",
     "fs-extra": "^11.2.0",
     "vite-node": "^2.1.3",
