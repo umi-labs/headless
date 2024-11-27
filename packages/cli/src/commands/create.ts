@@ -1,150 +1,186 @@
 import fs from "fs-extra";
 import path from "path";
-import ora from "ora";
-import prompts from "prompts";
+import {
+  cancel,
+  confirm,
+  intro,
+  isCancel,
+  log,
+  outro,
+  select,
+  tasks,
+  text,
+} from "@clack/prompts";
 import { execa } from "execa";
 import simpleGit from "simple-git";
-import { bold, green } from "kleur/colors";
+import { bold, green, inverse } from "kleur/colors";
 
 const git = simpleGit();
 
-export const create = async (projectName?: string) => {
-  const spinner = ora();
-  try {
-    // Prompt for the project name if not provided
-    if (!projectName) {
-      const response = await prompts({
-        type: "text",
-        name: "projectName",
-        message: "What is the name of the new project?",
-      });
+export const create = async (options: { name: string }) => {
+  let targetDir = "";
+  let projectName: string;
+  let packageManager: string;
+  const templatesRepo = "https://github.com/umi-labs/umi"; // Correct repo URL
+  const tempDir = path.join(process.cwd(), "temp-templates");
 
-      projectName = response.projectName;
-    }
+  intro(inverse(" create-umi-app "));
 
-    spinner.start("Setting up a new project...");
+  log.message(
+    " _   _ __  __ ___   ____ ___ ____ ___ _____  _    _     \n" +
+      "| | | |  \\/  |_ _| |  _ \\_ _/ ___|_ _|_   _|/ \\  | |    \n" +
+      "| | | | |\\/| || |  | | | | | |  _ | |  | | / _ \\ | |    \n" +
+      "| |_| | |  | || |  | |_| | | |_| || |  | |/ ___ \\| |___ \n" +
+      " \\___/|_|  |_|___| |____/___\\____|___| |_/_/   \\_\\_____|\n",
+  );
 
-    if (!projectName) {
-      spinner.fail("Project name is required.");
-      return;
-    }
+  log.message(inverse(" It's pronounced oo-me! "));
 
-    const targetDir = path.join(process.cwd(), projectName);
+  await tasks([
+    {
+      title: "Setup Directory",
+      task: async () => {
+        // Prompt for the project name
+        // TODO: Currently asking this twice - I believe first time is because the var is running before usage???
 
-    // Check if the target directory already exists
-    if (await fs.pathExists(targetDir)) {
-      spinner.fail(`The directory ${projectName} already exists.`);
-      const { overwrite } = await prompts({
-        type: "confirm",
-        name: "overwrite",
-        message: `The directory ${projectName} already exists. Do you want to overwrite it?`,
-        initial: false,
-      });
+        if (options.name) {
+          projectName = options.name;
+        } else {
+          // @ts-expect-error issue with text type possibly expecting symbol
+          projectName = await text({
+            message: "What is the name of the new project?",
+          });
 
-      if (!overwrite) {
-        spinner.fail("Project creation cancelled.");
-        return;
-      }
+          if (isCancel(projectName)) {
+            cancel("Project name is required.");
+            process.exit(0);
+          }
+        }
 
-      // Remove the existing directory if overwrite is confirmed
-      await fs.remove(targetDir);
-    }
+        targetDir = path.join(process.cwd(), projectName!);
 
-    spinner.succeed("Directory setup complete.");
+        // Check if the target directory already exists
+        if (await fs.pathExists(targetDir)) {
+          const overwrite = await confirm({
+            message: `The directory ${projectName} already exists. Do you want to overwrite it?`,
+          });
 
-    // Clone the templates repository into a temporary directory
-    const templatesRepo = "https://github.com/umi-labs/umi"; // Correct repo URL
-    const tempDir = path.join(process.cwd(), "temp-templates");
+          if (overwrite === false) {
+            cancel("Project creation cancelled.");
+            process.exit(0);
+          }
 
-    spinner.start("Cloning templates from GitHub...");
-    await git.clone(templatesRepo, tempDir);
+          // Remove the existing directory if overwrite is confirmed
+          await fs.remove(targetDir);
+        }
 
-    spinner.succeed("Templates cloned.");
+        return "Directory setup complete.";
+      },
+    },
+    {
+      title: "Cloning templates",
+      task: async () => {
+        // Clone the templates repository into a temporary directory
+        await git.clone(templatesRepo, tempDir);
+        log.success("Templates cloned successful.");
+      },
+    },
+    {
+      title: "Template Selection",
+      task: async () => {
+        // List available templates in the cloned directory
+        const templatesDir = path.join(tempDir, "templates");
+        const templates = await fs.readdir(templatesDir);
 
-    // List available templates in the cloned directory
-    const templatesDir = path.join(tempDir, "templates");
-    const templates = await fs.readdir(templatesDir);
+        if (templates.length === 0) {
+          log.error("No templates available in the cloned directory.");
+          await fs.remove(tempDir);
+          process.exit(0);
+        }
 
-    if (templates.length === 0) {
-      spinner.fail("No templates available in the cloned directory.");
-      return;
-    }
+        // Prompt user to select a template
+        // @ts-expect-error issue with text type possibly expecting symbol
+        const selectedTemplate: string = await select({
+          message: "Select a template:",
+          options: templates.map((template) => ({
+            title: template,
+            value: template,
+          })),
+        });
 
-    // Prompt user to select a template
-    const { selectedTemplate } = await prompts({
-      type: "select",
-      name: "selectedTemplate",
-      message: "Select a template:",
-      choices: templates.map((template) => ({
-        title: template,
-        value: template,
-      })),
-    });
+        if (isCancel(selectedTemplate)) {
+          cancel("Template selection is required.");
+          await fs.remove(tempDir);
+          process.exit(0);
+        }
 
-    if (!selectedTemplate) {
-      spinner.fail("Template selection is required.");
-      return;
-    }
+        const templatePath = path.join(templatesDir, selectedTemplate);
 
-    const templatePath = path.join(templatesDir, selectedTemplate);
+        log.step(`Copying template: ${selectedTemplate}`);
 
-    spinner.start(`Copying template: ${selectedTemplate}...`);
+        // Move the template contents to the target directory
+        await fs.copy(templatePath, targetDir, { overwrite: true });
 
-    // Move the template contents to the target directory
-    await fs.copy(templatePath, targetDir, { overwrite: true });
+        await fs.remove(tempDir);
 
-    spinner.succeed("Template copied.");
+        return "Template copied.";
+      },
+    },
+    {
+      title: "Installation",
+      task: async () => {
+        // Run installation commands
+        // @ts-expect-error issue with text type possibly expecting symbol
+        packageManager = await select({
+          message: "Which package manager would you like to use?",
+          options: [
+            { label: "pnpm", value: "pnpm", hint: "Recommended" },
+            { label: "npm", value: "npm" },
+            { label: "yarn", value: "yarn" },
+          ],
+        });
 
-    // Run installation commands
-    const packageManager = await prompts({
-      type: "select",
-      name: "manager",
-      message: "Which package manager would you like to use?",
-      choices: [
-        { title: "pnpm", value: "pnpm", description: "Recommended" },
-        { title: "npm", value: "npm" },
-        { title: "yarn", value: "yarn" },
-      ],
-      initial: 0,
-    });
+        await execa(packageManager, ["install"], {
+          cwd: targetDir,
+          stdio: "ignore",
+        }).catch(async (error) => {
+          log.error(error);
+          await fs.remove(tempDir);
+          process.exit(0);
+        });
 
-    spinner.start("Installing dependencies...");
-    await execa(packageManager.manager, ["install"], {
-      cwd: targetDir,
-      stdio: "inherit",
-    });
-    spinner.succeed("Dependencies installed.");
+        await fs.remove(tempDir);
+        return "Installation complete.";
+      },
+    },
+    {
+      title: "",
+      task: async () => {
+        // Offering helpful tips to the user
+        const tips = [
+          `Navigate into your new project folder: ${bold(
+            green(`cd ${projectName}`),
+          )}`,
+          `Run ${bold(green("umi init"))} to initialise your project.`,
+          `Start your development server: ${bold(
+            green(
+              `${packageManager} ${packageManager === "npm" ? "run" : ""} dev`,
+            ),
+          )}`,
+          `Check the ${bold(green("README.md"))} file for more setup instructions.`,
+          `Explore the available templates to customise your project further.`,
+        ];
 
-    // Clean up by removing the temporary directory
-    await fs.remove(tempDir);
+        log.message(
+          `Project created successfully! ${bold(green(" Let's get you started: "))}`,
+          { symbol: "🎉" },
+        );
+        tips.map((tip, index) =>
+          log.message(tip, { symbol: bold(green(`${index + 1}.`)) }),
+        );
+      },
+    },
+  ]);
 
-    // Offering helpful tips to the user
-    const tips = [
-      `${bold("1.")} Navigate into your new project folder: ${bold(
-        `cd ${projectName}`,
-      )}`,
-      `${bold("2.")} Run ${bold("umi init")} to initialise your project.`,
-      `${bold("3.")} Start your development server: ${bold(
-        `${packageManager.manager} ${
-          packageManager.manager === "npm" ? "run" : ""
-        } dev`,
-      )}`,
-      `${bold("4.")} Check the ${bold(
-        "README.md",
-      )} file for more setup instructions.`,
-      `${bold(
-        "5.",
-      )} Explore the available templates to customise your project further.`,
-    ];
-
-    console.log(
-      `\n🎉 Project created successfully! ${bold(
-        green("Let's get you started:\n"),
-      )}`,
-    );
-    tips.forEach((tip) => console.log(tip));
-  } catch (error) {
-    spinner.fail("An error occurred while creating the project.");
-    console.error(error);
-  }
+  outro("Happy coding :)");
 };

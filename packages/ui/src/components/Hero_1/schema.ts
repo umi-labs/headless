@@ -4,7 +4,7 @@ export const Schema = z.object({
   data: z.object({
     tagline: z.string(),
     heading: z.string(),
-    descritpion: z.string(),
+    description: z.string(),
     image: z.object({
       src: z.string(),
       alt: z.string(),
@@ -30,7 +30,7 @@ export type Type = z.infer<typeof Schema>;
 
 export const TEST_DATA: Type["data"] = {
   heading: "Medium length hero heading goes here",
-  descritpion:
+  description:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.",
   tagline: "Tagline",
   image: {

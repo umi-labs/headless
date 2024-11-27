@@ -1,22 +1,28 @@
 import fs from "fs-extra";
 import path from "path";
-import ora from "ora";
 import simpleGit from "simple-git";
-import prompts from "prompts";
 import { z } from "zod";
-import { Config, componentNameSchema } from "../utils/schema.js";
-import { addImportBelowObjects } from "../utils/file-management/addImportsBelowObjects.js";
+import { componentNameSchema, Config } from "../utils/schema.js";
+import { addImportBelowObjects } from "../utils/file-and-directory-management/addImportsBelowObjects.js";
 import { cleanComponentName } from "../utils/nameCleaner.js";
+import { intro, log, outro, select, tasks, text } from "@clack/prompts";
+import { inverse } from "kleur/colors";
+import { cleanUp } from "../utils/file-and-directory-management/cleanup";
+import { checkMultiPackageStatus } from "../utils/package";
+import { execa } from "execa";
+
+// TODO: Add ability to pull additional import requirements from config file attached to component
+// TODO: Needs to be upgraded to the clack prompt system
 
 // Import fs-extra functions like this or dist will fail
-const { readJSON, pathExists, ensureDir, remove, outputFile, readFile } = fs;
+const { readJSON, pathExists, ensureDir, outputFile, readFile } = fs;
 
 // Initialise simple-git
 const git = simpleGit();
 
 // Function to add a component
-export const add = async (name: string) => {
-  const spinner = ora();
+export const add = async (options: { name: string }) => {
+  intro(inverse(" adding a component "));
 
   const sanity = path.join(process.cwd(), "sanity", "schemas", "objects");
 
@@ -24,167 +30,243 @@ export const add = async (name: string) => {
   const componentsRepo = "https://github.com/umi-labs/umi"; // Correct repo URL
   const compDir = path.join(process.cwd(), "temp-components");
 
+  // Constants
+  let componentsDir: string,
+    components: string[],
+    selectedComponent: string,
+    selectedComponentDir: string,
+    category: string,
+    additionalPackages: string[],
+    componentDir: string,
+    config: Config;
+
+  let componentName = cleanComponentName(options.name);
+
   // Clean up old temporary directory if exists
-  if (await pathExists(compDir)) {
-    spinner.start("Cleaning up old temp directory...");
-    await remove(compDir);
-    spinner.succeed("Old temp directory removed.");
-  }
+  await cleanUp(compDir);
 
-  // Clone the components repository
-  spinner.start("Getting components...");
-  await git.clone(componentsRepo, compDir);
-  spinner.succeed("Components repository cloned.");
+  await tasks([
+    {
+      title: "Cloning components",
+      task: async () => {
+        // Clone the components repository
+        log.info("Getting components...");
+        await git.clone(componentsRepo, compDir);
+        log.info(`${compDir}`);
+        return "Components repository cloned.";
+      },
+    },
+    {
+      title: "Choose your component",
+      task: async () => {
+        // List available templates in the cloned directory
+        componentsDir = path.join(compDir, "packages", "ui", "output");
+        components = await fs.readdir(componentsDir);
 
-  // List available templates in the cloned directory
-  const componentsDir = path.join(compDir, "packages", "ui", "output");
-  const components = await fs.readdir(componentsDir);
+        if (components.length === 0) {
+          log.warn("No templates available in the cloned directory.");
+          await cleanUp(compDir);
+          process.exit(0);
+        }
 
-  if (components.length === 0) {
-    spinner.fail("No templates available in the cloned directory.");
-    return;
-  }
+        // Prompt user to select a template
+        // @ts-expect-error type error
+        selectedComponent = await select({
+          message: "Select a component to add:",
+          options: components.map((component) => ({
+            title: component,
+            value: component,
+          })),
+        });
 
-  // Prompt user to select a template
-  const { selectedComponent } = await prompts({
-    type: "select",
-    name: "selectedComponent",
-    message: "Select a component to add:",
-    choices: components.map((component) => ({
-      title: component,
-      value: component,
-    })),
-  });
+        return `Selected component: ${selectedComponent}`;
+      },
+    },
+    {
+      title: "Preparing component",
+      task: async () => {
+        // Path to the selected component directory
+        selectedComponentDir = path.join(componentsDir, selectedComponent);
 
-  console.log(`Selected component: ${selectedComponent}`);
+        // Read the config.json from the selected component directory
+        const componentConfigPath = path.join(
+          selectedComponentDir,
+          "config.json",
+        );
 
-  // Path to the selected component directory
-  const selectedComponentDir = path.join(componentsDir, selectedComponent);
+        if (!(await pathExists(componentConfigPath))) {
+          log.warn(`No config.json found in ${selectedComponent}`);
+        }
 
-  // Read the config.json from the selected component directory
-  const componentConfigPath = path.join(selectedComponentDir, "config.json");
+        const componentConfig = await readJSON(componentConfigPath);
+        category = componentConfig.category || "blocks"; // Default to "blocks" if category is not defined
+        additionalPackages = componentConfig.additionalPackages || [];
 
-  if (!(await pathExists(componentConfigPath))) {
-    spinner.fail(`No config.json found in ${selectedComponent}`);
-    return;
-  }
+        return `Component category: ${category}`;
+      },
+    },
+    {
+      title: "Name your component",
+      task: async () => {
+        // If no component name is provided, prompt for one
+        if (!componentName) {
+          // Prompt for component name
+          const response = await text({
+            message: "What is the name of the component?",
+            validate(value) {
+              if (value.length < 0) return "Component name is required"; // Validation for empty input
+            },
+          });
 
-  const componentConfig = await readJSON(componentConfigPath);
-  const category = componentConfig.category || "blocks"; // Default to "blocks" if category is not defined
+          log.step("Validating component name...");
 
-  console.log(`Component category: ${category}`);
+          // Check if the prompt response contains the expected componentName
+          if (response) {
+            componentName = cleanComponentName(response as string); // Make sure you access the correct key
+          } else {
+            log.warn("No component name provided.");
+          }
+        }
 
-  let componentName = cleanComponentName(name);
+        // Validate the component name using Zod
+        try {
+          componentNameSchema.parse(componentName);
+        } catch (error) {
+          log.warn((error as z.ZodError).errors[0].message);
+        }
 
-  // If no component name is provided, prompt for one
-  if (!componentName) {
-    // Prompt for component name
-    const response = await prompts({
-      type: "text",
-      name: "componentName", // This key corresponds to the value you'll access
-      message: "What is the name of the component?",
-      validate: (value) =>
-        value.length > 0 ? true : "Component name is required", // Validation for empty input
-    });
+        return "Component name validated.";
+      },
+    },
+    {
+      title: "Loading configuration",
+      task: async () => {
+        // Load existing configuration
+        let existingConfig: Config | {} = {};
+        const configPath = path.resolve(process.cwd(), "umirc.json");
 
-    spinner.start("Validating component name...");
+        if (await pathExists(configPath)) {
+          existingConfig = await readJSON(configPath);
+        }
 
-    // Check if the prompt response contains the expected componentName
-    if (response.componentName) {
-      componentName = cleanComponentName(response.componentName as string); // Make sure you access the correct key
-    } else {
-      spinner.fail("No component name provided.");
-      return;
-    }
-  }
+        // Validate config
+        config = existingConfig as Config;
 
-  // Validate the component name using Zod
-  try {
-    componentNameSchema.parse(componentName);
-  } catch (error) {
-    spinner.fail((error as z.ZodError).errors[0].message);
-    return;
-  }
+        // Check if aliases and components are defined
+        if (!config.aliases || !config.aliases.components) {
+          log.warn("Component alias not defined in configuration.");
+        }
 
-  spinner.succeed("Component name validated.");
+        return "Configuration loaded";
+      },
+    },
+    {
+      title: `Adding component: ${componentName}`,
+      task: async () => {
+        // Path to the new component directory based on config and category
+        componentDir = path.join(
+          process.cwd(),
+          "app",
+          `_${config.aliases.components}`,
+          `shared`,
+          `${category}`, // Use the category from the component's config.json
+        );
 
-  // Load existing configuration
-  let existingConfig: Config | {} = {};
-  const configPath = path.resolve(process.cwd(), "umirc.json");
+        // Ensure the directory exists
+        await ensureDir(componentDir);
 
-  if (await pathExists(configPath)) {
-    existingConfig = await readJSON(configPath);
-  }
+        const componentSourceFilePath = path.join(
+          selectedComponentDir,
+          `${selectedComponent}.tsx`,
+        );
 
-  // Validate config
-  const config = existingConfig as Config;
+        // Ensure the component file exists
+        if (!(await pathExists(componentSourceFilePath))) {
+          log.warn(`Component file "${selectedComponent}.tsx" not found.`);
+        }
 
-  // Check if aliases and components are defined
-  if (!config.aliases || !config.aliases.components) {
-    spinner.fail("Component alias not defined in configuration.");
-    return;
-  }
+        // Destination file path (e.g., _components/shared/heros/Hero_1.tsx)
+        const destinationFilePath = path.join(
+          componentDir,
+          `${componentName}.tsx`,
+        );
 
-  // Path to the new component directory based on config and category
-  const componentDir = path.join(
-    process.cwd(),
-    "app",
-    `_${config.aliases.components}`,
-    `shared`,
-    `${category}`, // Use the category from the component's config.json
-  );
+        let fileContent = await readFile(componentSourceFilePath, "utf8");
 
-  spinner.start(`Adding component: ${componentName}...`);
+        await outputFile(destinationFilePath, fileContent);
 
-  // Ensure the directory exists
-  await ensureDir(componentDir);
+        return `Component "${componentName}" added successfully!`;
+      },
+    },
+    {
+      title: "Inserting Schema",
+      task: async () => {
+        const schemaSourceFilePath = path.join(
+          selectedComponentDir,
+          `schema.ts`,
+        );
 
-  const componentSourceFilePath = path.join(
-    selectedComponentDir,
-    `${selectedComponent}.tsx`,
-  );
+        const schemaDestinationFilePath = path.join(
+          sanity,
+          `${componentName}.js`,
+        );
 
-  // Ensure the component file exists
-  if (!(await pathExists(componentSourceFilePath))) {
-    spinner.fail(`Component file "${selectedComponent}.tsx" not found.`);
-    return;
-  }
+        let schemaFileContent = await readFile(schemaSourceFilePath, "utf8");
 
-  // Destination file path (e.g., _components/shared/heros/Hero_1.tsx)
-  const destinationFilePath = path.join(componentDir, `${componentName}.tsx`);
+        // Ensure the component file exists
+        if (!(await pathExists(schemaSourceFilePath))) {
+          log.warn(`We cannot find the schema file for this component.`);
+        }
 
-  let fileContent = await readFile(componentSourceFilePath, "utf8");
+        await outputFile(schemaDestinationFilePath, schemaFileContent);
 
-  await outputFile(destinationFilePath, fileContent);
+        return `Component schema file  added successfully!`;
+      },
+    },
+    {
+      title: "Adding Imports into file system",
+      task: async () => {
+        await addImportBelowObjects({
+          componentName: componentName!,
+        });
 
-  spinner.succeed(`Component "${componentName}" added successfully!`);
+        return "Imports added";
+      },
+    },
+    {
+      title: "Installing Additional Packages",
+      task: async () => {
+        let packagesToInstall =
+          await checkMultiPackageStatus(additionalPackages);
 
-  spinner.start("Inserting schema...");
+        if (additionalPackages.length < 0) {
+          log.info("No additional packages found.");
+        } else if (packagesToInstall.length > 0) {
+          log.info(`Installing ${packagesToInstall.join(", ")}...`);
+          await execa("npm", ["install", ...packagesToInstall], {
+            stdio: "inherit",
+          });
+          log.success(
+            `${packagesToInstall.join(", ")} installed successfully.`,
+          );
+        } else {
+          log.success(
+            `${additionalPackages.join(", ")} are already installed.`,
+          );
+        }
 
-  const schemaSourceFilePath = path.join(selectedComponentDir, `schema.ts`);
+        return "Package Installation Complete";
+      },
+    },
+    {
+      title: "Cleaning Up",
+      task: async () => {
+        await cleanUp(compDir);
 
-  const schemaDestinationFilePath = path.join(sanity, `${componentName}.js`);
+        return "Clean Up Complete";
+      },
+    },
+  ]);
 
-  let schemaFileContent = await readFile(schemaSourceFilePath, "utf8");
-
-  // Ensure the component file exists
-  if (!(await pathExists(schemaSourceFilePath))) {
-    spinner.fail(`We cannot find the schema file for this component.`);
-    return;
-  }
-
-  await outputFile(schemaDestinationFilePath, schemaFileContent);
-
-  spinner.succeed(`Component schema file  added successfully!`);
-
-  spinner.start(`Adding imports...`);
-
-  await addImportBelowObjects({
-    componentName: componentName!,
-  });
-
-  spinner.succeed("Imports added");
-
-  // Clean up by removing the temporary directory
-  await remove(compDir);
+  outro(inverse(" component ready to use "));
 };

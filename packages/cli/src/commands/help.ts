@@ -1,5 +1,5 @@
 export function help() {
-    console.log(`
+  console.log(`
       Welcome to UMI CLI!
   
       Available Commands:
@@ -17,7 +17,7 @@ export function help() {
          Description: Displays this help message.
   
       Example:
-        To initialize a new project, run:
+        To initialise a new project, run:
         $ umi init
   
       For more information on each command, run:
