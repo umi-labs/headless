@@ -16,7 +16,8 @@ umi init
 
 | Option | Description | Default |
 | --- | --- | --- |
-| `--yes` | Skip prompts and use default values. | None |
+| `-y, --yes` | Skip prompts and use default values. | None |
+| `-n, --name <name>` | Set the name of the project | None |
 
 ## Examples
 
@@ -30,6 +31,18 @@ umi init
 
 ```bash copy
 umi init --yes
+```
+```bash copy
+umi init -y
+```
+
+### Adding a name
+
+```bash copy
+umi init --name my-project
+```
+```bash copy
+umi init -n my-project
 ```
 
 ## How it works

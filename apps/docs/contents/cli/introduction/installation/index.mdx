@@ -9,117 +9,127 @@ To install the **UMI CLI**, you will need to check for several prerequisites, in
 ## Install
 
 <Step>
-<StepItem title="System Requirements">
+  <StepItem title="System Requirements">
 
-  - **Node.js:** Make sure you have Node.js installed. This is crucial for the installation and use of the package.
-  - **Package Manager:** This project was built to be package manager agnostic so that `pnpm`, `npm` and `yarn` commands all work the same, ensure that your chosen package manager is installed.
+    - **Node.js:** Make sure you have Node.js installed. This is crucial for the installation and use of the package.
+    - **Package Manager:** This project was built to be package manager agnostic so that `pnpm`, `npm` and `yarn`
+    commands all work the same, ensure that your chosen package manager is installed.
 
-To verify installation, run:
+    To verify installation, run:
 
-  ```bash
-  node -v
-  ```
+    ```bash
+    node -v
+    ```
 
-  > We are currently running support for node 18.19.0. However we are working bring a wider array of versions supported.
+    > We are currently running support for node 18.19.0. However we are working bring a wider array of versions
+    supported.
 
-  And then checking your package manager of choice is installed, run:
+    And then checking your package manager of choice is installed, run:
 
-  <Tabs defaultValue="pnpm" className="pt-5 pb-1">
-    <TabsList className="">
-      <TabsTrigger value="pnpm">pnpm</TabsTrigger>
-      <TabsTrigger value="npm">npm</TabsTrigger>
-      <TabsTrigger value="yarn">yarn</TabsTrigger>
-    </TabsList>
-    <TabsContent value="pnpm">
+    <Note title="Package Manager" type="danger">
+      Currently we are having issues with package managers other than pnpm on some systems, for now please ensure this
+      is installed on your system to prevent issues down the road.
+    </Note>
+    #
+
+    <Tabs defaultValue="pnpm" className="pt-5 pb-1">
+      <TabsList className="">
+        <TabsTrigger value="pnpm">pnpm</TabsTrigger>
+        <TabsTrigger value="npm">npm</TabsTrigger>
+        <TabsTrigger value="yarn">yarn</TabsTrigger>
+      </TabsList>
+      <TabsContent value="pnpm">
+        ```bash copy
+        pnpm -v
+        ````
+      </TabsContent>
+      <TabsContent value="npm">
+        ```bash copy
+        npm -v
+        ````
+      </TabsContent>
+      <TabsContent value="yarn">
+        ```bash copy
+        yarn -v
+        ````
+      </TabsContent>
+
+    </Tabs>
+
+  </StepItem>
+  <StepItem title="Installation">
+    Now we will install the package onto your system.
+
+
+    <Tabs defaultValue="pnpm" className="pt-5 pb-1">
+      <TabsList className="">
+        <TabsTrigger value="pnpm">pnpm</TabsTrigger>
+        <TabsTrigger value="npm">npm</TabsTrigger>
+        <TabsTrigger value="yarn">yarn</TabsTrigger>
+      </TabsList>
+      <TabsContent value="pnpm">
+        ```bash copy
+        pnpm add -g @umi-digital/cli
+        ````
+      </TabsContent>
+      <TabsContent value="npm">
+        ```bash copy
+        npm install -g @umi-digital/cli
+        ````
+      </TabsContent>
+      <TabsContent value="yarn">
+        ```bash copy
+        yarn add -g @umi-digital/cli
+        ````
+      </TabsContent>
+    </Tabs>
+
+    **Whilst installing the package be aware of any modules that are not installed correctly. If this happens contact
+    the [project owner](mailto:isaac@umidigital.co.uk) immediately to organise a repair or remedy.**
+
+  </StepItem>
+  <StepItem title="Test Installation">
+    Finally, we need to test the installation to ensure that it is on your system and working. To do this run:
+
     ```bash copy
-    pnpm -v
-  ````
-    </TabsContent>
-    <TabsContent value="npm">
-    ```bash copy
-    npm -v
-  ````
-    </TabsContent>
-    <TabsContent value="yarn">
-    ```bash copy
-    yarn -v
-  ````
-    </TabsContent>
+    umi
+    ```
 
-  </Tabs>
+    This should give you a read out something like this (this is subject to change as the package matures overtime):
 
-</StepItem>
-<StepItem title="Installation">
-Now we will install the package onto your system.
+    ```bash
+    umi
+    Usage: umi [options] [command]
 
-<Tabs defaultValue="pnpm" className="pt-5 pb-1">
-  <TabsList className="">
-    <TabsTrigger value="pnpm">pnpm</TabsTrigger>
-    <TabsTrigger value="npm">npm</TabsTrigger>
-    <TabsTrigger value="yarn">yarn</TabsTrigger>
-  </TabsList>
-  <TabsContent value="pnpm">
-  ```bash copy
-  pnpm add -g @umi-digital/cli
-````
-  </TabsContent>
-  <TabsContent value="npm">
-  ```bash copy
-  npm install -g @umi-digital/cli
-````
-  </TabsContent>
-  <TabsContent value="yarn">
-  ```bash copy
-  yarn add -g @umi-digital/cli
-````
-  </TabsContent>
-</Tabs>
+    A CLI tool for project management
 
-**Whilst installing the package be aware of any modules that are not installed correctly. If this happens contact the [project owner](mailto:isaac@umidigital.co.uk) immediately to organise a repair or remedy.**
+    Options:
+    -v, --vers display the current version
+    -h, --help display help for command
 
-</StepItem>
-<StepItem title="Test Installation">
-Finally, we need to test the installation to ensure that it is on your system and working. To do this run:
+    Commands:
+    init [options] Initialises a new project
+    create [projectName] Creates a new project
+    add [componentName] Adds components or features to your project
+    remove [componentName] Removes components or features from your project
+    help Displays help information for UMI CLI
+    Usage: umi [options] [command]
 
-```bash copy
-umi
-```
+    A CLI tool for project management
 
-This should give you a read out something like this (this is subject to change as the package matures overtime):
+    Options:
+    -v, --vers display the current version
+    -h, --help display help for command
 
-```bash
-umi
-Usage: umi [options] [command]
+    Commands:
+    init [options] Initialises a new project
+    create [projectName] Creates a new project
+    add [componentName] Adds components or features to your project
+    remove [componentName] Removes components or features from your project
+    help Displays help information for UMI CLI
+    ````
 
-A CLI tool for project management
-
-Options:
-  -v, --vers              display the current version
-  -h, --help              display help for command
-
-Commands:
-  init [options]          Initialises a new project
-  create [projectName]    Creates a new project
-  add [componentName]     Adds components or features to your project
-  remove [componentName]  Removes components or features from your project
-  help                    Displays help information for UMI CLI
-Usage: umi [options] [command]
-
-A CLI tool for project management
-
-Options:
-  -v, --vers              display the current version
-  -h, --help              display help for command
-
-Commands:
-  init [options]          Initialises a new project
-  create [projectName]    Creates a new project
-  add [componentName]     Adds components or features to your project
-  remove [componentName]  Removes components or features from your project
-  help                    Displays help information for UMI CLI
-````
-
-</StepItem>
+  </StepItem>
 </Step>
 
 ## Next Steps

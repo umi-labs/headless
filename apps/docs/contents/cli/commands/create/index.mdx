@@ -12,78 +12,110 @@ The `create` command is used to add a new component to a project.
 umi create
 ```
 
+## Options
+
+| Option | Description | Default |
+| ------- | --- | --- |
+| `-n, --name <name>` | The name of the project. | None |
+
+
+## Examples
+
+### Creating a new project
+
+```bash copy
+umi create
+```
+
+### Adding a name
+
+```bash copy
+umi create --name my-project
+```
+```bash copy
+umi create -n my-project
+```
+
+
 ## Usage
 
 <Step>
-<StepItem title="Running The Command">
+  <StepItem title="Running The Command">
 
-Get started by running the command
+    Get started by running the command
 
-  ```bash
-  umi create
-  ```
+    ```bash
+    umi create
+    ```
 
-</StepItem>
-<StepItem title="Project Name">
+  </StepItem>
+  <StepItem title="Project Name">
 
-Next enter the name for the project you are looking to build.
+    Next enter the name for the project you are looking to build.
 
-```bash
-What is the name of the new project? ›
-```
+    ```bash
+    What is the name of the new project? ›
+    ```
 
-</StepItem>
-<StepItem title="Select Your Template">
+  </StepItem>
+  <StepItem title="Select Your Template">
 
-Great! Now you have chosen your name, we do a few things in the background to get the directory set up - if these have been done correctly you should see the messages below. Select a template from those presented to you (the templates below may vary to from what you can see as this repo will develop overtime).
+    Great! Now you have chosen your name, we do a few things in the background to get the directory set up - if these
+    have been done correctly you should see the messages below. Select a template from those presented to you (the
+    templates below may vary to from what you can see as this repo will develop overtime).
 
-```bash
-✔ What is the name of the new project? … Test
-✔ Directory setup complete.
-✔ Templates cloned.
-? Select a template: › - Use arrow-keys. Return to submit.
-❯   basic
+    ```bash
+    ✔ What is the name of the new project? … Test
+    ✔ Directory setup complete.
+    ✔ Templates cloned.
+    ? Select a template: › - Use arrow-keys. Return to submit.
+    ❯ basic
     marketing
-```
+    ```
 
-</StepItem>
-<StepItem title="Select Your Package Manager">
+  </StepItem>
+  <StepItem title="Select Your Package Manager">
 
-Congratulations, this is the final step needed to scaffold your project. Again, most of what is happening in the background is then relayed to you the user through the terminal with messages and their status. Select a package manager from the available below and the project will begin to build.
+    Congratulations, this is the final step needed to scaffold your project. Again, most of what is happening in the
+    background is then relayed to you the user through the terminal with messages and their status. Select a package
+    manager from the available below and the project will begin to build.
 
-```bash
-✔ What is the name of the new project? … Test
-✔ Directory setup complete.
-✔ Templates cloned.
-✔ Select a template: › basic
-✔ Template copied.
-? Which package manager would you like to use? › - Use arrow-keys. Return to submit.
-❯   pnpm - Recommended
+    ```bash
+    ✔ What is the name of the new project? … Test
+    ✔ Directory setup complete.
+    ✔ Templates cloned.
+    ✔ Select a template: › basic
+    ✔ Template copied.
+    ? Which package manager would you like to use? › - Use arrow-keys. Return to submit.
+    ❯ pnpm - Recommended
     npm
     yarn
-```
+    ```
 
-</StepItem>
-<StepItem title="Installation">
+  </StepItem>
+  <StepItem title="Installation">
 
-Your project should now scaffold itself into the directory with the name you have provided. If you need to overwrite a previous directory, the tool will ask you if this is okay before proceeding.
+    Your project should now scaffold itself into the directory with the name you have provided. If you need to overwrite
+    a previous directory, the tool will ask you if this is okay before proceeding.
 
-```bash
-✔ What is the name of the new project? … Test
-✔ Directory setup complete.
-✔ Templates cloned.
-✔ Select a template: › basic
-✔ Template copied.
-✔ Which package manager would you like to use? › pnpm
- WARN  deprecated eslint@8.57.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.
-Progress: resolved 1, reused WARN  5 deprecated subdependencies found: @humanwhocodes/config-array@0.11.14, @humanwhocodes/object-schema@2.0.3, glob@7.2.3, inflight@1.0.6, rimraf@3.0.2
-Progress: resolved 1313, reuPackages: +1256
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Progress: resolved 1313, reuProgress: resolved 1314, reused 1243, downloaded 5, added 975
-⠇ Installing dependencies...
-```
+    ```bash
+    ✔ What is the name of the new project? … Test
+    ✔ Directory setup complete.
+    ✔ Templates cloned.
+    ✔ Select a template: › basic
+    ✔ Template copied.
+    ✔ Which package manager would you like to use? › pnpm
+    WARN deprecated eslint@8.57.0: This version is no longer supported. Please see https://eslint.org/version-support
+    for other options.
+    Progress: resolved 1, reused WARN 5 deprecated subdependencies found: @humanwhocodes/config-array@0.11.14,
+    @humanwhocodes/object-schema@2.0.3, glob@7.2.3, inflight@1.0.6, rimraf@3.0.2
+    Progress: resolved 1313, reuPackages: +1256
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    Progress: resolved 1313, reuProgress: resolved 1314, reused 1243, downloaded 5, added 975
+    ⠇ Installing dependencies...
+    ```
 
-</StepItem>
+  </StepItem>
 </Step>
 
 ## Next Steps

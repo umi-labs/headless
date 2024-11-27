@@ -1,0 +1,32 @@
+---
+title: Config
+description: This section provides an overview of the config file in components
+---
+
+## Basic structure
+
+```json
+  {
+    "title": "Button",
+    "componentName": "Button",
+    "description": "Button component config",
+    "version": "1.0.0",
+    "category": "ui",
+    "type": "",
+    "schema": true,
+    "additionalPackages": []
+  }
+```
+
+Let's break down this structure:
+
+The main things of note within this json structure are the `componentName`, `category`, `type` and `additionalPackages` values, these are all vital to the cli when pulling files into a project as they
+lay out the key pieces of information in terms of what it is, where it's going and anything this component requires.
+
+When building a new component in this package you always need to make sure that these are completed and completed to the nth degree - this avoided duplication, installation errors etc.
+
+<Note title="Additonal Packages" type="warning">
+  For the additionalPackages array please input the installation value of the package you are meaning as a string. e.g.
+  `["motion"]` not `["npm install motion"]`.
+  Additionally, include the types package if required e.g. `["motion", "@types/motion"]`.
+</Note>
