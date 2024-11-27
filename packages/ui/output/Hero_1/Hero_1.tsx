@@ -4,7 +4,7 @@ interface Hero_1Props {
     data: {
         tagline: string;
         heading: string;
-        descritpion: string;
+        description: string;
         image: {
             src: string;
             alt: string;
@@ -47,7 +47,7 @@ export default function Hero1({
         <span className="text-base font-semibold">{data.tagline}</span>
         <div className="flex flex-col items-center justify-center gap-6">
           <h1 className="text-6xl font-bold">{data.heading}</h1>
-          <p className="text-lg">{data.descritpion}</p>
+          <p className="text-lg">{data.description}</p>
         </div>
       </div>
     </section>
