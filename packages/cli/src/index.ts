@@ -1,5 +1,5 @@
 import { Command } from "commander";
-import { init, create, add, remove, help } from "./commands";
+import { add, create, help, init, remove } from "./commands";
 
 import { getPackageInfo } from "./utils/package";
 
@@ -14,7 +14,7 @@ async function main() {
     .version(
       packageInfo.version || "0.0.1",
       "-v, --vers",
-      "display the current version"
+      "display the current version",
     );
 
   // Command for initialising a new project
@@ -22,32 +22,36 @@ async function main() {
     .command("init")
     .description("Initialises a new project")
     .option("-y, --yes", "Skip prompts and use default values")
+    .option("-n, --name <name>", "Name of the project")
     .action((options) => {
       init(options);
     });
 
   // Command for creating a new project
   program
-    .command("create [projectName]")
+    .command("create")
     .description("Creates a new project")
-    .action(async (projectName) => {
-      await create(projectName);
+    .option("-n, --name <name>", "Name of the project")
+    .action(async (options) => {
+      await create(options);
     });
 
   // // Command for adding components or features
   program
-    .command("add [componentName]")
+    .command("add")
     .description("Adds components or features to your project")
-    .action(async (componentName) => {
-      await add(componentName); // Pass the component name to add
+    .option("-n, --name <name>", "Name of the component")
+    .action(async (options) => {
+      await add(options); // Pass the component name to add
     });
 
   // Command for removing components or features
   program
-    .command("remove [componentName]")
+    .command("remove")
     .description("Removes components or features from your project")
-    .action(async (componentName) => {
-      await remove(componentName); // Pass the component name to add
+    .option("-n, --name <name>", "Name of the component")
+    .action(async (options) => {
+      await remove(options); // Pass the component name to add
     });
 
   // Command for displaying help information

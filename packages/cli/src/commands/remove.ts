@@ -6,11 +6,11 @@ import { Config } from "../utils/schema";
 
 const { pathExists, readJSON } = fs;
 
-export const remove = async (componentName: string) => {
+export const remove = async (options: { name: string }) => {
   const spinner = ora();
 
   try {
-    if (!componentName) {
+    if (!options.name) {
       spinner.fail("Component name is required.");
       return;
     }
@@ -32,16 +32,16 @@ export const remove = async (componentName: string) => {
       process.cwd(),
       "app",
       `_${config.aliases.components}`,
-      `${config.aliases.ui}`
+      `${config.aliases.ui}`,
     );
 
     // Define the path for the component to remove
-    const componentPath = path.join(componentDir, `${componentName}.tsx`);
+    const componentPath = path.join(componentDir, `${options.name}.tsx`);
 
     // Check if the component exists
     if (!(await fs.pathExists(componentPath))) {
       spinner.fail(
-        `Component "${componentName}" does not exist in the UI directory.`
+        `Component "${options.name}" does not exist in the UI directory.`,
       );
       return;
     }
@@ -50,7 +50,7 @@ export const remove = async (componentName: string) => {
     const { confirmDelete } = await prompts({
       type: "confirm",
       name: "confirmDelete",
-      message: `Are you sure you want to delete the component "${componentName}"?`,
+      message: `Are you sure you want to delete the component "${options.name}"?`,
       initial: false,
     });
 
@@ -59,11 +59,11 @@ export const remove = async (componentName: string) => {
       return;
     }
 
-    spinner.start(`Removing component: ${componentName}...`);
+    spinner.start(`Removing component: ${options.name}...`);
     // Remove the component
     await fs.remove(componentPath);
     spinner.succeed(
-      `Component "${componentName}" removed successfully from ${componentDir}.`
+      `Component "${options.name}" removed successfully from ${componentDir}.`,
     );
   } catch (error) {
     spinner.fail("An error occurred while removing the component.");

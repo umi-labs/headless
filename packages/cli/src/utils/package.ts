@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs-extra";
 import { type PackageJson } from "type-fest";
+import { log } from "@clack/prompts";
 
 const { readJSON, readJSONSync } = fs;
 
@@ -14,13 +15,13 @@ export function getPackageInfo() {
   } catch (error) {
     // If the file is not found or cannot be read, throw a specific error
     throw new Error(
-      "Could not find or read package.json. Please ensure it exists and is accessible."
+      "Could not find or read package.json. Please ensure it exists and is accessible.",
     );
   }
 }
 
 export async function checkIfPackageInstalled(
-  packageName: string
+  packageName: string,
 ): Promise<boolean> {
   try {
     // Check if the package is listed in dependencies or devDependencies in package.json
@@ -33,9 +34,19 @@ export async function checkIfPackageInstalled(
     // Return true if the package is found in either dependencies or devDependencies
     return packageName in dependencies || packageName in devDependencies;
   } catch (error) {
-    console.warn(
-      `Could not read package.json to verify ${packageName}. Proceeding with installation.`
+    log.warn(
+      `Could not read package.json to verify ${packageName}. Proceeding with installation.`,
     );
     return false;
   }
+}
+
+export async function checkMultiPackageStatus(packages: Array<string>) {
+  const packagesToInstall = [];
+  for (const packageName of packages) {
+    if (!(await checkIfPackageInstalled(packageName))) {
+      packagesToInstall.push(packageName);
+    }
+  }
+  return packagesToInstall;
 }
