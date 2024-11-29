@@ -1,0 +1,9 @@
+{
+"title": "SlidingContent",
+"componentName": "SlidingContent",
+"description": "SlidingContent component config",
+"version": "0.0.1",
+"category": "blocks",
+"type": "Slider",
+"schema": true
+}
