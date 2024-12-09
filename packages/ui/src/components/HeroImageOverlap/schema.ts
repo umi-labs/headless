@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { ButtonSchema, ImageSchema } from "../../lib/generic-schemas.ts";
 
 export const Schema = z.object({
   data: z.object({
@@ -7,8 +6,28 @@ export const Schema = z.object({
     title: z.string(),
     subtitle: z.string(),
     content: z.string(),
-    buttons: z.array(ButtonSchema).optional(),
-    image: ImageSchema,
+    buttons: z
+      .array(
+        z.object({
+          title: z.string(),
+          link: z.string().optional(),
+          type: z.enum([
+            "link",
+            "outline",
+            "default",
+            "destructive",
+            "secondary",
+            "ghost",
+          ]),
+        }),
+      )
+      .optional(),
+    image: z.object({
+      alt: z.string(),
+      src: z.string(),
+      width: z.number(),
+      height: z.number(),
+    }),
   }),
 });
 

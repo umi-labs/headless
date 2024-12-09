@@ -1,19 +1,58 @@
 import { z } from "zod";
-import { ButtonSchema, IconSchema } from "../../lib/generic-schemas.ts";
 
 export const Schema = z.object({
   data: z.object({
     separator: z.boolean().default(true).optional(),
     title: z.string(),
     content: z.string(),
-    buttons: z.array(ButtonSchema).optional(),
+    buttons: z
+      .array(
+        z.object({
+          title: z.string(),
+          link: z.string().optional(),
+          type: z.enum([
+            "link",
+            "outline",
+            "default",
+            "destructive",
+            "secondary",
+            "ghost",
+          ]),
+        }),
+      )
+      .optional(),
     topBuffer: z.boolean().default(true).optional(),
     features: z.array(
       z.object({
-        icon: IconSchema.optional(),
+        icon: z
+          .object({
+            type: z.enum(["eye", "rocket"]),
+            weight: z.enum([
+              "thin",
+              "light",
+              "regular",
+              "bold",
+              "duotone",
+              "fill",
+            ]),
+          })
+          .optional(),
         title: z.string(),
         content: z.string().optional(),
-        button: ButtonSchema.optional(),
+        button: z
+          .object({
+            title: z.string(),
+            link: z.string().optional(),
+            type: z.enum([
+              "link",
+              "outline",
+              "default",
+              "destructive",
+              "secondary",
+              "ghost",
+            ]),
+          })
+          .optional(),
       }),
     ),
   }),

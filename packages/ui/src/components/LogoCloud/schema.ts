@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { ImageSchema } from "../../lib/generic-schemas.ts";
 
 export const Schema = z.object({
   data: z.object({
@@ -7,7 +6,12 @@ export const Schema = z.object({
     title: z.string(),
     logos: z.array(
       z.object({
-        logo: ImageSchema,
+        logo: z.object({
+          alt: z.string(),
+          src: z.string(),
+          width: z.number(),
+          height: z.number(),
+        }),
         name: z.string().optional(),
         link: z.string().optional(),
       }),
