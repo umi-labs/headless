@@ -8,5 +8,8 @@
   "schema": true,
   "additionalPackages": [
     "@phosphor-icons/react"
+  ],
+  "additionalComponents": [
+    "Button"
   ]
 }
