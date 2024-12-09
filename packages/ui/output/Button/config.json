@@ -1,0 +1,1 @@
+{"title":"Button","componentName":"Button","description":"Button component config","version":"0.0.1","category":"globals","type":"ui","schema":true,"additionalPackages":["class-variance-authority","@radix-ui/react-slot"]}

@@ -6,18 +6,18 @@ export default defineType({
   type: 'object',
   fields: [
     defineField({
-          name: 'label',
-          title: 'Label',
+          name: 'title',
+          title: 'Title',
           type: 'string'
         }),
     defineField({
-          name: 'onClick',
-          title: 'OnClick',
+          name: 'link',
+          title: 'Link',
           type: 'object'
         }),
     defineField({
-          name: 'variant',
-          title: 'Variant',
+          name: 'type',
+          title: 'Type',
           type: 'object'
         })
   ],
