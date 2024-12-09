@@ -1,0 +1,11 @@
+{
+"title": "BlogGrid",
+"componentName": "BlogGrid",
+"description": "BlogGrid component config",
+"version": "0.0.1",
+"category": "blocks",
+"type": "grid",
+"schema": true,
+"additionalPackages": [],
+"additionalComponents": []
+}

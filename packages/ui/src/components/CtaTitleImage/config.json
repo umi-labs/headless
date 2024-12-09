@@ -1,0 +1,11 @@
+{
+"title": "CTATitleImage",
+"componentName": "CTATitleImage",
+"description": "CTATitleImage component config",
+"version": "0.0.1",
+"category": "blocks",
+"type": "cta",
+"schema": true,
+"additionalPackages": [],
+"additionalComponents": []
+}

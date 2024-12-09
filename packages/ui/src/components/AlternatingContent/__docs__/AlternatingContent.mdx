@@ -1,0 +1,17 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import Example from "./example.tsx";
+import * as AlternatingContent from "./AlternatingContent.stories.tsx";
+
+<Meta of={ AlternatingContent } title="AlternatingContent" />
+
+# Hero 1
+
+Basic component with different props.
+
+## Example
+
+<Canvas of={ AlternatingContent.Primary} />
+
+#### Arguments
+
+- **title** _`string`_ - A string that represents the text content of the button.

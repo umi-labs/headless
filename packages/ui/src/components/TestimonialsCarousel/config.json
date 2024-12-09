@@ -1,0 +1,13 @@
+{
+  "title": "TestimonialsCarousel",
+  "componentName": "TestimonialsCarousel",
+  "description": "TestimonialsCarousel component config",
+  "version": "0.0.1",
+  "category": "blocks",
+  "type": "carousel",
+  "schema": true,
+  "additionalPackages": [],
+  "additionalComponents": [
+    "Slider"
+  ]
+}

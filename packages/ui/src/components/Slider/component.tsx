@@ -28,6 +28,9 @@ type SliderContextProps = {
   scrollNext: () => void;
   canScrollPrev: boolean;
   canScrollNext: boolean;
+  activeIndex: number;
+  totalSlides: number;
+  goToSlide: (index: number) => void;
 } & SliderProps;
 
 const SliderContext = React.createContext<SliderContextProps | null>(null);
@@ -67,6 +70,8 @@ const Slider = React.forwardRef<
     );
     const [canScrollPrev, setCanScrollPrev] = React.useState(false);
     const [canScrollNext, setCanScrollNext] = React.useState(false);
+    const [activeIndex, setActiveIndex] = React.useState(0);
+    const [totalSlides, setTotalSlides] = React.useState(0);
 
     const onSelect = React.useCallback((api: SliderApi) => {
       if (!api) {
@@ -75,6 +80,7 @@ const Slider = React.forwardRef<
 
       setCanScrollPrev(api.canScrollPrev());
       setCanScrollNext(api.canScrollNext());
+      setActiveIndex(api.selectedScrollSnap());
     }, []);
 
     const scrollPrev = React.useCallback(() => {
@@ -84,6 +90,13 @@ const Slider = React.forwardRef<
     const scrollNext = React.useCallback(() => {
       api?.scrollNext();
     }, [api]);
+
+    const goToSlide = React.useCallback(
+      (index: number) => {
+        api?.scrollTo(index);
+      },
+      [api],
+    );
 
     const handleKeyDown = React.useCallback(
       (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -99,17 +112,17 @@ const Slider = React.forwardRef<
     );
 
     React.useEffect(() => {
-      if (!api || !setApi) {
-        return;
-      }
+      if (!api) return;
+
+      setTotalSlides(api.slideNodes().length);
+
+      if (!api || !setApi) return;
 
       setApi(api);
     }, [api, setApi]);
 
     React.useEffect(() => {
-      if (!api) {
-        return;
-      }
+      if (!api) return;
 
       onSelect(api);
       api.on("reInit", onSelect);
@@ -132,12 +145,15 @@ const Slider = React.forwardRef<
           scrollNext,
           canScrollPrev,
           canScrollNext,
+          activeIndex,
+          totalSlides,
+          goToSlide,
         }}
       >
         <div
           ref={ref}
           onKeyDownCapture={handleKeyDown}
-          className={cn("relative", className)}
+          className={cn("relative w-[calc(100%-6rem)]", className)}
           role="region"
           aria-roledescription="slider"
           {...props}
@@ -148,6 +164,7 @@ const Slider = React.forwardRef<
     );
   },
 );
+
 Slider.displayName = "Slider";
 
 const SliderContent = React.forwardRef<
@@ -170,6 +187,7 @@ const SliderContent = React.forwardRef<
     </div>
   );
 });
+
 SliderContent.displayName = "SliderContent";
 
 const SliderItem = React.forwardRef<
@@ -255,6 +273,33 @@ const SliderNext = React.forwardRef<
 
 SliderNext.displayName = "SliderNext";
 
+const SliderIndicators = (props: React.HTMLAttributes<HTMLDivElement>) => {
+  const { activeIndex, totalSlides, goToSlide } = useSlider();
+
+  return (
+    <div
+      className={cn(
+        "absolute inset-x-0 -bottom-10 flex items-center justify-center space-x-2",
+        props.className,
+      )}
+    >
+      {Array.from({ length: totalSlides }).map((_, index) => (
+        <button
+          key={index}
+          onClick={() => goToSlide(index)}
+          className={cn(
+            "h-2 w-2 rounded-full",
+            activeIndex === index ? "bg-gray-800" : "bg-gray-400",
+          )}
+          aria-label={`Go to slide ${index + 1}`}
+        />
+      ))}
+    </div>
+  );
+};
+
+SliderIndicators.displayName = "SliderIndicators";
+
 export {
   type SliderApi,
   Slider,
@@ -262,4 +307,5 @@ export {
   SliderItem,
   SliderPrevious,
   SliderNext,
+  SliderIndicators,
 };

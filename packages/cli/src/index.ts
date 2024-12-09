@@ -41,6 +41,7 @@ async function main() {
     .command("add")
     .description("Adds components or features to your project")
     .option("-n, --name <name>", "Name of the component")
+    .option("-c, --component <component>", "Name of the component")
     .action(async (options) => {
       await add(options); // Pass the component name to add
     });

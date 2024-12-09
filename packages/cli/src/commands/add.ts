@@ -21,7 +21,7 @@ const { readJSON, pathExists, ensureDir, outputFile, readFile } = fs;
 const git = simpleGit();
 
 // Function to add a component
-export const add = async (options: { name: string }) => {
+export const add = async (options: { name: string; component: string }) => {
   intro(inverse(" adding a component "));
 
   const sanity = path.join(process.cwd(), "sanity", "schemas", "objects");
@@ -70,15 +70,19 @@ export const add = async (options: { name: string }) => {
           process.exit(0);
         }
 
-        // Prompt user to select a template
-        // @ts-expect-error type error
-        selectedComponent = await select({
-          message: "Select a component to add:",
-          options: components.map((component) => ({
-            title: component,
-            value: component,
-          })),
-        });
+        if (!options.component) {
+          // Prompt user to select a template
+          // @ts-expect-error type error
+          selectedComponent = await select({
+            message: "Select a component to add:",
+            options: components.map((component) => ({
+              title: component,
+              value: component,
+            })),
+          });
+        } else {
+          selectedComponent = options.component;
+        }
 
         return `Selected component: ${selectedComponent}`;
       },
@@ -273,7 +277,7 @@ export const add = async (options: { name: string }) => {
         } else if (componentsToInstall.length > 0) {
           log.info(`Installing ${componentsToInstall.join(", ")}...`);
           for (const component of componentsToInstall) {
-            await execa("umi", ["add", component], {
+            await execa("umi", ["add", `-c ${component}`], {
               stdio: "inherit",
             });
           }

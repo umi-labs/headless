@@ -8,7 +8,7 @@
   "schema": true,
   "additionalPackages": [
     "embla-carousel-react",
-    "embla-carousel"
-  ],
-  "additionalComponents": []
+    "embla-carousel",
+    "@phosphor-icons/react"
+  ]
 }

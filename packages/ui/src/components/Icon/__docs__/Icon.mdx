@@ -1,0 +1,33 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import * as Icon from "./Icon.stories.tsx";
+
+<Meta of={Icon} title="Icon" />
+
+# Icon
+
+Basic component with different props.
+
+## Examples
+
+### Regular
+<Canvas of={Icon.Regular} />
+
+### Thin
+<Canvas of={Icon.Thin} />
+
+### Light
+<Canvas of={Icon.Light} />
+
+### Bold
+<Canvas of={Icon.Bold} />
+
+### Duotone
+<Canvas of={Icon.Duotone} />
+
+### Fill
+<Canvas of={Icon.Fill} />
+
+#### Arguments
+
+- **type** _`string`_ - A string that represents which icon will be displayed.
+- **weight** _`string`_ - A string that represents the weight variant of the icon being displayed.
