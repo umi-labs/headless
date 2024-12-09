@@ -1,12 +1,8 @@
-import React, { FC } from "react";
-import { ButtonType } from "../schema";
-import Button from "../Button";
+import { FC } from "react";
+import { Type } from "../schema";
+import Button from "../component";
 
-const Example: FC<ButtonType> = ({
-  label = "Click Me",
-  variant = "primary",
-  onClick = () => {},
-}) => {
+const Example: FC<Type> = ({ type = "default" }) => {
   return (
     <div
       style={{
@@ -16,7 +12,9 @@ const Example: FC<ButtonType> = ({
         height: "100%",
       }}
     >
-      <Button label={label} variant={variant} onClick={onClick} />
+      <Button title="" variant={type}>
+        Click Me
+      </Button>
     </div>
   );
 };

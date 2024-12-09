@@ -1,0 +1,17 @@
+import { Canvas, Meta } from "@storybook/blocks";
+import Example from "./example.tsx";
+import * as HeroWithMedia from "./HeroWithMedia.stories.tsx";
+
+<Meta of={ HeroWithMedia } title="HeroWithMedia" />
+
+# Hero 1
+
+Basic component with different props.
+
+## Example
+
+<Canvas of={ HeroWithMedia.Primary} />
+
+#### Arguments
+
+- **title** _`string`_ - A string that represents the text content of the button.

@@ -1,7 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Tenor+Sans&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body.sb-show-main.sb-main-padded {
-  padding: 0;
+    padding: 0;
+}
+
+@layer base {
+    :root {
+        --font-heading: "Tenor Sans", sans-serif;
+        --font-body: "Nunito", sans-serif;
+        --font-accent: "Poppins", sans-serif;
+
+        --background-color: #ffffff;
+        --foreground-color: #313e4e;
+        --accent-color: #368db1;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h6 {
+        @apply font-heading font-semibold tracking-reduced;
+    }
+
+    h1,
+    h2 {
+        @apply leading-5 font-medium;
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply leading-6;
+    }
+
+    h1 {
+        @apply text-5xl;
+    }
+
+    h2 {
+        @apply text-4xl;
+    }
+
+    h3 {
+        @apply text-2xl;
+    }
+
+    h4 {
+        @apply text-xl;
+    }
+
+    h5 {
+        @apply font-accent text-xs font-bold tracking-expanded;
+    }
+
+    h6 {
+        @apply text-lg tracking-normal;
+    }
+
+    p {
+        @apply font-body text-lg font-light leading-['160%'] tracking-normal;
+    }
+
+    p .small {
+        @apply text-base leading-['150%'];
+    }
+
+    p .xsmall {
+        @apply text-sm;
+    }
 }

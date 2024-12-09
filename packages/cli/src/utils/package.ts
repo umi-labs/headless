@@ -41,6 +41,30 @@ export async function checkIfPackageInstalled(
   }
 }
 
+export async function checkIfComponentAdded(
+  componentName: string,
+  componentDir: string,
+): Promise<boolean> {
+  try {
+    // Check if the component is contained within the specified directory
+    const directory = path.join(process.cwd(), "app", `_${componentDir}`, `ui`);
+    const files = fs.readdirSync(directory);
+
+    files.forEach((file) => {
+      if (file.includes(componentDir)) {
+        return true;
+      }
+    });
+
+    return false;
+  } catch (error) {
+    log.warn(
+      `Could not read the directory to verify ${componentName}. Proceeding with installation.`,
+    );
+    return false;
+  }
+}
+
 export async function checkMultiPackageStatus(packages: Array<string>) {
   const packagesToInstall = [];
   for (const packageName of packages) {
@@ -49,4 +73,17 @@ export async function checkMultiPackageStatus(packages: Array<string>) {
     }
   }
   return packagesToInstall;
+}
+
+export async function checkForAdditionalComponents(
+  components: Array<string>,
+  componentDir: string,
+) {
+  const componentsToInstall = [];
+  for (const componentName of components) {
+    if (!(await checkIfComponentAdded(componentName, componentDir))) {
+      componentsToInstall.push(componentName);
+    }
+  }
+  return componentsToInstall;
 }

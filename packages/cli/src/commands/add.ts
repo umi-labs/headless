@@ -8,11 +8,11 @@ import { cleanComponentName } from "../utils/nameCleaner.js";
 import { intro, log, outro, select, tasks, text } from "@clack/prompts";
 import { inverse } from "kleur/colors";
 import { cleanUp } from "../utils/file-and-directory-management/cleanup";
-import { checkMultiPackageStatus } from "../utils/package";
+import {
+  checkForAdditionalComponents,
+  checkMultiPackageStatus,
+} from "../utils/package";
 import { execa } from "execa";
-
-// TODO: Add ability to pull additional import requirements from config file attached to component
-// TODO: Needs to be upgraded to the clack prompt system
 
 // Import fs-extra functions like this or dist will fail
 const { readJSON, pathExists, ensureDir, outputFile, readFile } = fs;
@@ -37,6 +37,7 @@ export const add = async (options: { name: string }) => {
     selectedComponentDir: string,
     category: string,
     additionalPackages: string[],
+    additionalComponents: string[],
     componentDir: string,
     config: Config;
 
@@ -101,6 +102,7 @@ export const add = async (options: { name: string }) => {
         const componentConfig = await readJSON(componentConfigPath);
         category = componentConfig.category || "blocks"; // Default to "blocks" if category is not defined
         additionalPackages = componentConfig.additionalPackages || [];
+        additionalComponents = componentConfig.additionalComponents || [];
 
         return `Component category: ${category}`;
       },
@@ -256,6 +258,35 @@ export const add = async (options: { name: string }) => {
         }
 
         return "Package Installation Complete";
+      },
+    },
+    {
+      title: "Adding additional components",
+      task: async () => {
+        let componentsToInstall = await checkForAdditionalComponents(
+          additionalComponents,
+          config.aliases.components,
+        );
+
+        if (componentsToInstall.length < 0) {
+          log.info("No additional components found.");
+        } else if (componentsToInstall.length > 0) {
+          log.info(`Installing ${componentsToInstall.join(", ")}...`);
+          for (const component of componentsToInstall) {
+            await execa("umi", ["add", component], {
+              stdio: "inherit",
+            });
+          }
+          log.success(
+            `${componentsToInstall.join(", ")} installed successfully.`,
+          );
+        } else {
+          log.success(
+            `${componentsToInstall.join(", ")} are already installed.`,
+          );
+        }
+
+        return "Components Installation Complete";
       },
     },
     {

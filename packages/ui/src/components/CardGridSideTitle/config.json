@@ -1,0 +1,12 @@
+{
+  "title": "CardGridSideTitle",
+  "componentName": "CardGridSideTitle",
+  "description": "CardGridSideTitle component config",
+  "version": "0.0.1",
+  "category": "blocks",
+  "type": "grid",
+  "schema": true,
+  "additionalPackages": [
+    "@phosphor-icons/react"
+  ]
+}

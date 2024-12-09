@@ -6,7 +6,14 @@ const meta = {
   component: Button,
   argTypes: {
     variant: {
-      options: ["primary", "secondary", "tertiary"],
+      options: [
+        "default",
+        "link",
+        "outline",
+        "destructive",
+        "secondary",
+        "ghost",
+      ],
       control: { type: "select" },
     },
   },
@@ -18,8 +25,7 @@ type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
   args: {
-    label: "Click Me",
-    variant: "primary",
-    onClick: () => console.log("Button Clicked"),
+    variant: "default",
+    children: "Click Me",
   },
 };

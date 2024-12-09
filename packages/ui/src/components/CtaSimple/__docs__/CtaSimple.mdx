@@ -1,0 +1,23 @@
+import { Canvas, Meta } from '@storybook/blocks'
+import * as CTASimple from './CtaSimple.stories.tsx'
+
+<Meta of={CTASimple} title="CTASimple" />
+
+# CTA Simple
+
+Simple CTA with different properties/configurations.
+
+## Default
+
+<Canvas of={CTASimple.Primary} />
+
+#### Arguments
+
+- **subtitle** _`string`_ - A string that represents the subtitle content of the component.
+- **title** _`string`_ - A string that represents the title content of the component.
+- **content** _`string`_ - A string that represents the text content of the component.
+- **button** _`{ title: string, link: string, type: string }`_ - An object that represents the button configuration of the component.
+- **image** _`{ alt: string, src: string, width: number, height: number }`_ - An object that represents the image configuration of the component.
+- **topBuffer** _`boolean? default(true)`_ - A boolean that changes whether there is a top buffer on the component.
+- **bottomBuffer** _`boolean? default(true)`_ - A boolean that changes whether there is a bottom buffer on the component.
+
